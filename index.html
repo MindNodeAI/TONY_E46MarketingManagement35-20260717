@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI行銷管理全局觀：打造高績效品牌的整合策略地圖 | TONY 顧問</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Noto Sans TC"', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            500: '#14b8a6', // Teal as a modern professional accent
+                            600: '#0d9488',
+                            900: '#134e4a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Modernized AI Term Highlight */
+        .ai-term {
+            cursor: pointer;
+            color: #0f172a;
+            font-weight: 600;
+            text-decoration: underline;
+            text-decoration-style: dashed;
+            text-decoration-color: #94a3b8;
+            text-underline-offset: 4px;
+            transition: all 0.2s ease;
+            padding: 0 2px;
+            border-radius: 4px;
+        }
+        .ai-term:hover {
+            color: #0d9488;
+            text-decoration-color: #0d9488;
+            background-color: #f0fdfa;
+        }
+
+        /* Smooth Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
+        /* Minimalist Modal Animation */
+        .modal-enter { animation: slideUpFade 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        @keyframes slideUpFade {
+            from { opacity: 0; transform: translateY(20px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        
+        /* Elegant Loader */
+        .loader {
+            width: 32px;
+            height: 32px;
+            border: 3px solid #e2e8f0;
+            border-bottom-color: #0d9488;
+            border-radius: 50%;
+            display: inline-block;
+            animation: rotation 1s linear infinite;
+        }
+        @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="bg-[#F8FAFC] text-slate-800 font-sans antialiased selection:bg-brand-500 selection:text-white">
+
+    <!-- Top Menu Bar (Black Background, White Text) -->
+    <header class="sticky top-0 z-40 w-full bg-slate-950 text-white shadow-lg border-b border-slate-800">
+        <!-- 增加 pt-12 md:pt-14 將整體內容往下推，避免被瀏覽器或系統狀態列遮擋 -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 md:pt-14">
+            <div class="flex flex-col md:flex-row justify-between items-center pb-3 gap-4">
+                <!-- Logo & Brand -->
+                <div class="flex items-center gap-3">
+                    <img src="https://i.postimg.cc/fT2sQW09/1.png" alt="Tony Studio Logo" class="h-10 sm:h-12 w-auto object-contain">
+                    <span class="font-bold text-lg tracking-wide text-slate-200 hidden sm:block">AI行銷管理全局觀</span>
+                </div>
+                
+                <!-- API Key Configuration (Dark Theme UI) -->
+                <div class="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto">
+                    <div class="flex items-center w-full sm:w-auto relative">
+                        <svg class="w-4 h-4 text-slate-400 absolute left-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path></svg>
+                        <input type="password" id="api-key-input" placeholder="輸入 Gemini API Key..." class="w-full sm:w-60 bg-slate-800 border border-slate-700 text-slate-200 text-sm rounded-md focus:ring-brand-500 focus:border-brand-500 block pl-9 p-2 transition-colors placeholder-slate-500">
+                    </div>
+                    <div class="flex items-center justify-between w-full sm:w-auto gap-3">
+                        <button onclick="saveApiKey()" id="save-btn" class="bg-brand-600 hover:bg-brand-500 text-white font-medium rounded-md text-sm px-4 py-2 transition-colors w-full sm:w-auto border border-brand-500">
+                            啟用 AI
+                        </button>
+                        <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" class="text-xs text-slate-400 hover:text-white underline-offset-2 hover:underline text-center w-full sm:w-auto whitespace-nowrap transition-colors">
+                            取得金鑰 ↗
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div id="api-key-status" class="hidden pb-3 text-xs text-center md:text-right text-brand-500 font-medium tracking-wide">
+                ● 系統已連線，AI 解析功能準備就緒
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-20">
+        
+        <!-- Hero Section -->
+        <section class="text-center space-y-6 max-w-4xl mx-auto">
+            <div class="inline-block px-3 py-1 bg-slate-200 text-slate-700 rounded-full text-xs font-bold tracking-widest uppercase mb-2">
+                Syllabus 2026
+            </div>
+            <h1 class="text-4xl md:text-6xl font-black text-slate-900 leading-tight tracking-tight">
+                AI行銷管理全局觀
+            </h1>
+            <h2 class="text-xl md:text-2xl font-medium text-slate-500 tracking-wide">
+                打造高績效品牌的整合策略地圖
+            </h2>
+            <div class="w-16 h-1 bg-slate-900 mx-auto rounded-full mt-8"></div>
+        </section>
+
+        <!-- Instructor Bio Section (Premium Layout) -->
+        <section class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+            <div class="flex flex-col md:flex-row">
+                <!-- Photo Side -->
+                <div class="md:w-1/3 bg-slate-50 p-10 flex flex-col items-center justify-center border-r border-slate-100">
+                    <img src="https://i.postimg.cc/Gh8Zt7SX/S_56844323.jpg" alt="TONY 楊文澤 老師" class="w-48 h-48 rounded-full object-cover shadow-lg mb-6 ring-4 ring-white">
+                    <h3 class="text-3xl font-black text-slate-900 mb-1">TONY 楊文澤</h3>
+                    <p class="text-brand-600 font-medium tracking-widest text-sm uppercase">資深數位行銷科技顧問</p>
+                </div>
+                
+                <!-- Content Side -->
+                <div class="md:w-2/3 p-10 lg:p-12 flex flex-col justify-center">
+                    <div class="flex flex-wrap gap-2 mb-8">
+                        <span class="px-3 py-1 bg-slate-100 text-slate-600 rounded text-xs font-bold tracking-wide">生成式 AI 創作者</span>
+                        <span class="px-3 py-1 bg-slate-100 text-slate-600 rounded text-xs font-bold tracking-wide">創業導師</span>
+                        <span class="px-3 py-1 bg-slate-100 text-slate-600 rounded text-xs font-bold tracking-wide">大學講師</span>
+                        <span class="px-3 py-1 bg-slate-100 text-slate-600 rounded text-xs font-bold tracking-wide">前上市公司發言人</span>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-10">
+                        <!-- 現職 -->
+                        <div>
+                            <h4 class="text-sm font-bold text-slate-400 uppercase tracking-widest mb-3 border-b border-slate-100 pb-2">Current 現職</h4>
+                            <ul class="space-y-2 text-slate-700 font-medium">
+                                <li class="flex items-start"><span class="mr-2 text-brand-500">▪</span> 龍華科大 數位行銷講師</li>
+                                <li class="flex items-start"><span class="mr-2 text-brand-500">▪</span> 智策慧 品牌行銷科技顧問</li>
+                            </ul>
+                        </div>
+                        
+                        <!-- 學歷 -->
+                        <div>
+                            <h4 class="text-sm font-bold text-slate-400 uppercase tracking-widest mb-3 border-b border-slate-100 pb-2">Education 學歷</h4>
+                            <ul class="space-y-2 text-slate-700 font-medium">
+                                <li class="flex items-start"><span class="mr-2 text-brand-500">▪</span> 台大 EMBA 商學組</li>
+                                <li class="flex items-start"><span class="mr-2 text-brand-500">▪</span> 美國 ASU 互動多媒體設計</li>
+                                <li class="flex items-start"><span class="mr-2 text-brand-500">▪</span> 北科大 工業設計</li>
+                            </ul>
+                        </div>
+
+                        <!-- 經歷 -->
+                        <div>
+                            <h4 class="text-sm font-bold text-slate-400 uppercase tracking-widest mb-3 border-b border-slate-100 pb-2">Experience 核心經歷</h4>
+                            <ul class="space-y-2 text-slate-700 font-medium text-sm leading-relaxed">
+                                <li class="flex items-start"><span class="mr-2 text-brand-500">▪</span> 脈動心聯股份有限公司 創辦人暨執行長</li>
+                                <li class="flex items-start"><span class="mr-2 text-brand-500">▪</span> 宏碁集團建碁 AOPEN 全球品牌行銷總監 / 企業發言人</li>
+                                <li class="flex items-start"><span class="mr-2 text-brand-500">▪</span> 台灣數位看板多媒體聯盟 (DSMA) 副會長</li>
+                            </ul>
+                        </div>
+
+                        <!-- 授課 -->
+                        <div>
+                            <h4 class="text-sm font-bold text-slate-400 uppercase tracking-widest mb-3 border-b border-slate-100 pb-2">Teaching 專家授課</h4>
+                            <ul class="space-y-2 text-slate-700 font-medium text-sm leading-relaxed">
+                                <li class="flex items-start"><span class="mr-2 text-brand-500">▪</span> CPC 生產力中心 經營顧問師班講師</li>
+                                <li class="flex items-start"><span class="mr-2 text-brand-500">▪</span> 台大/長榮/北科/政大/世新 EMBA 業師</li>
+                                <li class="flex items-start"><span class="mr-2 text-brand-500">▪</span> 新光人壽 AI 工具應用 企業內訓講師</li>
+                                <li class="flex items-start"><span class="mr-2 text-brand-500">▪</span> T大使與產業尖兵 講師</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Course Philosophy & Details (Minimalist Grid) -->
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <!-- Left Info Panel -->
+            <div class="lg:col-span-4 space-y-6">
+                <div class="bg-slate-900 text-white p-8 rounded-2xl shadow-sm">
+                    <h3 class="text-lg font-bold mb-6 tracking-widest uppercase border-b border-slate-700 pb-3">課程基本資訊</h3>
+                    <dl class="space-y-4 text-sm font-medium">
+                        <div class="grid grid-cols-3 gap-2">
+                            <dt class="text-slate-400">授課教師</dt>
+                            <dd class="col-span-2 text-white">TONY 楊文澤 講師</dd>
+                        </div>
+                        <div class="grid grid-cols-3 gap-2">
+                            <dt class="text-slate-400">開課系所</dt>
+                            <dd class="col-span-2 text-white">龍華科技大學<br><span class="text-slate-300 text-xs">數位行銷暨跨境商務系</span></dd>
+                        </div>
+                        <div class="grid grid-cols-3 gap-2">
+                            <dt class="text-slate-400">學分/時數</dt>
+                            <dd class="col-span-2 text-white">3學分 / 每週3小時</dd>
+                        </div>
+                        <div class="grid grid-cols-3 gap-2">
+                            <dt class="text-slate-400">授課對象</dt>
+                            <dd class="col-span-2 text-white">大學部一年級學生</dd>
+                        </div>
+                    </dl>
+                </div>
+
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+                    <h3 class="text-lg font-bold text-slate-900 mb-4 tracking-widest uppercase border-b border-slate-100 pb-3">學習目標</h3>
+                    <ul class="space-y-4 text-sm text-slate-600">
+                        <li><strong class="text-slate-900 block mb-1">知識建構</strong>系統性地闡述行銷管理演進 (<span class="ai-term">Marketing 1.0 to 6.0</span>)。</li>
+                        <li><strong class="text-slate-900 block mb-1">策略思維</strong>運用<span class="ai-term">策略工具</span>進行市場分析與<span class="ai-term">品牌定位</span>。</li>
+                        <li><strong class="text-slate-900 block mb-1">AI 協作力</strong>熟練運用<span class="ai-term">生成式 AI</span>工具進行洞察與<span class="ai-term">內容行銷</span>產出。</li>
+                        <li><strong class="text-slate-900 block mb-1">數據素養</strong>理解<span class="ai-term">關鍵績效指標</span> (<span class="ai-term">KPIs</span>) 與<span class="ai-term">數據驅動決策</span>能力。</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Right Content Panel -->
+            <div class="lg:col-span-8 bg-white p-8 md:p-12 rounded-2xl shadow-sm border border-slate-200">
+                <div class="mb-12">
+                    <h3 class="text-2xl font-black text-slate-900 mb-6 flex items-center">
+                        <span class="w-1.5 h-6 bg-brand-500 mr-3 rounded-full"></span>核心理念
+                    </h3>
+                    <p class="text-slate-700 leading-loose text-lg">
+                        "本課程將跳脫傳統單向講授框架，定位為一場<strong class="text-brand-600 font-bold">「指導式 AI 協作工坊」</strong>。我們將引導學生將 AI 工具視為策略夥伴，共同完成市場分析、策略擬定與內容產出，實現思維與技能的雙重升級。"
+                    </p>
+                </div>
+                
+                <div>
+                    <h3 class="text-2xl font-black text-slate-900 mb-6 flex items-center">
+                        <span class="w-1.5 h-6 bg-slate-900 mr-3 rounded-full"></span>課程說明
+                    </h3>
+                    <div class="space-y-4 text-slate-600 leading-relaxed font-medium">
+                        <p>
+                            歡迎來到<span class="ai-term">行銷 6.0</span> 的時代！在這個由數據、演算法與<span class="ai-term">生成式 AI</span>共同定義的商業環境中，傳統的行銷理論已不足以應對挑戰。本課程旨在為數位原生代的行銷新兵，建立一套兼具「宏觀視野」與「微觀執行力」的<span class="ai-term">整合性行銷</span>管理知識體系。
+                        </p>
+                        <p>
+                            我們將從行銷的核心本質出發，系統性地解構從市場環境分析 (<span class="ai-term">Macro</span>)、<span class="ai-term">消費者洞察</span> (<span class="ai-term">Micro</span>)，到策略擬定 (<span class="ai-term">STP 策略</span>)、價值創造 (<span class="ai-term">行銷 4P</span>)，再到數據衡量 (<span class="ai-term">Metrics</span>) 的完整流程。
+                        </p>
+                        <p>
+                            更重要的是，每一環節都將深度融合行銷科技 (<span class="ai-term">MarTech</span>)、數據驅動決策，以及與 AI 代理 (<span class="ai-term">Agentic AI</span>) 的協作方法，確保您的行銷知識庫從第一天起就與產業前沿無縫接軌。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Assessment Table (Clean Design) -->
+        <section class="bg-white p-8 md:p-12 rounded-2xl shadow-sm border border-slate-200">
+            <h3 class="text-2xl font-black text-slate-900 mb-8 flex items-center">
+                <span class="w-1.5 h-6 bg-slate-400 mr-3 rounded-full"></span>專案實作評量 <span class="text-sm font-normal text-slate-400 ml-4">(無傳統紙筆考試)</span>
+            </h3>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="border-b-2 border-slate-900">
+                            <th class="pb-4 font-bold text-slate-900 uppercase tracking-widest text-sm w-1/4">評量項目</th>
+                            <th class="pb-4 font-bold text-slate-900 uppercase tracking-widest text-sm text-center w-1/6">比例</th>
+                            <th class="pb-4 font-bold text-slate-900 uppercase tracking-widest text-sm">執行說明</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-slate-600 font-medium">
+                        <tr class="border-b border-slate-100 hover:bg-slate-50 transition-colors">
+                            <td class="py-6 pr-4 align-top">
+                                <strong class="text-slate-900 block mb-1">課堂參與及 AI 歷程</strong>
+                            </td>
+                            <td class="py-6 align-top text-center">
+                                <span class="inline-block bg-slate-900 text-white font-bold py-1 px-3 rounded-full text-sm">30%</span>
+                            </td>
+                            <td class="py-6 align-top text-sm leading-relaxed">
+                                積極參與討論。建立「AI 協作歷程檔案」，記錄 <span class="ai-term">Prompt Crafting</span> (提示詞工程) 與迭代優化的能力，非僅複製貼上。
+                            </td>
+                        </tr>
+                        <tr class="border-b border-slate-100 hover:bg-slate-50 transition-colors">
+                            <td class="py-6 pr-4 align-top">
+                                <strong class="text-slate-900 block mb-1">期中專案</strong>
+                                <span class="text-xs text-slate-500">AI 賦能品牌診斷</span>
+                            </td>
+                            <td class="py-6 align-top text-center">
+                                <span class="inline-block bg-slate-900 text-white font-bold py-1 px-3 rounded-full text-sm">30%</span>
+                            </td>
+                            <td class="py-6 align-top text-sm leading-relaxed">
+                                選擇真實品牌，運用 AI 輔助 <span class="ai-term">PESTEL</span>、<span class="ai-term">SWOT 分析</span>及<span class="ai-term">波特五力分析</span>，產出<span class="ai-term">品牌診斷</span>與市場機會報告。
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-slate-50 transition-colors">
+                            <td class="py-6 pr-4 align-top">
+                                <strong class="text-slate-900 block mb-1">期末專案</strong>
+                                <span class="text-xs text-slate-500">整合行銷策略發表</span>
+                            </td>
+                            <td class="py-6 align-top text-center">
+                                <span class="inline-block bg-slate-900 text-white font-bold py-1 px-3 rounded-full text-sm">40%</span>
+                            </td>
+                            <td class="py-6 align-top text-sm leading-relaxed">
+                                擬定行銷目標與 <span class="ai-term">STP 策略</span>。規劃 <span class="ai-term">整合行銷溝通 (IMC)</span> 方案、設計 <span class="ai-term">KPIs</span>，並進行正式的策略提案發表 (Pitch)。
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Weekly Schedule (Minimalist Timeline) -->
+        <section>
+            <div class="text-center mb-12">
+                <h3 class="text-3xl font-black text-slate-900 mb-4">每週課程進度</h3>
+                <p class="inline-flex items-center gap-2 px-4 py-2 bg-slate-100 rounded-full text-sm font-medium text-slate-600">
+                    <svg class="w-4 h-4 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    互動提示：點擊帶有底線的<span class="ai-term">專有名詞</span>即可呼叫 TONY 老師的 AI 助教進行解析
+                </p>
+            </div>
+
+            <div class="space-y-16">
+                <!-- Module 1 -->
+                <div class="relative">
+                    <div class="mb-8 pb-6 border-b-2 border-slate-900">
+                        <h4 class="text-2xl font-black text-slate-900 flex items-center justify-between mb-3">
+                            <span>模組一：行銷新世界觀的建立</span>
+                            <span class="text-base font-bold text-slate-400 bg-slate-100 px-3 py-1 rounded">W1-W4</span>
+                        </h4>
+                        <p class="text-slate-600 font-medium leading-relaxed pr-0 md:pr-12">本模組旨在引導學生跳脫傳統行銷框架，建立 AI 與數據驅動下的全新商業視角。從宏觀的環境掃描、微觀的競爭者分析，到深度的消費者旅程與服務藍圖解析，為後續策略奠定堅實的「全局觀」基礎。</p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Card W1 -->
+                        <div class="bg-white p-6 rounded-xl border border-slate-200 hover:border-slate-300 transition-colors shadow-sm flex flex-col">
+                            <div class="text-xs font-bold text-brand-600 mb-2 tracking-widest">WEEK 1</div>
+                            <h5 class="text-lg font-bold text-slate-900 mb-4">破冰啟航：歡迎來到行銷 6.0</h5>
+                            <div class="space-y-4 text-sm text-slate-600 font-medium flex-1">
+                                <ul class="list-disc pl-5 space-y-1.5 leading-relaxed">
+                                    <li>行銷管理的定義與演進：從<span class="ai-term">生產導向</span>到<span class="ai-term">價值共創</span>與<span class="ai-term">永續行銷</span>。</li>
+                                    <li>企業經營的核心功能：<span class="ai-term">成長駭客</span> (Growth Hacking) vs. 傳統品牌建立。</li>
+                                    <li><span class="ai-term">行銷 6.0</span> 的核心特徵：數據、AI、<span class="ai-term">沉浸式體驗</span>與<span class="ai-term">空間運算</span>。</li>
+                                    <li>B2B、B2C 與 <span class="ai-term">D2C 直面消費者</span> 的商業模式本質差異。</li>
+                                </ul>
+                                <div class="p-4 bg-slate-50 rounded border border-slate-100 mt-4 flex flex-col flex-1">
+                                    <strong class="text-slate-900 block mb-2 text-xs uppercase tracking-wider flex items-center"><svg class="w-4 h-4 mr-1 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg> AI 協作任務</strong>
+                                    <div class="space-y-2 text-slate-700 mb-3">
+                                        <p><strong class="text-brand-600">【模式】</strong>：學習 <span class="ai-term">Prompt Engineering</span> 的 <span class="ai-term">RICE 原則</span>。</p>
+                                        <p><strong class="text-brand-600">【產出】</strong>：要求 AI 產出生活化的品牌價值共創案例。</p>
+                                        <p><strong class="text-amber-600">【互動討論】</strong>：AI 給的案例中，品牌真的放權給消費者了嗎？還是只是一場行銷噱頭？潛在的公關危機是什麼？</p>
+                                    </div>
+                                    <div class="mt-auto bg-slate-900 rounded-lg p-3 relative group">
+                                        <div class="flex justify-between items-center mb-2">
+                                            <span class="text-[10px] font-bold text-slate-400 tracking-widest uppercase">💡 提示詞示範</span>
+                                            <button onclick="copyToClipboard(this)" class="text-slate-400 hover:text-white transition-colors p-1 rounded bg-slate-800 hover:bg-slate-700 flex items-center gap-1 text-[10px]">
+                                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg> <span>複製</span>
+                                            </button>
+                                        </div>
+                                        <p class="text-xs text-slate-300 font-mono leading-relaxed prompt-text">你現在是頂尖大學的行銷系教授 (Role)。請用大一新生能聽懂的語言，舉一個生活化的品牌例子 (Context)，向我解釋「價值共創」的概念 (Instruction)。請用列點的方式說明，字數控制在 300 字以內 (Constraint)。</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Card W2 -->
+                        <div class="bg-white p-6 rounded-xl border border-slate-200 hover:border-slate-300 transition-colors shadow-sm flex flex-col">
+                            <div class="text-xs font-bold text-brand-600 mb-2 tracking-widest">WEEK 2</div>
+                            <h5 class="text-lg font-bold text-slate-900 mb-4">理解全局：行銷環境分析</h5>
+                            <div class="space-y-4 text-sm text-slate-600 font-medium flex-1">
+                                <ul class="list-disc pl-5 space-y-1.5 leading-relaxed">
+                                    <li>外部<span class="ai-term">宏觀環境分析</span>：<span class="ai-term">PESTEL</span> 模型與 <span class="ai-term">ESG 永續指標</span> 結合。</li>
+                                    <li>產業<span class="ai-term">微觀環境分析</span>：<span class="ai-term">波特五力分析</span> 加上「互補品」的實戰應用。</li>
+                                    <li>競爭邊界模糊化：尋找<span class="ai-term">藍海策略</span>與跨界思維。</li>
+                                    <li>辨識決定生死的產業<span class="ai-term">關鍵成功因素</span> (KSF)。</li>
+                                </ul>
+                                <div class="p-4 bg-slate-50 rounded border border-slate-100 mt-4 flex flex-col flex-1">
+                                    <strong class="text-slate-900 block mb-2 text-xs uppercase tracking-wider flex items-center"><svg class="w-4 h-4 mr-1 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg> AI 協作任務</strong>
+                                    <div class="space-y-2 text-slate-700 mb-3">
+                                        <p><strong class="text-brand-600">【模式】</strong>：指定目標產業，設定 AI 扮演產業分析師。</p>
+                                        <p><strong class="text-brand-600">【產出】</strong>：生成該產業的 <span class="ai-term">PESTEL</span> 趨勢掃描與<span class="ai-term">波特五力分析</span>。</p>
+                                        <p><strong class="text-amber-600">【互動討論】</strong>：AI 列出的「威脅」，通常基於過往數據。身為決策者，我們該如何發掘 AI 演算法看不見的市場「黑天鵝」？</p>
+                                    </div>
+                                    <div class="mt-auto bg-slate-900 rounded-lg p-3 relative group">
+                                        <div class="flex justify-between items-center mb-2">
+                                            <span class="text-[10px] font-bold text-slate-400 tracking-widest uppercase">💡 提示詞示範</span>
+                                            <button onclick="copyToClipboard(this)" class="text-slate-400 hover:text-white transition-colors p-1 rounded bg-slate-800 hover:bg-slate-700 flex items-center gap-1 text-[10px]">
+                                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg> <span>複製</span>
+                                            </button>
+                                        </div>
+                                        <p class="text-xs text-slate-300 font-mono leading-relaxed prompt-text">你現在是一位擁有10年經驗的產業分析師。請針對「台灣連鎖精品咖啡產業」，進行 PESTEL 趨勢掃描與波特五力分析。請用結構化的表格呈現，並在最後提出三個對新進品牌的「具體策略意涵建議」。</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Card W3 -->
+                        <div class="bg-white p-6 rounded-xl border border-slate-200 hover:border-slate-300 transition-colors shadow-sm flex flex-col">
+                            <div class="text-xs font-bold text-brand-600 mb-2 tracking-widest">WEEK 3</div>
+                            <h5 class="text-lg font-bold text-slate-900 mb-4">策略的起點：SWOT 與競爭者分析</h5>
+                            <div class="space-y-4 text-sm text-slate-600 font-medium flex-1">
+                                <ul class="list-disc pl-5 space-y-1.5 leading-relaxed">
+                                    <li><span class="ai-term">SWOT 分析</span>心法：<span class="ai-term">內部資源盤點</span> vs. <span class="ai-term">外部機會洞察</span>。</li>
+                                    <li>企業護城河檢驗：運用 <span class="ai-term">VRIO 模型</span> 評估核心競爭力。</li>
+                                    <li>從 SWOT 到 <span class="ai-term">TOWS 矩陣</span>的策略推導與動態競爭。</li>
+                                    <li>繪製競爭者輪廓：<span class="ai-term">直接競爭者</span>與<span class="ai-term">替代品</span>的<span class="ai-term">知覺圖</span>。</li>
+                                </ul>
+                                <div class="p-4 bg-slate-50 rounded border border-slate-100 mt-4 flex flex-col flex-1">
+                                    <strong class="text-slate-900 block mb-2 text-xs uppercase tracking-wider flex items-center"><svg class="w-4 h-4 mr-1 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg> AI 協作任務</strong>
+                                    <div class="space-y-2 text-slate-700 mb-3">
+                                        <p><strong class="text-brand-600">【模式】</strong>：輸入企業資訊，設定 AI 扮演市場策略顧問。</p>
+                                        <p><strong class="text-brand-600">【產出】</strong>：產出 <span class="ai-term">SWOT 分析</span>及 <span class="ai-term">TOWS 矩陣</span>方向建議。</p>
+                                        <p><strong class="text-amber-600">【互動討論】</strong>：檢視 AI 提出的 SO (優勢+機會) 策略，這是否有真正的「護城河」？如果競品明天就照抄，我們還能贏嗎？</p>
+                                    </div>
+                                    <div class="mt-auto bg-slate-900 rounded-lg p-3 relative group">
+                                        <div class="flex justify-between items-center mb-2">
+                                            <span class="text-[10px] font-bold text-slate-400 tracking-widest uppercase">💡 提示詞示範</span>
+                                            <button onclick="copyToClipboard(this)" class="text-slate-400 hover:text-white transition-colors p-1 rounded bg-slate-800 hover:bg-slate-700 flex items-center gap-1 text-[10px]">
+                                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg> <span>複製</span>
+                                            </button>
+                                        </div>
+                                        <p class="text-xs text-slate-300 font-mono leading-relaxed prompt-text">你現在是企業策略顧問。以下是「Gogoro」近期的財報與新聞摘要：[請貼上摘要]。請根據這些內容產出 SWOT 分析，並運用 TOWS 矩陣推導出具體的 SO (運用優勢掌握機會) 與 WT (克服劣勢避開威脅) 的行動方案建議。</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Card W4 -->
+                        <div class="bg-white p-6 rounded-xl border border-slate-200 hover:border-slate-300 transition-colors shadow-sm flex flex-col">
+                            <div class="text-xs font-bold text-brand-600 mb-2 tracking-widest">WEEK 4</div>
+                            <h5 class="text-lg font-bold text-slate-900 mb-4">顧客為王：數位時代的消費者行為</h5>
+                            <div class="space-y-4 text-sm text-slate-600 font-medium flex-1">
+                                <ul class="list-disc pl-5 space-y-1.5 leading-relaxed">
+                                    <li><span class="ai-term">消費者決策旅程</span>：從 <span class="ai-term">AIDA 模式</span>到 <span class="ai-term">5A 模型</span>。</li>
+                                    <li>挖掘真實需求：導入 <span class="ai-term">焦糖任務理論</span> (Jobs-to-be-Done, JTBD)。</li>
+                                    <li><span class="ai-term">行為經濟學</span>在行銷的應用 (如：<span class="ai-term">推力理論</span>)。</li>
+                                    <li><span class="ai-term">顧客旅程地圖</span> 與 <span class="ai-term">服務藍圖</span> (Service Blueprint) 的繪製與應用。</li>
+                                </ul>
+                                <div class="p-4 bg-slate-50 rounded border border-slate-100 mt-4 flex flex-col flex-1">
+                                    <strong class="text-slate-900 block mb-2 text-xs uppercase tracking-wider flex items-center"><svg class="w-4 h-4 mr-1 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg> AI 協作任務</strong>
+                                    <div class="space-y-2 text-slate-700 mb-3">
+                                        <p><strong class="text-brand-600">【模式】</strong>：提供情境，要求 AI 扮演 UX 研究員與服務設計師。</p>
+                                        <p><strong class="text-brand-600">【產出】</strong>：生成 <span class="ai-term">Persona</span> 的<span class="ai-term">顧客旅程地圖</span>與<span class="ai-term">服務藍圖</span>。</p>
+                                        <p><strong class="text-amber-600">【互動討論】</strong>：AI 點出的「痛點」，是消費者真實的痛，還是我們品牌「自以為的痛」？前台的服務承諾，後台支援系統真的能做到嗎？</p>
+                                    </div>
+                                    <div class="mt-auto bg-slate-900 rounded-lg p-3 relative group">
+                                        <div class="flex justify-between items-center mb-2">
+                                            <span class="text-[10px] font-bold text-slate-400 tracking-widest uppercase">💡 提示詞示範</span>
+                                            <button onclick="copyToClipboard(this)" class="text-slate-400 hover:text-white transition-colors p-1 rounded bg-slate-800 hover:bg-slate-700 flex items-center gap-1 text-[10px]">
+                                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg> <span>複製</span>
+                                            </button>
+                                        </div>
+                                        <p class="text-xs text-slate-300 font-mono leading-relaxed prompt-text">你是一位資深體驗研究員與服務設計師。我準備推出『專為銀髮族設計的智慧手錶』。請為最有潛力的 Persona 繪製「顧客旅程地圖」與搭配的「服務藍圖」(含前台互動與後台支援)。請以表格呈現各階段的接觸點、情緒感受、痛點與機會點。</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Module 2 -->
+                <div class="relative">
+                    <div class="mb-8 pb-6 border-b-2 border-slate-900">
+                        <h4 class="text-2xl font-black text-slate-900 flex items-center justify-between mb-3">
+                            <span>模組二：數據驅動的策略擬定</span>
+                            <span class="text-base font-bold text-slate-400 bg-slate-100 px-3 py-1 rounded">W5-W9</span>
+                        </h4>
+                        <p class="text-slate-600 font-medium leading-relaxed pr-0 md:pr-12">在這充滿雜訊的市場中，本模組將帶領學生運用 AI 協作，從海量數據中萃取有價值的消費者洞察。並透過精準的 STP 策略切分市場、塑造立體化的人物誌，最終淬鍊出具備強大競爭力的品牌定位與產品價值核心。</p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- W5 -->
+                        <div class="bg-white p-6 rounded-xl border border-slate-200 hover:border-slate-300 transition-colors shadow-sm flex flex-col">
+                            <div class="text-xs font-bold text-brand-600 mb-2 tracking-widest">WEEK 5</div>
+                            <h5 class="text-lg font-bold text-slate-900 mb-4">洞察引擎：行銷研究與數據洞察</h5>
+                            <div class="space-y-4 text-sm text-slate-600 font-medium flex-1">
+                                <ul class="list-disc pl-5 space-y-1.5 leading-relaxed">
+                                    <li><span class="ai-term">行銷研究</span>流程與<span class="ai-term">次級資料</span>的戰略應用。</li>
+                                    <li>數據過濾：<span class="ai-term">零方數據</span> (Zero-party data) 與第一方數據的價值。</li>
+                                    <li>從 Data 到 <span class="ai-term">消費者洞察</span> (Insight) 的煉金術。</li>
+                                    <li>品牌健康度指標：<span class="ai-term">淨推薦值</span> (<span class="ai-term">NPS</span>) 與 <span class="ai-term">社群聆聽</span>。</li>
+                                </ul>
+                                <div class="p-4 bg-slate-50 rounded border border-slate-100 mt-4 flex flex-col flex-1">
+                                    <strong class="text-slate-900 block mb-2 text-xs uppercase tracking-wider flex items-center"><svg class="w-4 h-4 mr-1 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg> AI 協作任務</strong>
+                                    <div class="space-y-2 text-slate-700 mb-3">
+                                        <p><strong class="text-brand-600">【模式】</strong>：輸入網路評論，要求 AI 扮演數據分析師。</p>
+                                        <p><strong class="text-brand-600">【產出】</strong>：執行<span class="ai-term">情感分析</span>，總結<span class="ai-term">消費者洞察</span>。</p>
+                                        <p><strong class="text-amber-600">【互動討論】</strong>：AI 的情感分析是否忽略了台灣論壇特有的「反串」與「酸民文化」？我們該如何從雜訊中淬鍊出真洞察？</p>
+                                    </div>
+                                    <div class="mt-auto bg-slate-900 rounded-lg p-3 relative group">
+                                        <div class="flex justify-between items-center mb-2">
+                                            <span class="text-[10px] font-bold text-slate-400 tracking-widest uppercase">💡 提示詞示範</span>
+                                            <button onclick="copyToClipboard(this)" class="text-slate-400 hover:text-white transition-colors p-1 rounded bg-slate-800 hover:bg-slate-700 flex items-center gap-1 text-[10px]">
+                                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg> <span>複製</span>
+                                            </button>
+                                        </div>
+                                        <p class="text-xs text-slate-300 font-mono leading-relaxed prompt-text">你是一位數據分析師。以下是收集到關於「某除濕機品牌」的 20 則 PTT 真實評論：[貼上評論]。請執行情感分析，提取 3 個最常被討論的痛點，最後總結出 2 個具潛力的消費者洞察 (Insight)。</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- W6 -->
+                        <div class="bg-white p-6 rounded-xl border border-slate-200 hover:border-slate-300 transition-colors shadow-sm flex flex-col">
+                            <div class="text-xs font-bold text-brand-600 mb-2 tracking-widest">WEEK 6</div>
+                            <h5 class="text-lg font-bold text-slate-900 mb-4">市場切分與定位 (STP) Part 1: S & T</h5>
+                            <div class="space-y-4 text-sm text-slate-600 font-medium flex-1">
+                                <ul class="list-disc pl-5 space-y-1.5 leading-relaxed">
+                                    <li><span class="ai-term">市場區隔</span> 的四大變數：<span class="ai-term">人口統計變數</span>、<span class="ai-term">心理變數</span>等。</li>
+                                    <li>市場規模評估：運用 <span class="ai-term">TAM/SAM/SOM 模型</span> 估算產值。</li>
+                                    <li><span class="ai-term">目標市場選擇</span> 與 <span class="ai-term">微區隔</span> (Micro-segmentation)。</li>
+                                    <li>立體化的人物誌 (<span class="ai-term">Persona</span>) 建立與應用。</li>
+                                </ul>
+                                <div class="p-4 bg-slate-50 rounded border border-slate-100 mt-4 flex flex-col flex-1">
+                                    <strong class="text-slate-900 block mb-2 text-xs uppercase tracking-wider flex items-center"><svg class="w-4 h-4 mr-1 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg> AI 協作任務</strong>
+                                    <div class="space-y-2 text-slate-700 mb-3">
+                                        <p><strong class="text-brand-600">【模式】</strong>：與 AI 進行角色扮演，AI 作為目標市場代表。</p>
+                                        <p><strong class="text-brand-600">【產出】</strong>：協作深化 <span class="ai-term">Persona</span> 的生活細節與價值觀。</p>
+                                        <p><strong class="text-amber-600">【互動討論】</strong>：AI 描繪的 Persona 是否太過完美流於「刻板印象」？我們該加入哪些「反直覺」的變數來找到真實市場的破口？</p>
+                                    </div>
+                                    <div class="mt-auto bg-slate-900 rounded-lg p-3 relative group">
+                                        <div class="flex justify-between items-center mb-2">
+                                            <span class="text-[10px] font-bold text-slate-400 tracking-widest uppercase">💡 提示詞示範</span>
+                                            <button onclick="copyToClipboard(this)" class="text-slate-400 hover:text-white transition-colors p-1 rounded bg-slate-800 hover:bg-slate-700 flex items-center gap-1 text-[10px]">
+                                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg> <span>複製</span>
+                                            </button>
+                                        </div>
+                                        <p class="text-xs text-slate-300 font-mono leading-relaxed prompt-text">我們來角色扮演。你現在是我們品牌的受眾：「30歲、重視環保的雙薪無子頂客族」。我會問你關於日常消費習慣與價值觀的問題，請完全代入這個角色回答我，讓我們深化這個 Persona。你準備好了嗎？</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- W7 -->
+                        <div class="bg-white p-6 rounded-xl border border-slate-200 hover:border-slate-300 transition-colors shadow-sm flex flex-col">
+                            <div class="text-xs font-bold text-brand-600 mb-2 tracking-widest">WEEK 7</div>
+                            <h5 class="text-lg font-bold text-slate-900 mb-4">市場切分與定位 (STP) Part 2: P</h5>
+                            <div class="space-y-4 text-sm text-slate-600 font-medium flex-1">
+                                <ul class="list-disc pl-5 space-y-1.5 leading-relaxed">
+                                    <li><span class="ai-term">品牌定位</span> 的核心：建立獨特且無法取代的<span class="ai-term">心智佔有率</span>。</li>
+                                    <li>競爭優勢：釐清 <span class="ai-term">同同點與差異點</span> (POP vs. POD)。</li>
+                                    <li><span class="ai-term">價值主張圖</span> (Value Proposition Canvas) 深度拆解。</li>
+                                    <li>撰寫具備商業殺傷力的<span class="ai-term">定位聲明</span>。</li>
+                                </ul>
+                                <div class="p-4 bg-slate-50 rounded border border-slate-100 mt-4 flex flex-col flex-1">
+                                    <strong class="text-slate-900 block mb-2 text-xs uppercase tracking-wider flex items-center"><svg class="w-4 h-4 mr-1 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg> AI 協作任務</strong>
+                                    <div class="space-y-2 text-slate-700 mb-3">
+                                        <p><strong class="text-brand-600">【模式】</strong>：輸入品牌資訊，要求 AI 扮演品牌策略師。</p>
+                                        <p><strong class="text-brand-600">【產出】</strong>：生成多版本的<span class="ai-term">定位聲明</span>與<span class="ai-term">價值主張</span>。</p>
+                                        <p><strong class="text-amber-600">【互動討論】</strong>：比較 AI 生成的定位，哪一個能在消費者腦海中真正「釘下釘子」？這與我們現有的資源能力匹配嗎？</p>
+                                    </div>
+                                    <div class="mt-auto bg-slate-900 rounded-lg p-3 relative group">
+                                        <div class="flex justify-between items-center mb-2">
+                                            <span class="text-[10px] font-bold text-slate-400 tracking-widest uppercase">💡 提示詞示範</span>
+                                            <button onclick="copyToClipboard(this)" class="text-slate-400 hover:text-white transition-colors p-1 rounded bg-slate-800 hover:bg-slate-700 flex items-center gap-1 text-[10px]">
+                                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg> <span>複製</span>
+                                            </button>
+                                        </div>
+                                        <p class="text-xs text-slate-300 font-mono leading-relaxed prompt-text">你是品牌策略師。我們的產品是「用海廢塑料製作的精品托特包」，目標客群是環保頂客族。請運用價值主張圖的邏輯，生成 3 種不同切入點(功能面、情感面、社會面)的「品牌定位聲明」，並分別列出其優缺點。</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- W8 -->
+                        <div class="bg-white p-6 rounded-xl border border-slate-200 hover:border-slate-300 transition-colors shadow-sm flex flex-col">
+                            <div class="text-xs font-bold text-brand-600 mb-2 tracking-widest">WEEK 8</div>
+                            <h5 class="text-lg font-bold text-slate-900 mb-4">價值核心：產品與品牌策略</h5>
+                            <div class="space-y-4 text-sm text-slate-600 font-medium flex-1">
+                                <ul class="list-disc pl-5 space-y-1.5 leading-relaxed">
+                                    <li><span class="ai-term">產品三層次理論</span>與<span class="ai-term">產品生命週期</span>策略。</li>
+                                    <li>敏捷行銷思維：<span class="ai-term">最小可行性產品</span> (<span class="ai-term">MVP</span>) 的實務驗證。</li>
+                                    <li>建立難以撼動的 <span class="ai-term">品牌權益金字塔</span>。</li>
+                                    <li>擴張佈局：<span class="ai-term">品牌架構</span> (Brand Architecture) 與延伸策略。</li>
+                                </ul>
+                                <div class="p-4 bg-slate-50 rounded border border-slate-100 mt-4 flex flex-col flex-1">
+                                    <strong class="text-slate-900 block mb-2 text-xs uppercase tracking-wider flex items-center"><svg class="w-4 h-4 mr-1 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg> AI 協作任務</strong>
+                                    <div class="space-y-2 text-slate-700 mb-3">
+                                        <p><strong class="text-brand-600">【模式】</strong>：設定核心價值，讓 AI 扮演創意總監。</p>
+                                        <p><strong class="text-brand-600">【產出】</strong>：進行命名、Slogan與<span class="ai-term">品牌故事原型</span>腦力激盪。</p>
+                                        <p><strong class="text-amber-600">【互動討論】</strong>：AI 建議的品牌故事原型，是否經得起時間考驗？在遇到公關危機時，這個「人設」會不會成為致命傷？</p>
+                                    </div>
+                                    <div class="mt-auto bg-slate-900 rounded-lg p-3 relative group">
+                                        <div class="flex justify-between items-center mb-2">
+                                            <span class="text-[10px] font-bold text-slate-400 tracking-widest uppercase">💡 提示詞示範</span>
+                                            <button onclick="copyToClipboard(this)" class="text-slate-400 hover:text-white transition-colors p-1 rounded bg-slate-800 hover:bg-slate-700 flex items-center gap-1 text-[10px]">
+                                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg> <span>複製</span>
+                                            </button>
+                                        </div>
+                                        <p class="text-xs text-slate-300 font-mono leading-relaxed prompt-text">你現在是資深創意總監。我們的品牌核心價值是「探索、無畏、極簡」，目標受眾是 Z 世代。請幫我們發想 5 個具備記憶點的中英文品牌名稱，撰寫 3 句具備煽動力的 Slogan，並建議最適合我們的「品牌故事原型」。</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- W9 -->
+                        <div class="md:col-span-2 bg-slate-900 p-8 rounded-xl shadow-sm flex items-center gap-6 text-white border border-slate-800">
+                            <div class="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center font-black text-2xl shrink-0">W9</div>
+                            <div>
+                                <h5 class="text-xl font-bold mb-2">🏆 期中專案工作坊與發表</h5>
+                                <ul class="list-disc pl-5 space-y-1 text-sm text-slate-300 font-medium leading-relaxed">
+                                    <li>各組上台發表「AI 賦能的<span class="ai-term">品牌診斷</span>與<span class="ai-term">競品分析報告</span>」。</li>
+                                    <li>由講師與同儕針對分析深度、洞察品質與策略機會的合理性，提供具體回饋。</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Module 3 -->
+                <div class="relative">
+                    <div class="mb-8 pb-6 border-b-2 border-slate-900">
+                        <h4 class="text-2xl font-black text-slate-900 flex items-center justify-between mb-3">
+                            <span>模組三：AI 時代的整合行銷溝通</span>
+                            <span class="text-base font-bold text-slate-400 bg-slate-100 px-3 py-1 rounded">W10-W14</span>
+                        </h4>
+                        <p class="text-slate-600 font-medium leading-relaxed pr-0 md:pr-12">當策略底定，如何精準落地？本模組涵蓋定價、通路體驗與整合行銷溝通。我們更將特別導入業界最前沿的 AEO/GEO (AI / 生成式引擎優化) 觀念，全面升級學生的 MarTech 數位行銷組合拳。</p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- W10 -->
+                        <div class="bg-white p-6 rounded-xl border border-slate-200 hover:border-slate-300 transition-colors shadow-sm flex flex-col">
+                            <div class="text-xs font-bold text-brand-600 mb-2 tracking-widest">WEEK 10</div>
+                            <h5 class="text-lg font-bold text-slate-900 mb-4">價值交換：定價策略</h5>
+                            <div class="space-y-4 text-sm text-slate-600 font-medium flex-1">
+                                <ul class="list-disc pl-5 space-y-1.5 leading-relaxed">
+                                    <li><span class="ai-term">定價三C</span>：成本、顧客、競爭者與<span class="ai-term">認知價值定價</span>。</li>
+                                    <li>主要定價策略：<span class="ai-term">滲透定價</span>、<span class="ai-term">吸脂定價</span>與<span class="ai-term">訂閱制模式</span>。</li>
+                                    <li><span class="ai-term">心理定價</span> (如：<span class="ai-term">錨定效應</span>) 的商業應用。</li>
+                                    <li>數位時代的防禦：<span class="ai-term">動態定價</span>與價格戰的應對。</li>
+                                </ul>
+                                <div class="p-4 bg-slate-50 rounded border border-slate-100 mt-4 flex flex-col flex-1">
+                                    <strong class="text-slate-900 block mb-2 text-xs uppercase tracking-wider flex items-center"><svg class="w-4 h-4 mr-1 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg> AI 協作任務</strong>
+                                    <div class="space-y-2 text-slate-700 mb-3">
+                                        <p><strong class="text-brand-600">【模式】</strong>：提供成本與競品價格，要求 AI 扮演定價分析師。</p>
+                                        <p><strong class="text-brand-600">【產出】</strong>：模擬不同定價策略下的市場反應，提供定價建議。</p>
+                                        <p><strong class="text-amber-600">【互動討論】</strong>：如果競品明天立刻降價 20%，AI 建議的「滲透定價」會面臨什麼崩盤風險？我們該如何設計防禦機制？</p>
+                                    </div>
+                                    <div class="mt-auto bg-slate-900 rounded-lg p-3 relative group">
+                                        <div class="flex justify-between items-center mb-2">
+                                            <span class="text-[10px] font-bold text-slate-400 tracking-widest uppercase">💡 提示詞示範</span>
+                                            <button onclick="copyToClipboard(this)" class="text-slate-400 hover:text-white transition-colors p-1 rounded bg-slate-800 hover:bg-slate-700 flex items-center gap-1 text-[10px]">
+                                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg> <span>複製</span>
+                                            </button>
+                                        </div>
+                                        <p class="text-xs text-slate-300 font-mono leading-relaxed prompt-text">你是定價策略分析師。我們將推出「AI自動貓砂盆」，成本約3000元，競品價格8000-15000元。請模擬我們若採用「滲透定價」與「吸脂定價」在上市前三個月的可能市場反應，並提供你的最終定價建議。</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- W11 -->
+                        <div class="bg-white p-6 rounded-xl border border-slate-200 hover:border-slate-300 transition-colors shadow-sm flex flex-col">
+                            <div class="text-xs font-bold text-brand-600 mb-2 tracking-widest">WEEK 11</div>
+                            <h5 class="text-lg font-bold text-slate-900 mb-4">價值傳遞與深化：LINE OA 私域與會員 CDP</h5>
+                            <div class="space-y-4 text-sm text-slate-600 font-medium flex-1">
+                                <ul class="list-disc pl-5 space-y-1.5 leading-relaxed">
+                                    <li><span class="ai-term">通路設計</span>與去中間化策略 (<span class="ai-term">D2C 直面消費者</span>)。</li>
+                                    <li><span class="ai-term">虛實整合</span> (<span class="ai-term">OMO</span>) 的全通路佈局思維。</li>
+                                    <li>建構<span class="ai-term">私域流量</span>護城河：<span class="ai-term">LINE OA 私域行銷</span>與 <span class="ai-term">會員行銷</span>。</li>
+                                    <li>數據賦能：將 LINE 互動數據打通 <span class="ai-term">CDP</span> 創造<span class="ai-term">忠誠度迴圈</span>。</li>
+                                </ul>
+                                <div class="p-4 bg-slate-50 rounded border border-slate-100 mt-4 flex flex-col flex-1">
+                                    <strong class="text-slate-900 block mb-2 text-xs uppercase tracking-wider flex items-center"><svg class="w-4 h-4 mr-1 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg> AI 協作任務</strong>
+                                    <div class="space-y-2 text-slate-700 mb-3">
+                                        <p><strong class="text-brand-600">【模式】</strong>：設定電商情境，要求 AI 扮演 LINE OA 營運與 CRM 經理。</p>
+                                        <p><strong class="text-brand-600">【產出】</strong>：規劃基於 LINE 官方帳號的「會員行銷」點數經濟與尊榮特權方案。</p>
+                                        <p><strong class="text-amber-600">【互動討論】</strong>：LINE 封鎖率居高不下，如果會員制度只是一味推播「打折訊息」，會不會加速被封鎖？我們該如何運用 CDP 數據標籤，在 LINE 裡設計「低成本、高感知」的非金錢特權？</p>
+                                    </div>
+                                    <div class="mt-auto bg-slate-900 rounded-lg p-3 relative group">
+                                        <div class="flex justify-between items-center mb-2">
+                                            <span class="text-[10px] font-bold text-slate-400 tracking-widest uppercase">💡 提示詞示範</span>
+                                            <button onclick="copyToClipboard(this)" class="text-slate-400 hover:text-white transition-colors p-1 rounded bg-slate-800 hover:bg-slate-700 flex items-center gap-1 text-[10px]">
+                                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg> <span>複製</span>
+                                            </button>
+                                        </div>
+                                        <p class="text-xs text-slate-300 font-mono leading-relaxed prompt-text">你是精通 CDP 與 LINE OA 經營的 CRM 客戶成功經理。我們的「頂級和牛電商」準備在 LINE 官方帳號導入會員制。請幫我規劃一套包含「銀卡、金卡、黑卡」的會員方案。除了基礎集點外，請針對「黑卡」提出 3 個基於數據洞察、令人驚豔的「LINE 專屬非價格折扣特權」，以降低封鎖率並提升顧客終身價值 (LTV)。</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- W12 -->
+                        <div class="bg-white p-6 rounded-xl border border-slate-200 hover:border-slate-300 transition-colors shadow-sm flex flex-col">
+                            <div class="text-xs font-bold text-brand-600 mb-2 tracking-widest">WEEK 12</div>
+                            <h5 class="text-lg font-bold text-slate-900 mb-4">整合行銷溝通 (IMC) 與社群事件引擎</h5>
+                            <div class="space-y-4 text-sm text-slate-600 font-medium flex-1">
+                                <ul class="list-disc pl-5 space-y-1.5 leading-relaxed">
+                                    <li><span class="ai-term">整合行銷溝通 (IMC)</span> 精神與<span class="ai-term">推廣組合</span>的綜效。</li>
+                                    <li>以小博大的爆發力：<span class="ai-term">事件行銷</span> 與<span class="ai-term">借勢行銷</span>。</li>
+                                    <li><span class="ai-term">社群行銷</span>佈局：引導<span class="ai-term">使用者生成內容</span> (<span class="ai-term">UGC</span>) 擴散。</li>
+                                    <li>注意力經濟：<span class="ai-term">迷因行銷</span>與病毒式傳播解析。</li>
+                                </ul>
+                                <div class="p-4 bg-slate-50 rounded border border-slate-100 mt-4 flex flex-col flex-1">
+                                    <strong class="text-slate-900 block mb-2 text-xs uppercase tracking-wider flex items-center"><svg class="w-4 h-4 mr-1 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg> AI 協作任務</strong>
+                                    <div class="space-y-2 text-slate-700 mb-3">
+                                        <p><strong class="text-brand-600">【模式】</strong>：給定近期時事，要求 AI 扮演公關與社群行銷策略師。</p>
+                                        <p><strong class="text-brand-600">【產出】</strong>：生成結合時事的「<span class="ai-term">事件行銷</span>」企劃與病毒短影音腳本。</p>
+                                        <p><strong class="text-amber-600">【互動討論】</strong>：借勢行銷是一把雙面刃！AI 寫的社群創意是否踩到了社會觀感的紅線？如果造成「公關炎上」，品牌的第一時間止血策略是什麼？</p>
+                                    </div>
+                                    <div class="mt-auto bg-slate-900 rounded-lg p-3 relative group">
+                                        <div class="flex justify-between items-center mb-2">
+                                            <span class="text-[10px] font-bold text-slate-400 tracking-widest uppercase">💡 提示詞示範</span>
+                                            <button onclick="copyToClipboard(this)" class="text-slate-400 hover:text-white transition-colors p-1 rounded bg-slate-800 hover:bg-slate-700 flex items-center gap-1 text-[10px]">
+                                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg> <span>複製</span>
+                                            </button>
+                                        </div>
+                                        <p class="text-xs text-slate-300 font-mono leading-relaxed prompt-text">你是一位資深公關與社群行銷策略師。我們是「運動機能服飾品牌」，即將迎來大型國際運動賽事熱潮。請為我們企劃一個具備爆發力的「事件行銷」線上活動，包含 1 個吸睛的主題 Hashtag、UGC (使用者生成內容) 的參與機制，以及 2 支要在 IG Reels 上擴散的病毒短影音腳本 (包含開頭Hook)。</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- W13 (AEO/GEO Update) -->
+                        <div class="bg-brand-50 border-brand-200 p-6 rounded-xl border hover:border-brand-300 transition-colors shadow-sm flex flex-col relative overflow-hidden">
+                            <div class="absolute top-0 right-0 bg-brand-100 text-brand-500 font-black text-4xl p-2 rounded-bl-xl opacity-40">NEW</div>
+                            <div class="text-xs font-bold text-brand-600 mb-2 tracking-widest">WEEK 13</div>
+                            <h5 class="text-lg font-bold text-slate-900 mb-4">AI 搜尋革命：AEO/GEO 與行銷自動化</h5>
+                            <div class="space-y-4 text-sm text-slate-600 font-medium flex-1">
+                                <ul class="list-disc pl-5 space-y-1.5 leading-relaxed">
+                                    <li>從傳統 SEO 演進到 <span class="ai-term">AEO</span> (AI 引擎優化) 與 <span class="ai-term">GEO</span> (生成式引擎優化)。</li>
+                                    <li>應對 SearchGPT 等 AI 搜尋引擎的<span class="ai-term">語義搜尋</span>佈局。</li>
+                                    <li>建構<span class="ai-term">社群行銷</span>與 <span class="ai-term">KOL</span>/<span class="ai-term">KOC</span> 矩陣效應。</li>
+                                    <li>導入 <span class="ai-term">行銷自動化</span> (MarTech 工具應用) 提升轉換率。</li>
+                                </ul>
+                                <div class="p-4 bg-white rounded border border-brand-100 mt-4 flex flex-col flex-1 shadow-sm">
+                                    <strong class="text-slate-900 block mb-2 text-xs uppercase tracking-wider flex items-center"><svg class="w-4 h-4 mr-1 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg> AI 協作任務</strong>
+                                    <div class="space-y-2 text-slate-700 mb-3">
+                                        <p><strong class="text-brand-600">【模式】</strong>：設定核心產品，要求 AI 扮演 AEO/GEO 專家。</p>
+                                        <p><strong class="text-brand-600">【產出】</strong>：發想針對 AI 引擎的「意圖型長尾問題」，產出易被 LLM 摘要引用的結構化內容大綱。</p>
+                                        <p><strong class="text-amber-600">【互動討論】</strong>：AEO/GEO 與傳統 SEO 的本質差異為何？如果消費者直接從 AI 得到答案而不點進我們網站，品牌的商業模式該如何變現？</p>
+                                    </div>
+                                    <div class="mt-auto bg-slate-900 rounded-lg p-3 relative group">
+                                        <div class="flex justify-between items-center mb-2">
+                                            <span class="text-[10px] font-bold text-brand-400 tracking-widest uppercase">💡 提示詞示範</span>
+                                            <button onclick="copyToClipboard(this)" class="text-slate-400 hover:text-white transition-colors p-1 rounded bg-slate-800 hover:bg-slate-700 flex items-center gap-1 text-[10px]">
+                                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg> <span>複製</span>
+                                            </button>
+                                        </div>
+                                        <p class="text-xs text-slate-300 font-mono leading-relaxed prompt-text">你是一位深諳 AEO/GEO (生成式引擎優化) 的行銷科技專家。我們的產品是「人體工學辦公椅」。請發想 5 個消費者會向 ChatGPT 或 Perplexity 提問的「高意圖長尾問題」(如：久坐腰痛適合哪種椅子？)。並挑選其中 1 題，產出一篇極易被 AI 摘要引用的結構化內容大綱 (需包含清晰標題、數據引證提示與條列式解答)。</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- W14 -->
+                        <div class="md:col-span-2 bg-slate-100 border border-slate-200 p-8 rounded-xl flex items-center gap-6">
+                            <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center font-black text-2xl text-slate-400 shrink-0 shadow-sm">W14</div>
+                            <div>
+                                <h5 class="text-xl font-bold text-slate-900 mb-2">🛠️ 期末專案衝刺：策略整合工作坊</h5>
+                                <ul class="list-disc pl-5 space-y-1 text-sm text-slate-600 font-medium leading-relaxed">
+                                    <li>如何將 <span class="ai-term">STP 策略</span>、<span class="ai-term">行銷 4P</span> 與 <span class="ai-term">整合行銷溝通 (IMC)</span> 串聯成具備防禦力的商業計畫。</li>
+                                    <li><span class="ai-term">預算規劃</span>與資源分配的減法原則。</li>
+                                    <li>講師將針對各組的期末專案架構，提供一對一的諮詢與指導。</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Module 4 -->
+                <div class="relative">
+                    <div class="mb-8 pb-6 border-b-2 border-slate-900">
+                        <h4 class="text-2xl font-black text-slate-900 flex items-center justify-between mb-3">
+                            <span>模組四：績效衡量與未來展望</span>
+                            <span class="text-base font-bold text-slate-400 bg-slate-100 px-3 py-1 rounded">W15-W18</span>
+                        </h4>
+                        <p class="text-slate-600 font-medium leading-relaxed pr-0 md:pr-12">行銷的最終目的是驅動商業增長。本模組將帶領學生拆解關鍵績效指標 (KPIs)、學習數據導向的決策邏輯。同時探討 Agentic AI 自動化代理的未來應用與行銷倫理，並以完整的期末實戰提案發表，驗證整學期的策略能量。</p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- W15 -->
+                        <div class="bg-white p-6 rounded-xl border border-slate-200 hover:border-slate-300 transition-colors shadow-sm flex flex-col">
+                            <div class="text-xs font-bold text-brand-600 mb-2 tracking-widest">WEEK 15</div>
+                            <h5 class="text-lg font-bold text-slate-900 mb-4">成效衡量：行銷分析與 KPIs</h5>
+                            <div class="space-y-4 text-sm text-slate-600 font-medium flex-1">
+                                <ul class="list-disc pl-5 space-y-1.5 leading-relaxed">
+                                    <li><span class="ai-term">關鍵績效指標</span> (<span class="ai-term">KPIs</span>) 解析：<span class="ai-term">ROAS</span>, <span class="ai-term">CPA</span>, <span class="ai-term">CVR</span> 等。</li>
+                                    <li>投資回報評估：<span class="ai-term">獲客成本</span> (CAC) 與 <span class="ai-term">顧客終身價值</span> (LTV) 的健康比例。</li>
+                                    <li><span class="ai-term">歸因模型</span> (Attribution Models) 的多觸點分析。</li>
+                                    <li><span class="ai-term">Google Analytics 4</span> 與 <span class="ai-term">A/B 測試</span>優化邏輯。</li>
+                                </ul>
+                                <div class="p-4 bg-slate-50 rounded border border-slate-100 mt-4 flex flex-col flex-1">
+                                    <strong class="text-slate-900 block mb-2 text-xs uppercase tracking-wider flex items-center"><svg class="w-4 h-4 mr-1 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg> AI 協作任務</strong>
+                                    <div class="space-y-2 text-slate-700 mb-3">
+                                        <p><strong class="text-brand-600">【模式】</strong>：提供數據報告，要求 AI 扮演數據科學家。</p>
+                                        <p><strong class="text-brand-600">【產出】</strong>：解讀數據圖表，提出基於數據的優化建議。</p>
+                                        <p><strong class="text-amber-600">【互動討論】</strong>：高點擊率 (CTR) 卻帶來極低的轉換率 (CVR)，AI 看到的只是數字，身為行銷人，你看到的是什麼樣的「漏斗斷層」？</p>
+                                    </div>
+                                    <div class="mt-auto bg-slate-900 rounded-lg p-3 relative group">
+                                        <div class="flex justify-between items-center mb-2">
+                                            <span class="text-[10px] font-bold text-slate-400 tracking-widest uppercase">💡 提示詞示範</span>
+                                            <button onclick="copyToClipboard(this)" class="text-slate-400 hover:text-white transition-colors p-1 rounded bg-slate-800 hover:bg-slate-700 flex items-center gap-1 text-[10px]">
+                                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg> <span>複製</span>
+                                            </button>
+                                        </div>
+                                        <p class="text-xs text-slate-300 font-mono leading-relaxed prompt-text">你是行銷數據科學家。這是上月數據：FB廣告花費5萬，營收20萬，CTR 1.5%，CVR 0.8%；Google廣告花費3萬，營收8萬，CTR 5%，CVR 2.5%。請解讀數據，計算 ROAS，並提出 3 個廣告預算優化與 A/B 測試建議。</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- W16 -->
+                        <div class="bg-white p-6 rounded-xl border border-slate-200 hover:border-slate-300 transition-colors shadow-sm flex flex-col">
+                            <div class="text-xs font-bold text-brand-600 mb-2 tracking-widest">WEEK 16</div>
+                            <h5 class="text-lg font-bold text-slate-900 mb-4">品牌永續與未來：ESG、公關危機與 AI 代理</h5>
+                            <div class="space-y-4 text-sm text-slate-600 font-medium flex-1">
+                                <ul class="list-disc pl-5 space-y-1.5 leading-relaxed">
+                                    <li>與企業共存共榮：<span class="ai-term">ESG 永續經營</span>與<span class="ai-term">品牌目的</span> (Brand Purpose) 的黃金交叉。</li>
+                                    <li>從<span class="ai-term">綠色行銷</span>到防範<span class="ai-term">漂綠</span> (Greenwashing)：如何發揮真實社會影響力。</li>
+                                    <li>上市公司等級的<span class="ai-term">公關危機處理</span>：AI 時代的輿情防禦與定調策略。</li>
+                                    <li>行銷未來式：<span class="ai-term">Agentic AI</span> 自動化代理與<span class="ai-term">數據隱私</span>倫理。</li>
+                                </ul>
+                                <div class="p-4 bg-slate-50 rounded border border-slate-100 mt-4 flex flex-col flex-1">
+                                    <strong class="text-slate-900 block mb-2 text-xs uppercase tracking-wider flex items-center"><svg class="w-4 h-4 mr-1 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg> AI 協作任務</strong>
+                                    <div class="space-y-2 text-slate-700 mb-3">
+                                        <p><strong class="text-brand-600">【模式】</strong>：設定 ESG 爭議情境，要求 AI 扮演永續長 (CSO) 與發言人。</p>
+                                        <p><strong class="text-brand-600">【產出】</strong>：擬定兼顧品牌聲譽與 ESG 承諾的「公關聲明稿」及後續改善計畫。</p>
+                                        <p><strong class="text-amber-600">【互動討論】</strong>：AI 寫出來的公關稿是不是太過「官腔」反而提油救火？身為前發言人，Tony 老師會告訴你，這篇聲明稿裡哪一句話在記者會上「絕對不能說」？</p>
+                                    </div>
+                                    <div class="mt-auto bg-slate-900 rounded-lg p-3 relative group">
+                                        <div class="flex justify-between items-center mb-2">
+                                            <span class="text-[10px] font-bold text-slate-400 tracking-widest uppercase">💡 提示詞示範</span>
+                                            <button onclick="copyToClipboard(this)" class="text-slate-400 hover:text-white transition-colors p-1 rounded bg-slate-800 hover:bg-slate-700 flex items-center gap-1 text-[10px]">
+                                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg> <span>複製</span>
+                                            </button>
+                                        </div>
+                                        <p class="text-xs text-slate-300 font-mono leading-relaxed prompt-text">你是上市公司的永續長(CSO)與資深公關發言人。我們的服飾品牌剛被爆出「海外代工廠壓榨勞工與廢水汙染」的嚴重 ESG 醜聞，社群全面炎上。請以負責任、不推諉的態度，撰寫一份 300 字內的「初步公關聲明稿」，並列出我們未來 3 個月內具體的 3 項 ESG 改善承諾 (切勿流於空泛的漂綠)。</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- W17 -->
+                        <div class="bg-white p-6 rounded-xl border border-slate-200 hover:border-slate-300 transition-colors shadow-sm flex flex-col">
+                            <div class="text-xs font-bold text-brand-600 mb-2 tracking-widest">WEEK 17</div>
+                            <h5 class="text-lg font-bold text-slate-900 mb-4">期末專案發表預演與回饋</h5>
+                            <div class="space-y-4 text-sm text-slate-600 font-medium flex-1">
+                                <ul class="list-disc pl-5 space-y-1.5 leading-relaxed">
+                                    <li>商業提案心法：簡報結構的<span class="ai-term">黃金圈法則</span> (Why-How-What)。</li>
+                                    <li>精準溝通：3分鐘的<span class="ai-term">電梯簡報</span> (Elevator Pitch)。</li>
+                                    <li><span class="ai-term">數據視覺化</span>與故事化呈現技巧。</li>
+                                    <li>各組進行 Dress Rehearsal，講師與同儕針對簡報提供修正建議。</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- W18 -->
+                        <div class="bg-slate-900 p-8 rounded-xl shadow-sm text-white relative overflow-hidden flex flex-col justify-center">
+                            <div class="absolute -right-4 -bottom-4 text-slate-800 font-black text-9xl opacity-30 pointer-events-none">18</div>
+                            <div class="relative z-10">
+                                <div class="text-xs font-bold text-brand-500 mb-2 tracking-widest">WEEK 18</div>
+                                <h5 class="text-xl font-bold mb-4 flex items-center">🏆 期末專案總發表與課程總結</h5>
+                                <ul class="list-disc pl-5 space-y-2 text-sm text-slate-300 font-medium leading-relaxed">
+                                    <li>各組進行正式的「<span class="ai-term">整合行銷策略規劃</span>」提案發表。</li>
+                                    <li>模擬向企業決策者與投資人提案的情境，完整展現策略思維與 AI 協作成果。</li>
+                                    <li>課程回顧與未來行銷人才 (AI-Empowered Marketer) 的能力藍圖總結。</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer (Minimalist) -->
+    <footer class="bg-slate-950 text-slate-500 py-12 text-center border-t border-slate-900 mt-20">
+        <div class="max-w-7xl mx-auto px-4">
+            <img src="https://i.postimg.cc/fT2sQW09/1.png" alt="Tony Studio Logo" class="h-6 w-auto mx-auto mb-6 opacity-30 grayscale">
+            <p class="text-sm tracking-widest uppercase font-medium">© 2026 TONY STUDIO. All Rights Reserved.</p>
+            <p class="text-xs mt-2 opacity-50">本教材由 TONY STUDIO 楊文澤顧問設計開發</p>
+        </div>
+    </footer>
+
+    <!-- TONY 老師 AI 助理 Chatbot UI -->
+    <div id="chatbot-fab" class="fixed bottom-6 right-6 z-[45]">
+        <button onclick="toggleChat()" class="bg-slate-900 hover:bg-slate-800 text-white rounded-full p-4 shadow-2xl transition-transform hover:scale-105 flex items-center justify-center relative group border border-slate-700">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
+            <span class="absolute -top-10 right-0 bg-slate-800 text-white text-xs px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap font-bold tracking-widest shadow-lg">專屬 AI 助理</span>
+        </button>
+    </div>
+
+    <div id="chatbot-window" class="fixed bottom-24 right-6 w-80 md:w-[380px] bg-white rounded-2xl shadow-2xl z-50 hidden flex-col border border-slate-200 overflow-hidden transform origin-bottom-right transition-all duration-300" style="height: 550px; max-height: 80vh;">
+        <!-- Header -->
+        <div class="bg-slate-900 text-white p-4 flex justify-between items-center shadow-md relative z-10">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-full bg-brand-500 flex items-center justify-center font-black text-sm border-2 border-brand-400 shadow-inner">AI</div>
+                <div>
+                    <h4 class="font-bold text-sm tracking-wide">TONY 老師的專屬助教</h4>
+                    <div class="flex items-center gap-1 mt-0.5">
+                        <span class="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></span>
+                        <p class="text-[10px] text-slate-300 tracking-wider">在線為您解答</p>
+                    </div>
+                </div>
+            </div>
+            <button onclick="toggleChat()" class="text-slate-400 hover:text-white transition-colors bg-slate-800 hover:bg-slate-700 rounded-full p-1.5">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            </button>
+        </div>
+        <!-- Messages -->
+        <div id="chat-messages" class="flex-1 overflow-y-auto p-4 space-y-5 bg-slate-50 text-sm scroll-smooth">
+            <!-- Welcome msg -->
+            <div class="flex items-start gap-2 justify-start">
+                <div class="w-7 h-7 rounded-full bg-brand-100 flex items-center justify-center shrink-0 mt-1 border border-brand-200"><span class="text-brand-700 text-xs font-black">AI</span></div>
+                <div class="bg-white p-3.5 rounded-2xl rounded-tl-sm shadow-sm border border-slate-200 text-slate-700 leading-relaxed max-w-[85%]">
+                    同學您好！我是 TONY 老師的 AI 助教。👋<br><br>關於《AI行銷管理全局觀》的理論 (如 STP、AEO)、或是剛才做完的 AI 協作任務，有任何想討論的地方嗎？隨時問我！
+                </div>
+            </div>
+        </div>
+        <!-- Input -->
+        <div class="p-3 bg-white border-t border-slate-200 flex gap-2">
+            <textarea id="chat-input" rows="1" placeholder="輸入您的問題 (Shift+Enter 換行)..." class="flex-1 bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-slate-900 focus:ring-1 focus:ring-slate-900 resize-none overflow-hidden" onkeydown="handleChatKeydown(event)"></textarea>
+            <button onclick="sendChatMessage()" class="bg-slate-900 hover:bg-slate-800 text-white rounded-xl px-4 py-2 transition-colors flex items-center justify-center shadow-sm">
+                <svg class="w-4 h-4 transform rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Premium AI Modal -->
+    <div id="ai-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 sm:p-6">
+        <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-md transition-opacity" onclick="closeModal()"></div>
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg relative z-10 flex flex-col max-h-[85vh] modal-enter border border-slate-100 overflow-hidden">
+            <!-- Header -->
+            <div class="flex items-center justify-between p-6 border-b border-slate-100 bg-white">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-full bg-slate-900 flex items-center justify-center text-white text-xs font-black">AI</div>
+                    <h3 class="text-lg font-bold text-slate-900">
+                        解析 <span id="modal-term" class="text-brand-600 ml-1"></span>
+                    </h3>
+                </div>
+                <button onclick="closeModal()" class="text-slate-400 hover:text-slate-900 bg-slate-50 hover:bg-slate-100 rounded-full p-2 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            
+            <!-- Body -->
+            <div class="p-6 overflow-y-auto flex-1 bg-slate-50/50">
+                <div id="modal-loading" class="flex flex-col items-center justify-center py-12 space-y-4">
+                    <div class="loader"></div>
+                    <p class="text-slate-500 font-medium text-sm tracking-wide">TONY 顧問的 AI 助手正在思考中...</p>
+                </div>
+                <div id="modal-content" class="text-slate-700 leading-relaxed space-y-4 hidden prose prose-slate max-w-none text-sm md:text-base">
+                    <!-- API Data injected here -->
+                </div>
+            </div>
+            
+            <!-- Footer -->
+            <div class="p-4 border-t border-slate-100 bg-white text-xs text-slate-400 text-center font-medium">
+                Powered by Gemini API • 內容由 AI 協作生成
+            </div>
+        </div>
+    </div>
+
+    <!-- Alert Modal (Clean Design) -->
+    <div id="alert-modal" class="fixed inset-0 z-[60] hidden items-center justify-center p-4">
+        <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-md" onclick="closeAlertModal()"></div>
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-sm relative z-10 p-8 text-center modal-enter border border-slate-100">
+            <div class="w-16 h-16 bg-slate-100 text-slate-900 rounded-full flex items-center justify-center mx-auto mb-5">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path></svg>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 mb-2">需要 API Key</h3>
+            <p class="text-slate-500 text-sm mb-8 font-medium leading-relaxed">請先在頁面頂端輸入 Gemini API Key 以啟用互動解析功能。</p>
+            <div class="flex flex-col gap-3">
+                <button onclick="closeAlertModal()" class="w-full py-2.5 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors font-bold text-sm">我知道了</button>
+                <a href="https://aistudio.google.com/app/apikey" target="_blank" class="w-full py-2.5 bg-slate-50 text-slate-600 rounded-lg hover:bg-slate-100 transition-colors font-bold text-sm border border-slate-200">免費申請金鑰 ↗</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- 狀態管理 ---
+        let userApiKey = localStorage.getItem('tony_course_api_key') || '';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const keyInput = document.getElementById('api-key-input');
+            if (userApiKey) {
+                keyInput.value = userApiKey;
+                showKeyStatus(true);
+            }
+
+            // 綁定互動名詞
+            document.querySelectorAll('.ai-term').forEach(el => {
+                el.addEventListener('click', (e) => {
+                    const term = e.target.innerText;
+                    triggerAIExplanation(term);
+                });
+            });
+        });
+
+        // --- API Key 邏輯 ---
+        function saveApiKey() {
+            const inputVal = document.getElementById('api-key-input').value.trim();
+            if (inputVal) {
+                userApiKey = inputVal;
+                localStorage.setItem('tony_course_api_key', userApiKey);
+                showKeyStatus(true);
+                
+                const btn = document.getElementById('save-btn');
+                const origText = btn.innerText;
+                btn.innerText = "已啟用";
+                btn.classList.add('bg-emerald-600', 'border-emerald-600');
+                btn.classList.remove('bg-brand-600', 'hover:bg-brand-500', 'border-brand-500');
+                setTimeout(() => {
+                    btn.innerText = origText;
+                    btn.classList.remove('bg-emerald-600', 'border-emerald-600');
+                    btn.classList.add('bg-brand-600', 'hover:bg-brand-500', 'border-brand-500');
+                }, 2000);
+            }
+        }
+
+        function showKeyStatus(saved) {
+            const statusEl = document.getElementById('api-key-status');
+            if (saved) statusEl.classList.remove('hidden');
+            else statusEl.classList.add('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('ai-modal').classList.add('hidden');
+        }
+        function closeAlertModal() {
+            document.getElementById('alert-modal').classList.add('hidden');
+        }
+
+        // --- STREAMING_CHUNK:Implementing AI term definition logic... ---
+        // --- 核心：具備指數退避 (Exponential Backoff) 的 API 呼叫 ---
+        async function fetchWithRetry(url, options, retries = 5) {
+            const delays = [1000, 2000, 4000, 8000, 16000]; // 1s, 2s, 4s, 8s, 16s
+            for (let i = 0; i < retries; i++) {
+                try {
+                    const response = await fetch(url, options);
+                    if (!response.ok) {
+                        let errorMsg = `HTTP Error ${response.status}`;
+                        try {
+                            const errorData = await response.json();
+                            if (errorData.error && errorData.error.message) {
+                                errorMsg = errorData.error.message;
+                            }
+                        } catch (e) { /* 忽略 json 解析錯誤 */ }
+                        throw new Error(errorMsg);
+                    }
+                    return await response.json();
+                } catch (error) {
+                    console.warn(`API 連線失敗，正在進行第 ${i + 1} 次重試... (${error.message})`);
+                    if (i === retries - 1) throw error; // 最後一次依然失敗，拋出錯誤
+                    await new Promise(res => setTimeout(res, delays[i]));
+                }
+            }
+        }
+
+        async function triggerAIExplanation(term) {
+            if (!userApiKey) {
+                document.getElementById('alert-modal').classList.remove('hidden');
+                document.getElementById('alert-modal').classList.add('flex');
+                return;
+            }
+
+            const modal = document.getElementById('ai-modal');
+            const termTitle = document.getElementById('modal-term');
+            const loading = document.getElementById('modal-loading');
+            const content = document.getElementById('modal-content');
+
+            termTitle.innerText = term;
+            content.innerHTML = '';
+            content.classList.add('hidden');
+            loading.classList.remove('hidden');
+            loading.classList.add('flex');
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+
+            try {
+                const systemPrompt = "你現在是 TONY 楊老師團隊的「首席 AI 行銷助教」。面對大一學生，你的任務是先建立他們紮實的學科基礎，接著切換為 TONY 老師（擁有 15 年以上品牌行銷、MarTech 與上市公司發言人經驗的資深顧問）的實戰視角，傳授業界真實的經驗談。";
+                const userPrompt = `請解析行銷專有名詞：「${term}」。\n請嚴格依照以下結構以 Markdown 格式排版回覆：\n\n### 📖 理論基礎與定義\n(用大一學生能聽懂的語言，清楚解釋這個方法的原始學術定義、理論框架與存在目的，幫助建立基本功)\n\n### 💡 TONY 老師實戰精解\n(以資深行銷總監/顧問的角度，分享這個方法在「業界實務」中真正的用法、心法，或是企業常犯的錯誤與盲點)\n\n### 🔥 商業實務案例\n(舉一個知名品牌的真實市場操作細節，印證上述的觀念與實務應用)\n\n總字數請控制在 450 字左右。語氣要兼具大學講師的耐心與業界老將的專業自信，排版清晰易讀。`;
+
+                // 更新為 gemini-3.5-flash
+                const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${userApiKey}`;
+                const payload = {
+                    systemInstruction: { parts: [{ text: systemPrompt }] },
+                    contents: [{ parts: [{ text: userPrompt }] }]
+                };
+
+                // 使用強健的 Retry 機制呼叫 API
+                const data = await fetchWithRetry(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const aiText = data.candidates[0].content.parts[0].text;
+                content.innerHTML = parseMarkdown(aiText);
+
+            } catch (error) {
+                content.innerHTML = `
+                    <div class="bg-red-50 text-red-700 p-4 rounded-xl border border-red-200">
+                        <strong class="flex items-center mb-2"><svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> 連線或驗證失敗</strong>
+                        <p class="text-sm font-medium">無法取得 AI 解析，原因可能是：</p>
+                        <ul class="list-disc ml-5 mt-2 text-sm space-y-1">
+                            <li>API Key 填寫錯誤或失效。</li>
+                            <li>網路連線不穩或被防火牆阻擋。</li>
+                            <li class="text-xs text-red-500 break-words mt-2">系統錯誤訊息：${error.message}</li>
+                        </ul>
+                    </div>`;
+            } finally {
+                loading.classList.remove('flex');
+                loading.classList.add('hidden');
+                content.classList.remove('hidden');
+            }
+        }
+
+        // --- 簡易 Markdown 解析器優化 ---
+        function parseMarkdown(text) {
+            let html = text;
+            html = html.replace(/\*\*(.*?)\*\*/g, '<strong class="text-slate-900 font-bold">$1</strong>');
+            html = html.replace(/^### (.*$)/gim, '<h4 class="text-base font-bold text-slate-900 mt-5 mb-2 flex items-center"><span class="w-1 h-4 bg-brand-500 mr-2 rounded-sm"></span>$1</h4>');
+            html = html.replace(/^## (.*$)/gim, '<h3 class="text-lg font-bold text-slate-900 mt-6 mb-3 border-b border-slate-100 pb-2">$1</h3>');
+            html = html.replace(/^\* (.*$)/gim, '<li class="ml-5 list-disc marker:text-brand-500 mb-1">$1</li>');
+            html = html.replace(/^- (.*$)/gim, '<li class="ml-5 list-disc marker:text-brand-500 mb-1">$1</li>');
+            html = html.replace(/\n\n/g, '</p><p class="mb-4">');
+            html = html.replace(/\n/g, '<br>');
+            if(!html.startsWith('<') && !html.startsWith('<h')) html = `<p class="mb-4">${html}</p>`;
+            return html;
+        }
+
+        // --- STREAMING_CHUNK:Adding chatbot conversation and helper functions... ---
+        // --- 提示詞複製功能 ---
+        async function copyToClipboard(buttonElement) {
+            const container = buttonElement.closest('.relative');
+            const promptText = container.querySelector('.prompt-text').innerText;
+            
+            const originalHTML = buttonElement.innerHTML;
+            const successHTML = `<svg class="w-3 h-3 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> <span class="text-emerald-400 font-bold">已複製</span>`;
+
+            try {
+                // 優先使用現代的 Clipboard API
+                await navigator.clipboard.writeText(promptText);
+                showCopySuccess(buttonElement, originalHTML, successHTML);
+            } catch (err) {
+                // Fallback: 處理部分瀏覽器或 iframe 環境下不支援 clipboard 的狀況
+                const textArea = document.createElement("textarea");
+                textArea.value = promptText;
+                // 確保 textarea 不會影響畫面排版
+                textArea.style.position = "absolute";
+                textArea.style.left = "-999999px";
+                document.body.appendChild(textArea);
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    showCopySuccess(buttonElement, originalHTML, successHTML);
+                } catch (ex) {
+                    console.error('複製失敗:', ex);
+                    buttonElement.innerHTML = `<span class="text-red-400">複製失敗</span>`;
+                    setTimeout(() => buttonElement.innerHTML = originalHTML, 2000);
+                }
+                document.body.removeChild(textArea);
+            }
+        }
+
+        function showCopySuccess(btn, origHtml, successHtml) {
+            btn.innerHTML = successHtml;
+            btn.classList.remove('text-slate-400', 'hover:text-white', 'bg-slate-800', 'hover:bg-slate-700');
+            btn.classList.add('bg-emerald-900/50', 'border', 'border-emerald-800');
+            
+            setTimeout(() => {
+                btn.innerHTML = origHtml;
+                btn.classList.add('text-slate-400', 'hover:text-white', 'bg-slate-800', 'hover:bg-slate-700');
+                btn.classList.remove('bg-emerald-900/50', 'border', 'border-emerald-800');
+            }, 2000);
+        }
+
+        // --- TONY 老師 AI 助理 Chatbot 邏輯 ---
+        let chatHistory = []; // 儲存多輪對話歷史
+
+        function toggleChat() {
+            const chatWin = document.getElementById('chatbot-window');
+            if (chatWin.classList.contains('hidden')) {
+                if (!userApiKey) {
+                    document.getElementById('alert-modal').classList.remove('hidden');
+                    document.getElementById('alert-modal').classList.add('flex');
+                    return;
+                }
+                chatWin.classList.remove('hidden');
+                chatWin.classList.add('flex');
+                // 聚焦輸入框
+                setTimeout(() => document.getElementById('chat-input').focus(), 100);
+            } else {
+                chatWin.classList.add('hidden');
+                chatWin.classList.remove('flex');
+            }
+        }
+
+        function handleChatKeydown(e) {
+            // 自動調整 textarea 高度
+            e.target.style.height = 'auto';
+            e.target.style.height = (e.target.scrollHeight) + 'px';
+            
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendChatMessage();
+            }
+        }
+
+        async function sendChatMessage() {
+            const inputEl = document.getElementById('chat-input');
+            const text = inputEl.value.trim();
+            if (!text || !userApiKey) return;
+
+            // 1. 將使用者訊息加入 UI 與 History
+            appendChatMessage('user', text);
+            inputEl.value = '';
+            inputEl.style.height = 'auto'; // 重置高度
+            chatHistory.push({ role: 'user', parts: [{ text: text }] });
+
+            // 2. 顯示 Loading
+            const msgContainer = document.getElementById('chat-messages');
+            const loadingId = 'chat-loading-' + Date.now();
+            const loadingHtml = `
+                <div id="${loadingId}" class="flex items-start gap-2 justify-start">
+                    <div class="w-7 h-7 rounded-full bg-brand-100 flex items-center justify-center shrink-0 mt-1 border border-brand-200"><span class="text-brand-700 text-xs font-black">AI</span></div>
+                    <div class="bg-white p-4 rounded-2xl rounded-tl-sm shadow-sm border border-slate-200 flex items-center gap-1.5">
+                        <span class="w-2 h-2 bg-brand-400 rounded-full animate-bounce"></span>
+                        <span class="w-2 h-2 bg-brand-400 rounded-full animate-bounce" style="animation-delay: 0.15s"></span>
+                        <span class="w-2 h-2 bg-brand-400 rounded-full animate-bounce" style="animation-delay: 0.3s"></span>
+                    </div>
+                </div>`;
+            msgContainer.insertAdjacentHTML('beforeend', loadingHtml);
+            msgContainer.scrollTop = msgContainer.scrollHeight;
+
+            try {
+                // TONY 老師的專屬 AI 人設
+                const systemPrompt = `你現在是 TONY 楊老師（60歲，資深品牌行銷顧問、創業導師、前上市公司14年發言人、生成式 AI 專家）的專屬 AI 助教。
+你的任務是與大學生對話，解答他們關於《AI行銷管理全局觀》課程、行銷理論（如 STP, 4P, PESTEL）、MarTech 科技（如 AEO/GEO）、以及 AI 實作任務的疑問。
+回答守則：
+1. 語氣要平易近人、具啟發性，像是經驗豐富的業界前輩指導晚輩。
+2. 回答務必切中要害，不說廢話，適時帶入「商業獲利」、「護城河」、「公關危機」等業界真實視角。
+3. 鼓勵學生批判性思考，不要全盤接受 AI 的初步答案。
+4. 使用 Markdown 格式讓排版易讀。
+5. 每次回答字數盡量控制在 300 字以內，保持對話的輕快節奏。`;
+                
+                // 更新為 gemini-3.5-flash
+                const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${userApiKey}`;
+                const payload = {
+                    systemInstruction: { parts: [{ text: systemPrompt }] },
+                    contents: chatHistory
+                };
+
+                const data = await fetchWithRetry(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const aiText = data.candidates[0].content.parts[0].text;
+                
+                // 3. 將 AI 回覆加入 History 與 UI
+                chatHistory.push({ role: 'model', parts: [{ text: aiText }] });
+                document.getElementById(loadingId).remove();
+                appendChatMessage('model', aiText);
+
+            } catch (error) {
+                document.getElementById(loadingId).remove();
+                appendChatMessage('error', '⚠️ 系統連線發生錯誤，請確認 API Key 後再試一次。');
+                chatHistory.pop(); // 移除失敗的提問，允許重試
+            }
+        }
+
+        function appendChatMessage(role, text) {
+            const msgContainer = document.getElementById('chat-messages');
+            let html = '';
+            
+            if (role === 'user') {
+                const escapedText = text.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>');
+                html = `
+                <div class="flex items-start gap-2 justify-end">
+                    <div class="bg-slate-900 text-white p-3.5 rounded-2xl rounded-tr-sm shadow-md max-w-[85%] break-words leading-relaxed font-medium">
+                        ${escapedText}
+                    </div>
+                </div>`;
+            } else if (role === 'model') {
+                html = `
+                <div class="flex items-start gap-2 justify-start">
+                    <div class="w-7 h-7 rounded-full bg-brand-100 flex items-center justify-center shrink-0 mt-1 border border-brand-200"><span class="text-brand-700 text-xs font-black">AI</span></div>
+                    <div class="bg-white p-4 rounded-2xl rounded-tl-sm shadow-sm border border-slate-200 text-slate-700 max-w-[85%] prose prose-sm prose-slate break-words leading-relaxed">
+                        ${parseMarkdown(text)}
+                    </div>
+                </div>`;
+            } else if (role === 'error') {
+                 html = `
+                <div class="flex justify-center my-3">
+                    <span class="bg-red-50 text-red-600 px-3 py-1.5 rounded-lg text-xs font-bold border border-red-200 shadow-sm">${text}</span>
+                </div>`;
+            }
+            
+            msgContainer.insertAdjacentHTML('beforeend', html);
+            msgContainer.scrollTop = msgContainer.scrollHeight;
+        }
+    </script>
+</body>
+</html>
