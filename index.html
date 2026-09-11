@@ -74,14 +74,176 @@
 </head>
 <body class="bg-[#F8FAFC] text-slate-800 font-sans antialiased selection:bg-brand-500 selection:text-white">
 
+    <!-- ==================== AUTH GATE ==================== -->
+    <div id="auth-gate" class="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900 bg-cover bg-center overflow-y-auto py-10" style="background-image: url('https://i.postimg.cc/Gh8Zt7SX/S_56844323.jpg'); background-blend-mode: overlay; background-color: rgba(15, 23, 42, 0.9);">
+        <div class="bg-white/95 backdrop-blur-xl p-8 sm:p-10 rounded-3xl shadow-2xl w-full max-w-md mx-4 border border-white/20 mt-auto mb-auto">
+            <div class="text-center mb-8">
+                <img src="https://firebasestorage.googleapis.com/v0/b/k16-tony-ai-wisdom-platform.firebasestorage.app/o/assets%2F6av64EOvvqQNAIoXqcPfHC5BBeF3%2F1785039568519_2.png?alt=media&token=c2b5f53d-3d3b-4c7f-b404-fa38bb064309" alt="Logo" class="h-10 mx-auto mb-4 grayscale contrast-200 object-contain">
+                <h2 id="auth-title" class="text-2xl font-black text-slate-900 tracking-tight">會員登入</h2>
+                <p class="text-sm text-slate-500 mt-2 font-medium">AI行銷管理全局觀 SaaS 平台</p>
+            </div>
+            
+            <div id="auth-msg" class="mb-4"></div>
+
+            <!-- Login Form -->
+            <div id="auth-login-form" class="space-y-5">
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-1">電子信箱 Email</label>
+                    <input type="email" id="log-email" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all">
+                </div>
+                <div>
+                    <div class="flex justify-between items-center mb-1">
+                        <label class="block text-sm font-bold text-slate-700">密碼 Password</label>
+                        <button onclick="switchAuthMode('forgot')" class="text-xs font-bold text-brand-600 hover:text-brand-700 transition-colors">忘記密碼？</button>
+                    </div>
+                    <div class="relative">
+                        <input type="password" id="log-pwd" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all pr-12">
+                        <button type="button" onclick="togglePassword('log-pwd')" class="absolute right-4 top-3 text-slate-400 hover:text-slate-600 focus:outline-none">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                        </button>
+                    </div>
+                </div>
+                <button id="btn-log" onclick="handleLogin()" class="w-full bg-slate-900 text-white font-bold rounded-xl py-3.5 hover:bg-slate-800 transition-all shadow-lg shadow-slate-900/20 mt-2 flex items-center justify-center gap-2">
+                    <span id="log-spinner" class="hidden w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+                    <span id="log-text">登入系統</span>
+                </button>
+                <div class="text-center mt-6">
+                    <p class="text-sm text-slate-600 font-medium">還不是會員嗎？ <button onclick="switchAuthMode('register')" class="text-brand-600 font-bold hover:underline transition-all">立即免費註冊</button></p>
+                </div>
+            </div>
+
+            <!-- Register Form -->
+            <div id="auth-register-form" class="space-y-5 hidden">
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-2">您的身份 Identity</label>
+                    <div class="flex gap-4">
+                        <label class="flex-1 cursor-pointer">
+                            <input type="radio" name="reg-identity" value="student" checked class="peer sr-only">
+                            <div class="text-center py-2 border-2 border-slate-200 rounded-xl peer-checked:border-brand-500 peer-checked:bg-brand-50 peer-checked:text-brand-700 font-bold text-sm text-slate-500 transition-all">TONY老師學員</div>
+                        </label>
+                        <label class="flex-1 cursor-pointer">
+                            <input type="radio" name="reg-identity" value="visitor" class="peer sr-only">
+                            <div class="text-center py-2 border-2 border-slate-200 rounded-xl peer-checked:border-brand-500 peer-checked:bg-brand-50 peer-checked:text-brand-700 font-bold text-sm text-slate-500 transition-all">一般訪客</div>
+                        </label>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-1">真實姓名 Real Name</label>
+                    <input type="text" id="reg-name" placeholder="請輸入中文真實姓名" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-1">電子信箱 Email</label>
+                    <input type="email" id="reg-email" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-1">設定密碼 Password</label>
+                    <div class="relative">
+                        <input type="password" id="reg-pwd" placeholder="至少 6 個字元" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all pr-12">
+                        <button type="button" onclick="togglePassword('reg-pwd')" class="absolute right-4 top-3 text-slate-400 hover:text-slate-600 focus:outline-none">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                        </button>
+                    </div>
+                </div>
+                <button id="btn-reg" onclick="handleRegister()" class="w-full bg-brand-600 text-white font-bold rounded-xl py-3.5 hover:bg-brand-700 transition-all shadow-lg shadow-brand-500/30 mt-2 flex items-center justify-center gap-2">
+                    <span id="reg-spinner" class="hidden w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+                    <span id="reg-text">提交註冊並發送驗證信</span>
+                </button>
+                <div class="text-center mt-6">
+                    <p class="text-sm text-slate-600 font-medium">已有帳號？ <button onclick="switchAuthMode('login')" class="text-slate-900 font-bold hover:underline transition-all">返回登入</button></p>
+                </div>
+            </div>
+
+            <!-- Forgot Password Form -->
+            <div id="auth-forgot-form" class="space-y-5 hidden">
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-1">註冊的電子信箱 Email</label>
+                    <input type="email" id="reset-email" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all">
+                </div>
+                <button onclick="handleResetPassword()" class="w-full bg-slate-900 text-white font-bold rounded-xl py-3.5 hover:bg-slate-800 transition-all shadow-lg shadow-slate-900/20 mt-2">發送重設密碼信</button>
+                <div class="text-center mt-6">
+                    <button onclick="switchAuthMode('login')" class="text-slate-600 font-bold hover:underline text-sm transition-all">返回登入</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== ADMIN DASHBOARD ==================== -->
+    <div id="admin-dashboard" class="fixed inset-0 z-[90] hidden bg-[#F8FAFC] overflow-y-auto w-full h-full">
+        <header class="sticky top-0 z-40 w-full bg-slate-950 text-white shadow-lg border-b border-slate-800 py-4 px-6 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <span class="w-2 h-6 bg-amber-500 rounded-full"></span>
+                <h1 class="text-xl font-black tracking-wide">SaaS 系統管理後台</h1>
+            </div>
+            <button onclick="closeAdminDashboard()" class="bg-slate-800 hover:bg-slate-700 text-white font-medium rounded-lg text-sm px-4 py-2 border border-slate-700 transition-all flex items-center gap-2">
+                返回主程式 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+            </button>
+        </header>
+
+        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+            
+            <!-- Toolbar -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6">
+                <div class="w-full lg:w-auto">
+                    <h2 class="text-lg font-bold text-slate-900 mb-3 flex items-center gap-2">
+                        <svg class="w-5 h-5 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                        AI 智能分析報告 (匯出 Word)
+                    </h2>
+                    <div class="flex flex-col sm:flex-row items-center gap-3 w-full">
+                        <input type="date" id="report-start" class="bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-700 w-full sm:w-auto focus:ring-2 focus:ring-brand-500 outline-none">
+                        <span class="text-slate-400 font-bold">至</span>
+                        <input type="date" id="report-end" class="bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-700 w-full sm:w-auto focus:ring-2 focus:ring-brand-500 outline-none">
+                        <button id="btn-ai-report" onclick="generateAIReport()" class="bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-lg px-4 py-2 text-sm transition-all shadow-sm w-full sm:w-auto whitespace-nowrap flex items-center justify-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5L18.5 7H20"></path></svg>
+                            產出分析報告
+                        </button>
+                    </div>
+                </div>
+                <button onclick="exportCSV()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg px-5 py-2.5 text-sm transition-all shadow-sm flex items-center gap-2 whitespace-nowrap w-full lg:w-auto justify-center">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                    匯出 CSV 名單 (含 BOM 防亂碼)
+                </button>
+            </div>
+
+            <!-- Table -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="p-4 border-b border-slate-100 bg-slate-50/50 flex justify-between items-center">
+                    <h3 class="font-bold text-slate-800">註冊會員名單總覽</h3>
+                    <button onclick="renderAdminTable()" class="text-slate-500 hover:text-slate-900 transition-colors p-1" title="重新整理資料">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                    </button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-slate-200 text-left">
+                        <thead class="bg-slate-100">
+                            <tr>
+                                <th scope="col" class="px-5 py-4 text-xs font-black text-slate-500 uppercase tracking-wider">註冊信箱</th>
+                                <th scope="col" class="px-5 py-4 text-xs font-black text-slate-500 uppercase tracking-wider">真實姓名</th>
+                                <th scope="col" class="px-5 py-4 text-xs font-black text-slate-500 uppercase tracking-wider">身份</th>
+                                <th scope="col" class="px-5 py-4 text-xs font-black text-slate-500 uppercase tracking-wider text-center">登入次數</th>
+                                <th scope="col" class="px-5 py-4 text-xs font-black text-slate-500 uppercase tracking-wider">註冊時間</th>
+                                <th scope="col" class="px-5 py-4 text-xs font-black text-slate-500 uppercase tracking-wider">權限狀態</th>
+                                <th scope="col" class="px-5 py-4 text-xs font-black text-slate-500 uppercase tracking-wider">管理操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-tbody" class="bg-white divide-y divide-slate-100">
+                            <!-- JS Inject -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- ==================== MAIN APP ==================== -->
+    <div id="main-app" class="hidden">
+
     <!-- Top Menu Bar (Black Background, White Text) -->
     <header class="sticky top-0 z-40 w-full bg-slate-950 text-white shadow-lg border-b border-slate-800">
-        <!-- 增加 pt-12 md:pt-14 將整體內容往下推，避免被瀏覽器或系統狀態列遮擋 -->
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 md:pt-14">
             <div class="flex flex-col md:flex-row justify-between items-center pb-3 gap-4">
                 <!-- Logo & Brand -->
                 <div class="flex items-center gap-3">
-                    <img src="https://i.postimg.cc/fT2sQW09/1.png" alt="Tony Studio Logo" class="h-10 sm:h-12 w-auto object-contain">
+                    <img src="https://firebasestorage.googleapis.com/v0/b/k16-tony-ai-wisdom-platform.firebasestorage.app/o/assets%2F6av64EOvvqQNAIoXqcPfHC5BBeF3%2F1785039568519_2.png?alt=media&token=c2b5f53d-3d3b-4c7f-b404-fa38bb064309" alt="Tony Studio Logo" class="h-10 sm:h-12 w-auto object-contain">
                     <span class="font-bold text-lg tracking-wide text-slate-200 hidden sm:block">AI行銷管理全局觀</span>
                 </div>
                 
@@ -92,12 +254,20 @@
                         <input type="password" id="api-key-input" placeholder="輸入 Gemini API Key..." class="w-full sm:w-60 bg-slate-800 border border-slate-700 text-slate-200 text-sm rounded-md focus:ring-brand-500 focus:border-brand-500 block pl-9 p-2 transition-colors placeholder-slate-500">
                     </div>
                     <div class="flex items-center justify-between w-full sm:w-auto gap-3">
-                        <button onclick="saveApiKey()" id="save-btn" class="bg-brand-600 hover:bg-brand-500 text-white font-medium rounded-md text-sm px-4 py-2 transition-colors w-full sm:w-auto border border-brand-500">
+                        <button onclick="saveApiKey()" id="save-btn" class="bg-brand-600 hover:bg-brand-500 text-white font-medium rounded-md text-sm px-4 py-2 transition-colors w-full sm:w-auto border border-brand-500 whitespace-nowrap">
                             啟用 AI
                         </button>
                         <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" class="text-xs text-slate-400 hover:text-white underline-offset-2 hover:underline text-center w-full sm:w-auto whitespace-nowrap transition-colors">
                             取得金鑰 ↗
                         </a>
+                        
+                        <!-- 新增管理後台與登出按鈕 -->
+                        <button id="nav-admin-btn" onclick="openAdminDashboard()" class="hidden bg-amber-600 hover:bg-amber-500 text-white font-bold rounded-md text-sm px-4 py-2 transition-colors w-full sm:w-auto shadow-sm border border-amber-500 whitespace-nowrap">
+                            管理後台
+                        </button>
+                        <button onclick="handleLogout()" class="bg-slate-800 hover:bg-slate-700 text-white font-medium rounded-md text-sm px-4 py-2 transition-colors w-full sm:w-auto border border-slate-700 whitespace-nowrap">
+                            登出
+                        </button>
                     </div>
                 </div>
             </div>
@@ -128,7 +298,7 @@
             <div class="flex flex-col md:flex-row">
                 <!-- Photo Side -->
                 <div class="md:w-1/3 bg-slate-50 p-10 flex flex-col items-center justify-center border-r border-slate-100">
-                    <img src="https://i.postimg.cc/Gh8Zt7SX/S_56844323.jpg" alt="TONY 楊文澤 老師" class="w-48 h-48 rounded-full object-cover shadow-lg mb-6 ring-4 ring-white">
+                    <img src="https://firebasestorage.googleapis.com/v0/b/k16-tony-ai-wisdom-platform.firebasestorage.app/o/assets%2F6av64EOvvqQNAIoXqcPfHC5BBeF3%2F1787580326393_ChatGPT%20Image%202026%E5%B9%B46%E6%9C%8819%E6%97%A5%20%E4%B8%8A%E5%8D%8811_16_14.png?alt=media&token=3c85de41-f36f-46e5-a97a-7bc7eb83a027" alt="TONY 楊文澤 老師" class="w-48 h-48 rounded-full object-cover shadow-lg mb-6 ring-4 ring-white">
                     <h3 class="text-3xl font-black text-slate-900 mb-1">TONY 楊文澤</h3>
                     <p class="text-brand-600 font-medium tracking-widest text-sm uppercase">資深數位行銷科技顧問</p>
                 </div>
@@ -216,7 +386,7 @@
                 <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
                     <h3 class="text-lg font-bold text-slate-900 mb-4 tracking-widest uppercase border-b border-slate-100 pb-3">學習目標</h3>
                     <ul class="space-y-4 text-sm text-slate-600">
-                        <li><strong class="text-slate-900 block mb-1">知識建構</strong>系統性地闡述行銷管理演進 (<span class="ai-term">Marketing 1.0 to 6.0</span>)。</li>
+                        <li><strong class="text-slate-900 block mb-1">知識建構</strong>系統性地闡述行銷管理演進 (<span class="ai-term">Marketing 1.0 to 7.0</span>)。</li>
                         <li><strong class="text-slate-900 block mb-1">策略思維</strong>運用<span class="ai-term">策略工具</span>進行市場分析與<span class="ai-term">品牌定位</span>。</li>
                         <li><strong class="text-slate-900 block mb-1">AI 協作力</strong>熟練運用<span class="ai-term">生成式 AI</span>工具進行洞察與<span class="ai-term">內容行銷</span>產出。</li>
                         <li><strong class="text-slate-900 block mb-1">數據素養</strong>理解<span class="ai-term">關鍵績效指標</span> (<span class="ai-term">KPIs</span>) 與<span class="ai-term">數據驅動決策</span>能力。</li>
@@ -241,7 +411,7 @@
                     </h3>
                     <div class="space-y-4 text-slate-600 leading-relaxed font-medium">
                         <p>
-                            歡迎來到<span class="ai-term">行銷 6.0</span> 的時代！在這個由數據、演算法與<span class="ai-term">生成式 AI</span>共同定義的商業環境中，傳統的行銷理論已不足以應對挑戰。本課程旨在為數位原生代的行銷新兵，建立一套兼具「宏觀視野」與「微觀執行力」的<span class="ai-term">整合性行銷</span>管理知識體系。
+                            歡迎來到<span class="ai-term">行銷 7.0</span> 的時代！在這個由數據、演算法與<span class="ai-term">全自主 AI 代理</span>共同定義的商業環境中，傳統的行銷理論已不足以應對挑戰。本課程旨在為數位原生代的行銷新兵，建立一套兼具「宏觀視野」與「微觀執行力」的<span class="ai-term">整合性行銷</span>管理知識體系。
                         </p>
                         <p>
                             我們將從行銷的核心本質出發，系統性地解構從市場環境分析 (<span class="ai-term">Macro</span>)、<span class="ai-term">消費者洞察</span> (<span class="ai-term">Micro</span>)，到策略擬定 (<span class="ai-term">STP 策略</span>)、價值創造 (<span class="ai-term">行銷 4P</span>)，再到數據衡量 (<span class="ai-term">Metrics</span>) 的完整流程。
@@ -257,10 +427,10 @@
         <!-- Assessment Table (Clean Design) -->
         <section class="bg-white p-8 md:p-12 rounded-2xl shadow-sm border border-slate-200">
             <h3 class="text-2xl font-black text-slate-900 mb-8 flex items-center">
-                <span class="w-1.5 h-6 bg-slate-400 mr-3 rounded-full"></span>專案實作評量 <span class="text-sm font-normal text-slate-400 ml-4">(無傳統紙筆考試)</span>
+                <span class="w-1.5 h-6 bg-slate-400 mr-3 rounded-full"></span>專案實作評量 <span class="text-sm font-normal text-slate-400 ml-4 hidden sm:inline">(無傳統紙筆考試)</span>
             </h3>
             <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse">
+                <table class="w-full text-left border-collapse min-w-[600px]">
                     <thead>
                         <tr class="border-b-2 border-slate-900">
                             <th class="pb-4 font-bold text-slate-900 uppercase tracking-widest text-sm w-1/4">評量項目</th>
@@ -333,12 +503,12 @@
                         <!-- Card W1 -->
                         <div class="bg-white p-6 rounded-xl border border-slate-200 hover:border-slate-300 transition-colors shadow-sm flex flex-col">
                             <div class="text-xs font-bold text-brand-600 mb-2 tracking-widest">WEEK 1</div>
-                            <h5 class="text-lg font-bold text-slate-900 mb-4">破冰啟航：歡迎來到行銷 6.0</h5>
+                            <h5 class="text-lg font-bold text-slate-900 mb-4">破冰啟航：歡迎來到行銷 7.0</h5>
                             <div class="space-y-4 text-sm text-slate-600 font-medium flex-1">
                                 <ul class="list-disc pl-5 space-y-1.5 leading-relaxed">
                                     <li>行銷管理的定義與演進：從<span class="ai-term">生產導向</span>到<span class="ai-term">價值共創</span>與<span class="ai-term">永續行銷</span>。</li>
                                     <li>企業經營的核心功能：<span class="ai-term">成長駭客</span> (Growth Hacking) vs. 傳統品牌建立。</li>
-                                    <li><span class="ai-term">行銷 6.0</span> 的核心特徵：數據、AI、<span class="ai-term">沉浸式體驗</span>與<span class="ai-term">空間運算</span>。</li>
+                                    <li><span class="ai-term">行銷 7.0</span> 的核心特徵：數據、<span class="ai-term">全自主 AI 代理</span>、<span class="ai-term">超感知體驗</span>與<span class="ai-term">空間運算</span>。</li>
                                     <li>B2B、B2C 與 <span class="ai-term">D2C 直面消費者</span> 的商業模式本質差異。</li>
                                 </ul>
                                 <div class="p-4 bg-slate-50 rounded border border-slate-100 mt-4 flex flex-col flex-1">
@@ -848,13 +1018,13 @@
     <!-- Footer (Minimalist) -->
     <footer class="bg-slate-950 text-slate-500 py-12 text-center border-t border-slate-900 mt-20">
         <div class="max-w-7xl mx-auto px-4">
-            <img src="https://i.postimg.cc/fT2sQW09/1.png" alt="Tony Studio Logo" class="h-6 w-auto mx-auto mb-6 opacity-30 grayscale">
+            <img src="https://firebasestorage.googleapis.com/v0/b/k16-tony-ai-wisdom-platform.firebasestorage.app/o/assets%2F6av64EOvvqQNAIoXqcPfHC5BBeF3%2F1785039568519_2.png?alt=media&token=c2b5f53d-3d3b-4c7f-b404-fa38bb064309" alt="Tony Studio Logo" class="h-6 w-auto mx-auto mb-6 opacity-30 grayscale object-contain">
             <p class="text-sm tracking-widest uppercase font-medium">© 2026 TONY STUDIO. All Rights Reserved.</p>
             <p class="text-xs mt-2 opacity-50">本教材由 TONY STUDIO 楊文澤顧問設計開發</p>
         </div>
     </footer>
 
-    <!-- TONY 老師 AI 助理 Chatbot UI -->
+    <!-- TONY 老師 AI 助理 Chatbot UI (移至 main-app 內部確保生命週期綁定) -->
     <div id="chatbot-fab" class="fixed bottom-6 right-6 z-[45]">
         <button onclick="toggleChat()" class="bg-slate-900 hover:bg-slate-800 text-white rounded-full p-4 shadow-2xl transition-transform hover:scale-105 flex items-center justify-center relative group border border-slate-700">
             <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
@@ -897,12 +1067,12 @@
             </button>
         </div>
     </div>
+    </div> <!-- 結束 main-app 區塊包裹 -->
 
     <!-- Premium AI Modal -->
     <div id="ai-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 sm:p-6">
         <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-md transition-opacity" onclick="closeModal()"></div>
         <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg relative z-10 flex flex-col max-h-[85vh] modal-enter border border-slate-100 overflow-hidden">
-            <!-- Header -->
             <div class="flex items-center justify-between p-6 border-b border-slate-100 bg-white">
                 <div class="flex items-center gap-3">
                     <div class="w-8 h-8 rounded-full bg-slate-900 flex items-center justify-center text-white text-xs font-black">AI</div>
@@ -914,8 +1084,6 @@
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
             </div>
-            
-            <!-- Body -->
             <div class="p-6 overflow-y-auto flex-1 bg-slate-50/50">
                 <div id="modal-loading" class="flex flex-col items-center justify-center py-12 space-y-4">
                     <div class="loader"></div>
@@ -925,42 +1093,591 @@
                     <!-- API Data injected here -->
                 </div>
             </div>
-            
-            <!-- Footer -->
             <div class="p-4 border-t border-slate-100 bg-white text-xs text-slate-400 text-center font-medium">
                 Powered by Gemini API • 內容由 AI 協作生成
             </div>
         </div>
     </div>
 
-    <!-- Alert Modal (Clean Design) -->
-    <div id="alert-modal" class="fixed inset-0 z-[60] hidden items-center justify-center p-4">
-        <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-md" onclick="closeAlertModal()"></div>
+    <!-- Alert Modal (Clean Design, Replaces window.alert) -->
+    <div id="sys-alert-modal" class="fixed inset-0 z-[110] hidden items-center justify-center p-4">
+        <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" onclick="closeSysAlert()"></div>
         <div class="bg-white rounded-2xl shadow-2xl w-full max-w-sm relative z-10 p-8 text-center modal-enter border border-slate-100">
-            <div class="w-16 h-16 bg-slate-100 text-slate-900 rounded-full flex items-center justify-center mx-auto mb-5">
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path></svg>
+            <div id="sys-alert-icon" class="w-16 h-16 bg-slate-100 text-slate-900 rounded-full flex items-center justify-center mx-auto mb-5">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
             </div>
-            <h3 class="text-xl font-bold text-slate-900 mb-2">需要 API Key</h3>
-            <p class="text-slate-500 text-sm mb-8 font-medium leading-relaxed">請先在頁面頂端輸入 Gemini API Key 以啟用互動解析功能。</p>
+            <h3 id="sys-alert-title" class="text-xl font-bold text-slate-900 mb-2">提示</h3>
+            <p id="sys-alert-msg" class="text-slate-500 text-sm mb-8 font-medium leading-relaxed">訊息內容</p>
             <div class="flex flex-col gap-3">
-                <button onclick="closeAlertModal()" class="w-full py-2.5 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors font-bold text-sm">我知道了</button>
-                <a href="https://aistudio.google.com/app/apikey" target="_blank" class="w-full py-2.5 bg-slate-50 text-slate-600 rounded-lg hover:bg-slate-100 transition-colors font-bold text-sm border border-slate-200">免費申請金鑰 ↗</a>
+                <button onclick="closeSysAlert()" class="w-full py-2.5 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors font-bold text-sm">我知道了</button>
             </div>
         </div>
     </div>
 
-    <script>
-        // --- 狀態管理 ---
-        let userApiKey = localStorage.getItem('tony_course_api_key') || '';
+    <!-- Confirm Modal (Clean Design, Replaces window.confirm) -->
+    <div id="sys-confirm-modal" class="fixed inset-0 z-[110] hidden items-center justify-center p-4">
+        <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" onclick="closeSysConfirm()"></div>
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-sm relative z-10 p-8 text-center modal-enter border border-slate-100">
+            <div class="w-16 h-16 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-5">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+            </div>
+            <h3 id="sys-confirm-title" class="text-xl font-bold text-slate-900 mb-2">確認操作</h3>
+            <p id="sys-confirm-msg" class="text-slate-500 text-sm mb-8 font-medium leading-relaxed whitespace-pre-wrap">您確定要執行此操作嗎？</p>
+            <div class="flex gap-3">
+                <button onclick="closeSysConfirm()" class="flex-1 py-2.5 bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 transition-colors font-bold text-sm">取消</button>
+                <button onclick="executeSysConfirm()" id="sys-confirm-btn" class="flex-1 py-2.5 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors font-bold text-sm">確定執行</button>
+            </div>
+        </div>
+    </div>
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const keyInput = document.getElementById('api-key-input');
-            if (userApiKey) {
-                keyInput.value = userApiKey;
-                showKeyStatus(true);
+    <!-- Firebase SDK 串接與全端 SaaS 邏輯 -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc, updateDoc, deleteDoc, collection, getDocs, query, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBZsF_hahIErMHMZ-26a6UWYnL8yiXZhCI",
+            authDomain: "e46-marketing-management.firebaseapp.com",
+            projectId: "e46-marketing-management",
+            storageBucket: "e46-marketing-management.firebasestorage.app",
+            messagingSenderId: "704263536810",
+            appId: "1:704263536810:web:dd5403192f4136359e90d3",
+            measurementId: "G-L2C71TLNF6"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        
+        // 嚴格遵守路徑規範 Rule 1
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'e46-marketing-management';
+        let userId = null;
+        let currentUserProfile = null;
+        window.memberData = []; // 用於暫存後台數據以供 CSV/AI 分析
+
+        // ================= 全域視窗輔助函式 (取代 alert/confirm) =================
+        let confirmCallback = null;
+        
+        window.showSysAlert = (title, msg, isError = false) => {
+            document.getElementById('sys-alert-title').innerText = title;
+            document.getElementById('sys-alert-msg').innerHTML = msg;
+            const iconWrap = document.getElementById('sys-alert-icon');
+            if(isError) {
+                iconWrap.className = "w-16 h-16 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto mb-5";
+                iconWrap.innerHTML = '<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>';
+            } else {
+                iconWrap.className = "w-16 h-16 bg-slate-100 text-slate-900 rounded-full flex items-center justify-center mx-auto mb-5";
+                iconWrap.innerHTML = '<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>';
+            }
+            const modal = document.getElementById('sys-alert-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        };
+
+        window.closeSysAlert = () => {
+            const modal = document.getElementById('sys-alert-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        };
+
+        window.showSysConfirm = (title, msg, onConfirm, isDestructive = true) => {
+            document.getElementById('sys-confirm-title').innerText = title;
+            document.getElementById('sys-confirm-msg').innerText = msg;
+            confirmCallback = onConfirm;
+            
+            const btn = document.getElementById('sys-confirm-btn');
+            if(isDestructive) {
+                btn.className = "flex-1 py-2.5 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors font-bold text-sm";
+            } else {
+                btn.className = "flex-1 py-2.5 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition-colors font-bold text-sm";
             }
 
-            // 綁定互動名詞
+            const modal = document.getElementById('sys-confirm-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        };
+
+        window.closeSysConfirm = () => {
+            const modal = document.getElementById('sys-confirm-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            confirmCallback = null;
+        };
+
+        window.executeSysConfirm = () => {
+            if(confirmCallback) confirmCallback();
+            window.closeSysConfirm();
+        };
+
+        // ================= AUTH GATE 邏輯 =================
+        window.switchAuthMode = (mode) => {
+            document.getElementById('auth-login-form').classList.add('hidden');
+            document.getElementById('auth-register-form').classList.add('hidden');
+            document.getElementById('auth-forgot-form').classList.add('hidden');
+            document.getElementById('auth-msg').innerHTML = '';
+            document.getElementById(`auth-${mode}-form`).classList.remove('hidden');
+            document.getElementById('auth-title').innerText = mode === 'login' ? '會員登入' : (mode === 'register' ? '註冊會員' : '重設密碼');
+        };
+
+        window.togglePassword = (inputId) => {
+            const el = document.getElementById(inputId);
+            if (el.type === 'password') {
+                el.type = 'text';
+            } else {
+                el.type = 'password';
+            }
+        };
+
+        function showAuthMsg(msg, isError = false) {
+            const el = document.getElementById('auth-msg');
+            if(!msg) {
+                el.innerHTML = '';
+                return;
+            }
+            el.innerHTML = `<div class="p-3 mb-4 text-sm font-bold rounded-xl ${isError ? 'bg-red-50 text-red-600 border border-red-200' : 'bg-emerald-50 text-emerald-700 border border-emerald-200'}">${msg}</div>`;
+        }
+
+        window.handleRegister = async () => {
+            const email = document.getElementById('reg-email').value.trim();
+            const pwd = document.getElementById('reg-pwd').value;
+            const name = document.getElementById('reg-name').value.trim();
+            const identity = document.querySelector('input[name="reg-identity"]:checked').value;
+            
+            if (!email || !pwd || !name) return showAuthMsg('請填寫完整資訊', true);
+            if (pwd.length < 6) return showAuthMsg('密碼需至少 6 個字元', true);
+
+            const btn = document.getElementById('btn-reg');
+            const spinner = document.getElementById('reg-spinner');
+            const btnText = document.getElementById('reg-text');
+            
+            btn.disabled = true;
+            spinner.classList.remove('hidden');
+            btnText.innerText = '處理中...';
+            
+            try {
+                // 1. 建立帳號
+                const cred = await createUserWithEmailAndPassword(auth, email, pwd);
+                
+                // 2. 發送雙重驗證信 (Double Opt-in)
+                await sendEmailVerification(cred.user);
+                
+                // 3. 權限分流 (RBAC) - 鎖定最高權限者
+                const role = (email === 'mindnodeai@gmail.com') ? 'admin' : 'user';
+                
+                // 4. 寫入公開資料庫供後台查詢 (等待完成)
+                const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'member_profiles', cred.user.uid);
+                await setDoc(docRef, {
+                    uid: cred.user.uid,
+                    email: email,
+                    realName: name,
+                    identity: identity,
+                    role: role,
+                    loginCount: 0,
+                    createdAt: Date.now(),
+                    lastLoginAt: Date.now()
+                });
+
+                // 5. 強制登出等待信箱驗證
+                await signOut(auth); 
+                showAuthMsg('✅ 註冊成功！系統已發送驗證信。<br><span class="text-xs text-emerald-600/80 mt-1 block">溫馨提醒：註冊確認信有時會跑到「垃圾郵件匣」，請記得前往點擊連結驗證唷！</span>');
+                
+                // 幾秒後自動切回登入畫面
+                setTimeout(() => window.switchAuthMode('login'), 5000);
+            } catch (err) {
+                let msg = '註冊失敗：' + err.message;
+                if (err.code === 'auth/email-already-in-use') msg = '此信箱已經註冊過囉！';
+                showAuthMsg(msg, true);
+            } finally {
+                btn.disabled = false;
+                spinner.classList.add('hidden');
+                btnText.innerText = '提交註冊並發送驗證信';
+            }
+        };
+
+        window.handleLogin = async () => {
+            const email = document.getElementById('log-email').value.trim();
+            const pwd = document.getElementById('log-pwd').value;
+            if (!email || !pwd) return showAuthMsg('請輸入信箱與密碼', true);
+
+            const btn = document.getElementById('btn-log');
+            const spinner = document.getElementById('log-spinner');
+            const btnText = document.getElementById('log-text');
+            
+            btn.disabled = true;
+            spinner.classList.remove('hidden');
+            btnText.innerText = '登入驗證中...';
+
+            try {
+                const cred = await signInWithEmailAndPassword(auth, email, pwd);
+                
+                // --- 自動修復幽靈帳號機制 ---
+                const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'member_profiles', cred.user.uid);
+                const docSnap = await getDoc(docRef);
+                if (!docSnap.exists()) {
+                    await setDoc(docRef, {
+                        uid: cred.user.uid,
+                        email: email,
+                        realName: '未設定 (系統自動修復)',
+                        identity: 'visitor',
+                        role: (email === 'mindnodeai@gmail.com') ? 'admin' : 'user',
+                        loginCount: 0,
+                        createdAt: Date.now(),
+                        lastLoginAt: Date.now()
+                    });
+                }
+                
+                // 嚴格信箱驗證檢查 (最高管理員例外)
+                if (!cred.user.emailVerified && email !== 'mindnodeai@gmail.com') { 
+                    await signOut(auth);
+                    showAuthMsg('❌ 登入失敗：信箱尚未驗證。<br><span class="text-xs text-red-500 mt-1 block">請至信箱點擊驗證連結 (記得檢查垃圾郵件匣)。</span>', true);
+                    btn.disabled = false;
+                    spinner.classList.add('hidden');
+                    btnText.innerText = '登入系統';
+                    return;
+                }
+                
+                // 登入成功後解鎖按鈕，onAuthStateChanged 會接管後續畫面切換
+                btn.disabled = false;
+                spinner.classList.add('hidden');
+                btnText.innerText = '登入系統';
+
+            } catch (err) {
+                showAuthMsg('❌ 登入失敗：帳號或密碼錯誤', true);
+                btn.disabled = false;
+                spinner.classList.add('hidden');
+                btnText.innerText = '登入系統';
+            }
+        };
+
+        window.handleResetPassword = async () => {
+            const email = document.getElementById('reset-email').value.trim();
+            if (!email) return showAuthMsg('請輸入您註冊的信箱', true);
+            
+            try {
+                await sendPasswordResetEmail(auth, email);
+                showAuthMsg('✅ 重設密碼信件已寄出！<br><span class="text-xs text-emerald-600/80 mt-1 block">溫馨提醒：信件有時會跑到「垃圾郵件匣」，請記得確認唷！</span>');
+            } catch (err) {
+                showAuthMsg('發送失敗：' + err.message, true);
+            }
+        };
+
+        window.handleLogout = async () => {
+            try {
+                await signOut(auth);
+                
+                // 軟登出 (Soft Logout)：清空狀態不重整網頁
+                userId = null;
+                currentUserProfile = null;
+                window.userApiKey = '';
+                
+                // 清空輸入框
+                document.getElementById('log-email').value = '';
+                document.getElementById('log-pwd').value = '';
+                
+                // 清空 API Key 狀態
+                const keyInput = document.getElementById('api-key-input');
+                if (keyInput) keyInput.value = '';
+                document.getElementById('api-key-status').classList.add('hidden');
+                
+                // 重置右上角按鈕
+                const saveBtn = document.getElementById('save-btn');
+                saveBtn.innerText = "啟用 AI";
+                saveBtn.classList.remove('bg-emerald-600', 'border-emerald-600');
+                saveBtn.classList.add('bg-brand-600', 'hover:bg-brand-500', 'border-brand-500');
+                
+                // 隱藏管理按鈕
+                document.getElementById('nav-admin-btn').classList.add('hidden');
+                
+                // 回到登入預設
+                window.switchAuthMode('login');
+                showAuthMsg('');
+                
+            } catch (err) {
+                console.error("登出錯誤:", err);
+                window.showSysAlert("登出失敗", "發生系統錯誤：" + err.message, true);
+            }
+        };
+
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                // 如果是新註冊尚未驗證，攔截不要進入主畫面
+                if (!user.emailVerified && user.email !== 'mindnodeai@gmail.com') return;
+
+                userId = user.uid;
+                try {
+                    const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'member_profiles', user.uid);
+                    const docSnap = await getDoc(docRef);
+                    if (docSnap.exists()) {
+                        currentUserProfile = docSnap.data();
+                        
+                        // 紀錄活躍度
+                        await updateDoc(docRef, {
+                            loginCount: (currentUserProfile.loginCount || 0) + 1,
+                            lastLoginAt: Date.now()
+                        });
+
+                        // 判斷權限顯示 Admin 按鈕
+                        if (currentUserProfile.role === 'admin') {
+                            document.getElementById('nav-admin-btn').classList.remove('hidden');
+                        }
+
+                        // 解鎖主程式
+                        document.getElementById('auth-gate').classList.add('hidden');
+                        document.getElementById('main-app').classList.remove('hidden');
+                        
+                        // 若從後台登出又登入，確保後台是關閉的
+                        document.getElementById('admin-dashboard').classList.add('hidden');
+
+                        await loadApiKeyFromCloud();
+                    } else {
+                        // 邊界防呆：若是直接用驗證金鑰登入但沒資料，建立基本檔案 (不重整網頁)
+                        const role = (user.email === 'mindnodeai@gmail.com') ? 'admin' : 'user';
+                        await setDoc(docRef, { uid: user.uid, email: user.email || '未知信箱', realName: '未設定', identity: 'visitor', role: role, loginCount: 1, createdAt: Date.now(), lastLoginAt: Date.now() });
+                        
+                        // 手動觸發一次畫面解鎖，避免 reload 造成白畫面
+                        currentUserProfile = { uid: user.uid, email: user.email, role: role };
+                        if (role === 'admin') document.getElementById('nav-admin-btn').classList.remove('hidden');
+                        document.getElementById('auth-gate').classList.add('hidden');
+                        document.getElementById('main-app').classList.remove('hidden');
+                    }
+                } catch (e) {
+                    console.error("載入資料失敗", e);
+                }
+            } else {
+                // 未登入狀態：徹底隱藏系統介面
+                document.getElementById('auth-gate').classList.remove('hidden');
+                document.getElementById('main-app').classList.add('hidden');
+                document.getElementById('admin-dashboard').classList.add('hidden');
+            }
+        });
+
+        async function loadApiKeyFromCloud() {
+            if (!userId) return;
+            try {
+                const docRef = doc(db, 'artifacts', appId, 'users', userId, 'settings', 'apikey');
+                const docSnap = await getDoc(docRef);
+                if (docSnap.exists() && docSnap.data().key) {
+                    setTimeout(() => {
+                        window.userApiKey = docSnap.data().key;
+                        const input = document.getElementById('api-key-input');
+                        if (input) input.value = window.userApiKey;
+                        if (window.showKeyStatus) window.showKeyStatus(true);
+                    }, 500);
+                }
+            } catch (error) {
+                console.error("無法從雲端載入 API Key:", error);
+            }
+        }
+
+        window.saveApiKeyToCloud = async function(key) {
+            if (!userId) return;
+            try {
+                const docRef = doc(db, 'artifacts', appId, 'users', userId, 'settings', 'apikey');
+                await setDoc(docRef, { key: key });
+            } catch (error) {
+                console.error("無法儲存 API Key:", error);
+            }
+        }
+
+        // ================= ADMIN DASHBOARD 管理後台邏輯 =================
+        window.openAdminDashboard = async () => {
+            document.getElementById('main-app').classList.add('hidden');
+            document.getElementById('admin-dashboard').classList.remove('hidden');
+            await window.renderAdminTable();
+        };
+
+        window.closeAdminDashboard = () => {
+            document.getElementById('admin-dashboard').classList.add('hidden');
+            document.getElementById('main-app').classList.remove('hidden');
+        };
+
+        window.renderAdminTable = async () => {
+            const tbody = document.getElementById('admin-tbody');
+            tbody.innerHTML = '<tr><td colspan="7" class="text-center py-12 text-brand-600 font-bold tracking-widest"><div class="loader mr-3 align-middle border-brand-200 border-b-brand-600"></div> 資料載入中...</td></tr>';
+            
+            try {
+                const q = query(collection(db, 'artifacts', appId, 'public', 'data', 'member_profiles'));
+                const snap = await getDocs(q);
+                let users = [];
+                snap.forEach(doc => users.push(doc.data()));
+                
+                users.sort((a, b) => b.createdAt - a.createdAt);
+                window.memberData = users;
+
+                if (users.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="7" class="text-center py-12 text-slate-500 font-medium">尚無任何註冊會員</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = users.map(u => {
+                    const date = new Date(u.createdAt).toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
+                    const isSuperAdmin = u.email === 'mindnodeai@gmail.com';
+                    
+                    const roleBadge = u.role === 'admin' 
+                        ? '<span class="px-2.5 py-1 bg-amber-100/80 text-amber-700 rounded-lg text-xs font-black tracking-widest shadow-sm ring-1 ring-amber-400/30">ADMIN 管理員</span>' 
+                        : '<span class="px-2.5 py-1 bg-slate-100 text-slate-600 rounded-lg text-xs font-bold shadow-sm border border-slate-200">USER 一般會員</span>';
+                        
+                    const identityBadge = u.identity === 'student' 
+                        ? '<span class="px-2.5 py-1 text-brand-700 font-bold text-xs"><span class="w-2 h-2 inline-block bg-brand-500 rounded-full mr-1"></span>TONY學員</span>' 
+                        : '<span class="px-2.5 py-1 text-slate-500 font-bold text-xs"><span class="w-2 h-2 inline-block bg-slate-300 rounded-full mr-1"></span>一般訪客</span>';
+                    
+                    return `
+                    <tr class="hover:bg-brand-50/50 transition-colors border-b border-slate-100">
+                        <td class="px-5 py-4 whitespace-nowrap text-sm font-bold text-slate-900">${u.email}</td>
+                        <td class="px-5 py-4 whitespace-nowrap text-sm font-medium text-slate-700">${u.realName}</td>
+                        <td class="px-5 py-4 whitespace-nowrap">${identityBadge}</td>
+                        <td class="px-5 py-4 whitespace-nowrap text-sm font-black text-slate-600 text-center">${u.loginCount || 0}</td>
+                        <td class="px-5 py-4 whitespace-nowrap text-xs text-slate-500 font-mono tracking-tighter">${date}</td>
+                        <td class="px-5 py-4 whitespace-nowrap">${roleBadge}</td>
+                        <td class="px-5 py-4 whitespace-nowrap text-sm font-medium flex gap-2">
+                            ${!isSuperAdmin ? `
+                                <button onclick="changeUserRole('${u.uid}', '${u.role === 'admin' ? 'user' : 'admin'}')" class="text-amber-700 hover:text-white bg-amber-50 hover:bg-amber-600 border border-amber-200 hover:border-amber-600 px-3 py-1.5 rounded-lg transition-all text-xs font-bold shadow-sm">切換權限</button>
+                                <button onclick="deleteUser('${u.uid}')" class="text-red-600 hover:text-white bg-red-50 hover:bg-red-600 border border-red-200 hover:border-red-600 px-3 py-1.5 rounded-lg transition-all text-xs font-bold shadow-sm">刪除紀錄</button>
+                            ` : '<span class="text-xs text-amber-600 font-black tracking-widest bg-amber-100 px-3 py-1.5 rounded-lg border border-amber-200">唯一系統創作者</span>'}
+                        </td>
+                    </tr>`;
+                }).join('');
+            } catch (e) {
+                console.error(e);
+                tbody.innerHTML = '<tr><td colspan="7" class="text-center py-12 text-red-500 font-bold">載入失敗，請檢查權限或連線。</td></tr>';
+            }
+        };
+
+        window.changeUserRole = (uid, newRole) => {
+            window.showSysConfirm(
+                "確認更改權限", 
+                `確定要將此用戶的系統權限更改為 [${newRole.toUpperCase()}] 嗎？`, 
+                async () => {
+                    try {
+                        const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'member_profiles', uid);
+                        await updateDoc(docRef, { role: newRole });
+                        await window.renderAdminTable(); 
+                    } catch (e) {
+                        window.showSysAlert("權限變更失敗", e.message, true);
+                    }
+                }, 
+                false // 使用橘色按鈕表示警告而非紅色的破壞性行為
+            );
+        };
+
+        window.deleteUser = (uid) => {
+            window.showSysConfirm(
+                "刪除會員檔案", 
+                "警告：確定要刪除此用戶的會員檔案嗎？\n(注意：這僅會移除應用程式紀錄，不會刪除使用者的 Auth 帳號。此操作無法復原。)", 
+                async () => {
+                    try {
+                        const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'member_profiles', uid);
+                        await deleteDoc(docRef);
+                        await window.renderAdminTable();
+                    } catch (e) {
+                        window.showSysAlert("刪除失敗", e.message, true);
+                    }
+                },
+                true // 紅色按鈕
+            );
+        };
+
+        window.exportCSV = () => {
+            if (!window.memberData || window.memberData.length === 0) {
+                return window.showSysAlert("無法匯出", "目前沒有會員資料可供匯出。", false);
+            }
+            
+            let csv = '\uFEFF'; 
+            csv += "註冊信箱,真實姓名,身份,系統登入次數,註冊時間,系統權限\n";
+            
+            window.memberData.forEach(u => {
+                const date = new Date(u.createdAt).toLocaleString('zh-TW');
+                const identity = u.identity === 'student' ? 'TONY老師學員' : '一般訪客';
+                const role = u.role === 'admin' ? '管理員' : '一般會員';
+                csv += `${u.email},${u.realName},${identity},${u.loginCount || 0},${date},${role}\n`;
+            });
+            
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `SaaS_會員總表_${new Date().toISOString().slice(0,10)}.csv`;
+            a.click();
+            URL.revokeObjectURL(url);
+        };
+
+        window.generateAIReport = async () => {
+            const startDate = document.getElementById('report-start').value;
+            const endDate = document.getElementById('report-end').value;
+            if (!startDate || !endDate) {
+                return window.showSysAlert('操作提示', '請先設定分析報告的「起訖時間」以進行彙整。');
+            }
+            
+            const apiKey = window.userApiKey || '';
+            if (!apiKey) {
+                return window.showSysAlert('缺少 API 金鑰', '請先在首頁頂端輸入您的 Gemini API Key 以啟用智能分析功能。', true);
+            }
+
+            const btn = document.getElementById('btn-ai-report');
+            const origText = btn.innerHTML;
+            btn.innerHTML = '<span class="animate-pulse flex items-center"><span class="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2"></span>AI 深度分析中...</span>';
+            btn.disabled = true;
+
+            try {
+                const startTimestamp = new Date(startDate).getTime();
+                const endTimestamp = new Date(endDate).getTime() + 86400000; 
+                
+                const filteredUsers = window.memberData.filter(u => u.createdAt >= startTimestamp && u.createdAt <= endTimestamp);
+                
+                const total = filteredUsers.length;
+                const students = filteredUsers.filter(u => u.identity === 'student').length;
+                const visitors = total - students;
+                const totalLogins = filteredUsers.reduce((sum, u) => sum + (u.loginCount || 0), 0);
+
+                const prompt = `你是一位專業的 SaaS 數據分析師。以下是我們系統從 ${startDate} 到 ${endDate} 的會員註冊與活躍數據：
+- 期間新註冊總人數：${total} 人
+- 身份結構分佈：TONY老師學員 ${students} 人 / 一般訪客 ${visitors} 人
+- 期間內這批用戶的總登入次數：${totalLogins} 次
+                
+請幫我撰寫一份「專業且具備商業洞察的營運分析報告」，內容需包含：
+1. 數據總結 (計算活躍度、推估參與度)
+2. 客群結構分析洞察 (學員與訪客的比例意涵)
+3. 給管理層的下一步行銷或營運建議。
+
+請以適合 Word 匯出的 HTML 格式回覆 (只使用 <h1>, <h2>, <p>, <ul> 等標準標籤，不要包含 \`\`\`html 標記，加上簡單行內 CSS style 讓文字具備商務質感)。`;
+
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+                });
+                
+                if (!response.ok) throw new Error('API 請求失敗，請檢查 API Key 是否有效。');
+                const data = await response.json();
+                let htmlContent = data.candidates[0].content.parts[0].text;
+                
+                htmlContent = htmlContent.replace(/```html/g, '').replace(/```/g, '');
+
+                const header = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>AI 營運分析報告</title><style>body { font-family: 'Microsoft JhengHei', 'PingFang TC', sans-serif; line-height: 1.8; color: #1e293b; } h1 { color: #0f172a; border-bottom: 2px solid #0d9488; padding-bottom: 8px; font-size: 24px; } h2 { color: #0d9488; margin-top: 24px; font-size: 18px; } p, li { font-size: 14px; }</style></head><body>";
+                const footer = "</body></html>";
+                
+                const blob = new Blob(['\ufeff', header + htmlContent + footer], { type: 'application/msword' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `SaaS_營運分析報告_${startDate}_至_${endDate}.doc`;
+                a.click();
+                URL.revokeObjectURL(url);
+
+            } catch (err) {
+                window.showSysAlert('報告產生失敗', err.message, true);
+            } finally {
+                btn.innerHTML = origText;
+                btn.disabled = false;
+            }
+        };
+    </script>
+
+    <script>
+        window.userApiKey = ''; 
+
+        document.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('.ai-term').forEach(el => {
                 el.addEventListener('click', (e) => {
                     const term = e.target.innerText;
@@ -969,12 +1686,13 @@
             });
         });
 
-        // --- API Key 邏輯 ---
         function saveApiKey() {
             const inputVal = document.getElementById('api-key-input').value.trim();
             if (inputVal) {
-                userApiKey = inputVal;
-                localStorage.setItem('tony_course_api_key', userApiKey);
+                window.userApiKey = inputVal;
+                if (window.saveApiKeyToCloud) {
+                    window.saveApiKeyToCloud(window.userApiKey);
+                }
                 showKeyStatus(true);
                 
                 const btn = document.getElementById('save-btn');
@@ -990,7 +1708,7 @@
             }
         }
 
-        function showKeyStatus(saved) {
+        window.showKeyStatus = function(saved) {
             const statusEl = document.getElementById('api-key-status');
             if (saved) statusEl.classList.remove('hidden');
             else statusEl.classList.add('hidden');
@@ -999,14 +1717,10 @@
         function closeModal() {
             document.getElementById('ai-modal').classList.add('hidden');
         }
-        function closeAlertModal() {
-            document.getElementById('alert-modal').classList.add('hidden');
-        }
 
-        // --- STREAMING_CHUNK:Implementing AI term definition logic... ---
         // --- 核心：具備指數退避 (Exponential Backoff) 的 API 呼叫 ---
         async function fetchWithRetry(url, options, retries = 5) {
-            const delays = [1000, 2000, 4000, 8000, 16000]; // 1s, 2s, 4s, 8s, 16s
+            const delays = [1000, 2000, 4000, 8000, 16000];
             for (let i = 0; i < retries; i++) {
                 try {
                     const response = await fetch(url, options);
@@ -1017,22 +1731,22 @@
                             if (errorData.error && errorData.error.message) {
                                 errorMsg = errorData.error.message;
                             }
-                        } catch (e) { /* 忽略 json 解析錯誤 */ }
+                        } catch (e) { }
                         throw new Error(errorMsg);
                     }
                     return await response.json();
                 } catch (error) {
                     console.warn(`API 連線失敗，正在進行第 ${i + 1} 次重試... (${error.message})`);
-                    if (i === retries - 1) throw error; // 最後一次依然失敗，拋出錯誤
+                    if (i === retries - 1) throw error;
                     await new Promise(res => setTimeout(res, delays[i]));
                 }
             }
         }
 
         async function triggerAIExplanation(term) {
-            if (!userApiKey) {
-                document.getElementById('alert-modal').classList.remove('hidden');
-                document.getElementById('alert-modal').classList.add('flex');
+            if (!window.userApiKey) {
+                // Use custom alert if they try to click term without API key
+                window.showSysAlert('需要 API 金鑰', '請先在頁面頂端輸入您的 Gemini API Key 以啟用互動解析功能。', false);
                 return;
             }
 
@@ -1054,14 +1768,12 @@
                 const systemPrompt = "你現在是 TONY 楊老師團隊的「首席 AI 行銷助教」。面對大一學生，你的任務是先建立他們紮實的學科基礎，接著切換為 TONY 老師（擁有 15 年以上品牌行銷、MarTech 與上市公司發言人經驗的資深顧問）的實戰視角，傳授業界真實的經驗談。";
                 const userPrompt = `請解析行銷專有名詞：「${term}」。\n請嚴格依照以下結構以 Markdown 格式排版回覆：\n\n### 📖 理論基礎與定義\n(用大一學生能聽懂的語言，清楚解釋這個方法的原始學術定義、理論框架與存在目的，幫助建立基本功)\n\n### 💡 TONY 老師實戰精解\n(以資深行銷總監/顧問的角度，分享這個方法在「業界實務」中真正的用法、心法，或是企業常犯的錯誤與盲點)\n\n### 🔥 商業實務案例\n(舉一個知名品牌的真實市場操作細節，印證上述的觀念與實務應用)\n\n總字數請控制在 450 字左右。語氣要兼具大學講師的耐心與業界老將的專業自信，排版清晰易讀。`;
 
-                // 更新為 gemini-3.5-flash
-                const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${userApiKey}`;
+                const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=${window.userApiKey}`;
                 const payload = {
                     systemInstruction: { parts: [{ text: systemPrompt }] },
                     contents: [{ parts: [{ text: userPrompt }] }]
                 };
 
-                // 使用強健的 Retry 機制呼叫 API
                 const data = await fetchWithRetry(url, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -1089,7 +1801,6 @@
             }
         }
 
-        // --- 簡易 Markdown 解析器優化 ---
         function parseMarkdown(text) {
             let html = text;
             html = html.replace(/\*\*(.*?)\*\*/g, '<strong class="text-slate-900 font-bold">$1</strong>');
@@ -1103,8 +1814,6 @@
             return html;
         }
 
-        // --- STREAMING_CHUNK:Adding chatbot conversation and helper functions... ---
-        // --- 提示詞複製功能 ---
         async function copyToClipboard(buttonElement) {
             const container = buttonElement.closest('.relative');
             const promptText = container.querySelector('.prompt-text').innerText;
@@ -1113,14 +1822,11 @@
             const successHTML = `<svg class="w-3 h-3 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> <span class="text-emerald-400 font-bold">已複製</span>`;
 
             try {
-                // 優先使用現代的 Clipboard API
                 await navigator.clipboard.writeText(promptText);
                 showCopySuccess(buttonElement, originalHTML, successHTML);
             } catch (err) {
-                // Fallback: 處理部分瀏覽器或 iframe 環境下不支援 clipboard 的狀況
                 const textArea = document.createElement("textarea");
                 textArea.value = promptText;
-                // 確保 textarea 不會影響畫面排版
                 textArea.style.position = "absolute";
                 textArea.style.left = "-999999px";
                 document.body.appendChild(textArea);
@@ -1150,19 +1856,17 @@
         }
 
         // --- TONY 老師 AI 助理 Chatbot 邏輯 ---
-        let chatHistory = []; // 儲存多輪對話歷史
+        let chatHistory = []; 
 
         function toggleChat() {
             const chatWin = document.getElementById('chatbot-window');
             if (chatWin.classList.contains('hidden')) {
-                if (!userApiKey) {
-                    document.getElementById('alert-modal').classList.remove('hidden');
-                    document.getElementById('alert-modal').classList.add('flex');
+                if (!window.userApiKey) {
+                    window.showSysAlert('需要 API 金鑰', '請先在頁面頂端輸入您的 Gemini API Key 以使用專屬 AI 助理。', false);
                     return;
                 }
                 chatWin.classList.remove('hidden');
                 chatWin.classList.add('flex');
-                // 聚焦輸入框
                 setTimeout(() => document.getElementById('chat-input').focus(), 100);
             } else {
                 chatWin.classList.add('hidden');
@@ -1171,7 +1875,6 @@
         }
 
         function handleChatKeydown(e) {
-            // 自動調整 textarea 高度
             e.target.style.height = 'auto';
             e.target.style.height = (e.target.scrollHeight) + 'px';
             
@@ -1184,15 +1887,13 @@
         async function sendChatMessage() {
             const inputEl = document.getElementById('chat-input');
             const text = inputEl.value.trim();
-            if (!text || !userApiKey) return;
+            if (!text || !window.userApiKey) return;
 
-            // 1. 將使用者訊息加入 UI 與 History
             appendChatMessage('user', text);
             inputEl.value = '';
-            inputEl.style.height = 'auto'; // 重置高度
+            inputEl.style.height = 'auto'; 
             chatHistory.push({ role: 'user', parts: [{ text: text }] });
 
-            // 2. 顯示 Loading
             const msgContainer = document.getElementById('chat-messages');
             const loadingId = 'chat-loading-' + Date.now();
             const loadingHtml = `
@@ -1208,7 +1909,6 @@
             msgContainer.scrollTop = msgContainer.scrollHeight;
 
             try {
-                // TONY 老師的專屬 AI 人設
                 const systemPrompt = `你現在是 TONY 楊老師（60歲，資深品牌行銷顧問、創業導師、前上市公司14年發言人、生成式 AI 專家）的專屬 AI 助教。
 你的任務是與大學生對話，解答他們關於《AI行銷管理全局觀》課程、行銷理論（如 STP, 4P, PESTEL）、MarTech 科技（如 AEO/GEO）、以及 AI 實作任務的疑問。
 回答守則：
@@ -1218,8 +1918,7 @@
 4. 使用 Markdown 格式讓排版易讀。
 5. 每次回答字數盡量控制在 300 字以內，保持對話的輕快節奏。`;
                 
-                // 更新為 gemini-3.5-flash
-                const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${userApiKey}`;
+                const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=${window.userApiKey}`;
                 const payload = {
                     systemInstruction: { parts: [{ text: systemPrompt }] },
                     contents: chatHistory
@@ -1233,7 +1932,6 @@
 
                 const aiText = data.candidates[0].content.parts[0].text;
                 
-                // 3. 將 AI 回覆加入 History 與 UI
                 chatHistory.push({ role: 'model', parts: [{ text: aiText }] });
                 document.getElementById(loadingId).remove();
                 appendChatMessage('model', aiText);
@@ -1241,7 +1939,7 @@
             } catch (error) {
                 document.getElementById(loadingId).remove();
                 appendChatMessage('error', '⚠️ 系統連線發生錯誤，請確認 API Key 後再試一次。');
-                chatHistory.pop(); // 移除失敗的提問，允許重試
+                chatHistory.pop();
             }
         }
 
