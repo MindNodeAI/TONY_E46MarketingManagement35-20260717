@@ -6,6 +6,7 @@
     <title>AI行銷管理全局觀：打造高績效品牌的整合策略地圖 | TONY 顧問</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
     <script>
         tailwind.config = {
             theme: {
@@ -376,7 +377,7 @@
                     <div>
                         <h3 class="text-2xl font-black text-slate-900 mb-6 flex items-center"><span class="w-1.5 h-6 bg-slate-900 mr-3 rounded-full"></span>課程說明</h3>
                         <div class="space-y-4 text-slate-600 leading-relaxed font-medium">
-                            <p>歡迎來到<span class="ai-term">行銷 7.0</span> 的時代！在這個由全自主 AI 代理 (Agentic AI)、空間運算與演算法共構的商業環境中，傳統的行銷理論已不足以應對挑戰。本課程旨在為數位原生代的行銷新兵，建立一套兼具「宏觀視野」與「微觀執行力」的<span class="ai-term">整合性行銷</span>管理知識體系。</p>
+                            <p>歡迎來到<span class="ai-term">行銷 7.0</span> 的時代！在這個由全自主 AI 代理 (Agentic AI)、空間運算與演算法共構的商業環境中，傳統行銷理論已不足以應對挑戰。本課程旨在為數位原生代的行銷新兵，建立一套兼具「宏觀視野」與「微觀執行力」的<span class="ai-term">整合性行銷</span>管理知識體系。</p>
                             <p>我們將從行銷的核心本質出發，系統性地解構從市場環境分析 (<span class="ai-term">Macro</span>)、<span class="ai-term">消費者洞察</span> (<span class="ai-term">Micro</span>)，到策略擬定 (<span class="ai-term">STP 策略</span>)、價值創造 (<span class="ai-term">行銷 4P</span>)，再到數據衡量 (<span class="ai-term">Metrics</span>) 的完整流程。</p>
                             <p>更重要的是，每一環節都將深度融合行銷科技 (<span class="ai-term">MarTech</span>)、數據驅動決策，以及與 AI 代理 (<span class="ai-term">Agentic AI</span>) 的協作方法，確保您的行銷知識庫從第一天起就與產業前沿無縫接軌。</p>
                         </div>
@@ -617,7 +618,7 @@
                                         <div class="space-y-2 text-slate-700 mb-3">
                                             <p><strong class="text-brand-600">【模式】</strong>：與 AI 進行角色扮演，AI 作為目標市場代表。</p>
                                             <p><strong class="text-brand-600">【產出】</strong>：協作深化 <span class="ai-term">Persona</span> 的生活細節與價值觀。</p>
-                                            <p><strong class="text-amber-600">【互動討論】</strong>：AI 描繪的 Persona 是否太過完美流於「刻板印象」？我們該加入哪些「反直覺」的變數來找到真實市場的破口？</p>
+                                            <p><strong class="text-amber-600">【互動討論】</strong>：AI 描繪的 Persona 是否太過完美流於「刻板印象」？我們該如何加入哪些「反直覺」的變數來找到真實市場的破口？</p>
                                         </div>
                                         <div class="mt-auto bg-slate-900 rounded-lg p-3 relative group">
                                             <div class="flex justify-between items-center mb-2">
@@ -1156,7 +1157,11 @@
                         document.getElementById('main-app').classList.remove('hidden');
                         document.getElementById('admin-dashboard').classList.add('hidden');
                     }
-                } catch (e) { console.error("載入資料失敗", e); }
+                } catch (e) { 
+                    console.error("載入資料失敗", e);
+                    window.showSysAlert("資料庫權限錯誤", "無法連接您的會員資料庫。請確認 Firebase Firestore 的安全規則 (Security Rules) 是否已正確發布。<br><br><span class='text-xs text-red-500'>" + e.message + "</span>", true);
+                    await window.fbSignOut(window.auth);
+                }
             } else {
                 document.getElementById('auth-gate').classList.remove('hidden');
                 document.getElementById('main-app').classList.add('hidden');
@@ -1697,12 +1702,20 @@
                 const parsedHTML = parseMarkdown(aiText);
                 content.innerHTML = parsedHTML;
                 
-                const safeHTML = encodeURIComponent(parsedHTML);
+                // 觸發 MathJax 渲染公式
+                if (window.MathJax) {
+                    MathJax.typesetPromise([content]).catch((err) => console.log('MathJax error: ', err));
+                }
+                
+                // 修正 SyntaxError：將單引號進行轉義替換，確保匯入 decodeURIComponent 時不會斷開 JS 字串
+                const safeHTML = encodeURIComponent(parsedHTML).replace(/'/g, "%27");
+                const safeTerm = term.replace(/'/g, "\\'");
+                
                 actionsContainer.innerHTML = `
-                    <button onclick="window.saveAiNote('深度解析：${term}', decodeURIComponent('${safeHTML}'), this)" class="text-xs font-bold text-brand-600 bg-brand-50 border border-brand-200 px-3 py-1.5 rounded-lg transition-colors hover:bg-brand-100 flex items-center gap-1">
+                    <button onclick="window.saveAiNote('深度解析：${safeTerm}', decodeURIComponent('${safeHTML}'), this)" class="text-xs font-bold text-brand-600 bg-brand-50 border border-brand-200 px-3 py-1.5 rounded-lg transition-colors hover:bg-brand-100 flex items-center gap-1">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 01-2-2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path></svg> 儲存至筆記
                     </button>
-                    <button onclick="window.exportToWord('深度解析：${term}', decodeURIComponent('${safeHTML}'))" class="text-xs font-bold text-white bg-slate-900 hover:bg-slate-800 border border-slate-900 px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1">
+                    <button onclick="window.exportToWord('深度解析：${safeTerm}', decodeURIComponent('${safeHTML}'))" class="text-xs font-bold text-white bg-slate-900 hover:bg-slate-800 border border-slate-900 px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg> 匯出 Word
                     </button>`;
             } catch (error) {
@@ -1722,7 +1735,52 @@
             // 處理水平分隔線 (---)
             html = html.replace(/^---$/gim, '<hr class="my-6 border-slate-200">');
 
+            // 處理 Markdown 表格 (解決截圖中變成亂碼純文字的問題)
+            if (html.includes('|')) {
+                const lines = html.split('\n');
+                let inTable = false;
+                let tableHtml = '';
+                let newHtmlLines = [];
+                
+                for (let i = 0; i < lines.length; i++) {
+                    const line = lines[i].trim();
+                    if (line.startsWith('|') && line.endsWith('|')) {
+                        if (!inTable) {
+                            inTable = true;
+                            tableHtml = '<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-slate-200 border border-slate-200 rounded-lg overflow-hidden">';
+                        }
+                        // 檢查是否為分隔線 |---|---|
+                        if (/^\|[\s\-:]+\|/.test(line) && line.replace(/[\|\-\:\s]/g, '').length === 0) {
+                            tableHtml += '</thead><tbody class="bg-white divide-y divide-slate-100">';
+                            // 將上一行轉為 thead
+                            tableHtml = tableHtml.replace(/<tr class="hover:bg-slate-50">/g, '<thead class="bg-slate-50"><tr>').replace(/<td class="px-4 py-3 text-sm text-slate-700 whitespace-pre-wrap break-words">/g, '<th class="px-4 py-3 text-left text-xs font-bold text-slate-600 uppercase tracking-wider">').replace(/<\/td>/g, '</th>');
+                        } else {
+                            const cells = line.split('|').slice(1, -1).map(c => c.trim());
+                            tableHtml += '<tr class="hover:bg-slate-50">';
+                            cells.forEach(cell => {
+                                tableHtml += `<td class="px-4 py-3 text-sm text-slate-700 whitespace-pre-wrap break-words">${cell}</td>`;
+                            });
+                            tableHtml += '</tr>';
+                        }
+                    } else {
+                        if (inTable) {
+                            inTable = false;
+                            tableHtml += '</tbody></table></div>';
+                            newHtmlLines.push(tableHtml);
+                            tableHtml = '';
+                        }
+                        newHtmlLines.push(lines[i]);
+                    }
+                }
+                if (inTable) {
+                    tableHtml += '</tbody></table></div>';
+                    newHtmlLines.push(tableHtml);
+                }
+                html = newHtmlLines.join('\n');
+            }
+
             html = html.replace(/\*\*(.*?)\*\*/g, '<strong class="text-slate-900 font-bold">$1</strong>');
+            html = html.replace(/^#### (.*$)/gim, '<h5 class="text-sm font-bold text-slate-800 mt-4 mb-2">$1</h5>');
             html = html.replace(/^### (.*$)/gim, '<h4 class="text-base font-bold text-slate-900 mt-5 mb-2 flex items-center"><span class="w-1 h-4 bg-brand-500 mr-2 rounded-sm"></span>$1</h4>');
             html = html.replace(/^## (.*$)/gim, '<h3 class="text-lg font-bold text-slate-900 mt-6 mb-3 border-b border-slate-100 pb-2">$1</h3>');
             html = html.replace(/^\* (.*$)/gim, '<li class="ml-5 list-disc marker:text-brand-500 mb-1">$1</li>');
@@ -1867,15 +1925,18 @@
                 html = `<div class="flex items-start gap-2 justify-end"><div class="bg-slate-900 text-white p-3.5 rounded-2xl rounded-tr-sm shadow-md max-w-[85%] break-words leading-relaxed font-medium">${escaped}</div></div>`;
             } else if (role === 'model') {
                 const parsedHTML = parseMarkdown(text);
-                const safeHTML = encodeURIComponent(parsedHTML);
-                const title = text.substring(0, 15).replace(/[\n#*]/g, '') + '...';
+                
+                // 修正 SyntaxError：過濾所有會破壞 HTML onclick 屬性的單引號，包含 title 也要去除
+                const safeHTML = encodeURIComponent(parsedHTML).replace(/'/g, "%27");
+                const safeTitle = text.substring(0, 15).replace(/[\n#*']/g, '') + '...';
+                
                 html = `
                 <div class="flex items-start gap-2 justify-start group">
                     <div class="w-7 h-7 rounded-full bg-brand-100 flex items-center justify-center shrink-0 mt-1 border border-brand-200"><span class="text-brand-700 text-xs font-black">AI</span></div>
                     <div class="bg-white p-4 rounded-2xl rounded-tl-sm shadow-sm border border-slate-200 text-slate-700 max-w-[85%] break-words leading-relaxed">
                         <div class="prose prose-sm prose-slate max-w-none">${parsedHTML}</div>
                         <div class="mt-3 pt-3 border-t border-slate-100 flex gap-2">
-                            <button onclick="window.saveAiNote('助教對話：${title}', decodeURIComponent('${safeHTML}'), this)" class="text-[10px] font-bold text-brand-600 bg-brand-50 border border-brand-200 px-2 py-1 rounded hover:bg-brand-100 transition-colors flex items-center gap-1">儲存筆記</button>
+                            <button onclick="window.saveAiNote('助教對話：${safeTitle}', decodeURIComponent('${safeHTML}'), this)" class="text-[10px] font-bold text-brand-600 bg-brand-50 border border-brand-200 px-2 py-1 rounded hover:bg-brand-100 transition-colors flex items-center gap-1">儲存筆記</button>
                             <button onclick="window.exportToWord('AI助教對話紀錄', decodeURIComponent('${safeHTML}'))" class="text-[10px] font-bold text-slate-500 bg-slate-100 border border-slate-200 px-2 py-1 rounded hover:bg-slate-200 transition-colors flex items-center gap-1">匯出 Word</button>
                         </div>
                     </div>
@@ -1885,6 +1946,11 @@
             }
             msgContainer.insertAdjacentHTML('beforeend', html);
             msgContainer.scrollTop = msgContainer.scrollHeight;
+            
+            // 如果是 AI 回覆，觸發 MathJax 渲染公式
+            if (role === 'model' && window.MathJax) {
+                MathJax.typesetPromise([msgContainer]).catch((err) => console.log('MathJax error: ', err));
+            }
         };
     </script>
 </body>
