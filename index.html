@@ -4,9 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI行銷管理全局觀：打造高績效品牌的整合策略地圖 | TONY 顧問</title>
+    
+    <!-- 引入 Tailwind CSS, MathJax, Mermaid -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+
     <script>
         tailwind.config = {
             theme: {
@@ -19,6 +23,7 @@
             }
         }
     </script>
+
     <style>
         /* Modernized AI Term Highlight */
         .ai-term {
@@ -67,7 +72,6 @@
 
     <!-- ==================== AUTH GATE ==================== -->
     <div id="auth-gate" class="fixed inset-0 z-[100] bg-slate-900 flex items-center justify-center p-4">
-        <!-- 背景裝飾 -->
         <div class="absolute inset-0 overflow-hidden pointer-events-none">
             <div class="absolute -top-1/2 -right-1/2 w-full h-full bg-brand-500/10 rounded-full blur-3xl"></div>
             <div class="absolute -bottom-1/2 -left-1/2 w-full h-full bg-blue-500/10 rounded-full blur-3xl"></div>
@@ -96,7 +100,7 @@
                         </div>
                         <div class="relative">
                             <input type="password" id="log-pwd" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all" placeholder="請輸入密碼">
-                            <button onclick="togglePassword('log-pwd')" class="absolute right-4 top-3 text-slate-400 hover:text-slate-600 focus:outline-none">
+                            <button onclick="togglePassword('log-pwd')" class="absolute right-4 top-3 text-slate-400 hover:text-slate-600 focus:outline-none" title="顯示/隱藏密碼">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
                             </button>
                         </div>
@@ -137,7 +141,7 @@
                         <label class="block text-xs font-bold text-slate-700 mb-1.5 tracking-wide">設定密碼 Password</label>
                         <div class="relative">
                             <input type="password" id="reg-pwd" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all" placeholder="至少 6 個字元">
-                            <button onclick="togglePassword('reg-pwd')" class="absolute right-4 top-3 text-slate-400 hover:text-slate-600 focus:outline-none">
+                            <button onclick="togglePassword('reg-pwd')" class="absolute right-4 top-3 text-slate-400 hover:text-slate-600 focus:outline-none" title="顯示/隱藏密碼">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
                             </button>
                         </div>
@@ -193,7 +197,6 @@
         </header>
 
         <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
-            <!-- Toolbar -->
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6">
                 <div class="w-full lg:w-auto">
                     <h2 class="text-lg font-bold text-slate-900 mb-3 flex items-center gap-2">
@@ -216,7 +219,6 @@
                 </button>
             </div>
 
-            <!-- Table -->
             <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
                 <div class="p-4 border-b border-slate-100 bg-slate-50/50 flex justify-between items-center">
                     <h3 class="font-bold text-slate-800">註冊會員名單總覽</h3>
@@ -248,7 +250,6 @@
 
     <!-- ==================== MAIN APP ==================== -->
     <div id="main-app" class="hidden">
-        <!-- Top Menu Bar -->
         <header class="sticky top-0 z-40 w-full bg-slate-950 text-white shadow-lg border-b border-slate-800">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 md:pt-14">
                 <div class="flex flex-col md:flex-row justify-between items-center pb-3 gap-4">
@@ -270,7 +271,6 @@
                             </button>
                             <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" class="text-xs text-slate-400 hover:text-white underline-offset-2 hover:underline text-center whitespace-nowrap transition-colors hidden sm:block">取得金鑰 ↗</a>
                             
-                            <!-- 功能按鈕 -->
                             <button id="nav-notes-btn" onclick="openNotesModal()" class="bg-slate-800 hover:bg-slate-700 text-brand-400 font-bold rounded-md text-sm px-4 py-2 transition-colors border border-slate-700 whitespace-nowrap flex items-center gap-1.5">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path></svg> 筆記庫
                             </button>
@@ -286,7 +286,6 @@
         </header>
 
         <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-20">
-            <!-- Hero Section -->
             <section class="text-center space-y-6 max-w-4xl mx-auto">
                 <div class="inline-block px-3 py-1 bg-slate-200 text-slate-700 rounded-full text-xs font-bold tracking-widest uppercase mb-2">Syllabus 2026</div>
                 <h1 class="text-4xl md:text-6xl font-black text-slate-900 leading-tight tracking-tight">AI行銷管理全局觀</h1>
@@ -954,7 +953,6 @@
             </section>
         </main>
 
-        <!-- Footer -->
         <footer class="bg-slate-950 text-slate-500 py-12 text-center border-t border-slate-900 mt-20">
             <div class="max-w-7xl mx-auto px-4">
                 <img src="https://firebasestorage.googleapis.com/v0/b/k16-tony-ai-wisdom-platform.firebasestorage.app/o/assets%2F6av64EOvvqQNAIoXqcPfHC5BBeF3%2F1785039568519_2.png?alt=media&token=c2b5f53d-3d3b-4c7f-b404-fa38bb064309" alt="Tony Studio Logo" class="h-6 w-auto mx-auto mb-6 opacity-30 grayscale object-contain">
@@ -963,7 +961,7 @@
             </div>
         </footer>
 
-        <!-- TONY 老師 AI 助理 Chatbot UI (Moved inside main-app) -->
+        <!-- TONY 老師 AI 助理 Chatbot UI -->
         <div id="chatbot-fab" class="fixed bottom-6 right-6 z-[45]">
             <button onclick="toggleChat()" class="bg-slate-900 hover:bg-slate-800 text-white rounded-full p-4 shadow-2xl transition-transform hover:scale-105 flex items-center justify-center relative group border border-slate-700">
                 <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
@@ -971,11 +969,9 @@
             </button>
         </div>
 
-        <div id="chatbot-window" class="fixed bottom-24 right-6 w-80 md:w-[380px] bg-white rounded-2xl shadow-2xl z-50 hidden flex-col border border-slate-200 overflow-hidden" style="height: 550px; max-height: 80vh;">
-            <!-- Drag Resize Handle -->
+        <div id="chatbot-window" class="fixed bottom-24 right-6 w-80 md:w-[420px] bg-white rounded-2xl shadow-2xl z-50 hidden flex-col border border-slate-200 overflow-hidden" style="height: 600px; max-height: 85vh;">
             <div id="chat-resizer" class="chat-resize-handle group" title="拖曳調整大小"></div>
             
-            <!-- Header -->
             <div class="bg-slate-900 text-white p-4 flex justify-between items-center shadow-md relative z-10 pl-6">
                 <div class="flex items-center gap-3">
                     <div class="w-9 h-9 rounded-full bg-brand-500 flex items-center justify-center font-black text-sm border-2 border-brand-400 shadow-inner">AI</div>
@@ -983,12 +979,11 @@
                         <h4 class="font-bold text-sm tracking-wide">TONY 老師的專屬助教</h4>
                         <div class="flex items-center gap-1 mt-0.5">
                             <span class="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></span>
-                            <p class="text-[10px] text-slate-300 tracking-wider">在線為您解答</p>
+                            <p class="text-[10px] text-slate-300 tracking-wider">支援 Mermaid 圖表與數學公式</p>
                         </div>
                     </div>
                 </div>
                 <div class="flex items-center gap-2">
-                    <!-- 字體縮放按鈕 -->
                     <button onclick="changeFontSize('chat', -1)" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-2 py-1 rounded transition-colors" title="縮小字體">A-</button>
                     <button onclick="changeFontSize('chat', 1)" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-2 py-1 rounded transition-colors mr-1" title="放大字體">A+</button>
                     <button onclick="toggleChat()" class="text-slate-400 hover:text-white transition-colors bg-slate-800 hover:bg-slate-700 rounded-full p-1.5">
@@ -996,17 +991,14 @@
                     </button>
                 </div>
             </div>
-            <!-- Messages -->
             <div id="chat-messages" class="flex-1 overflow-y-auto p-4 space-y-5 bg-slate-50 text-sm scroll-smooth">
-                <!-- Welcome msg -->
                 <div class="flex items-start gap-2 justify-start">
                     <div class="w-7 h-7 rounded-full bg-brand-100 flex items-center justify-center shrink-0 mt-1 border border-brand-200"><span class="text-brand-700 text-xs font-black">AI</span></div>
                     <div class="bg-white p-3.5 rounded-2xl rounded-tl-sm shadow-sm border border-slate-200 text-slate-700 leading-relaxed max-w-[85%]">
-                        同學您好！我是 TONY 老師的 AI 助教。👋<br><br>關於《AI行銷管理全局觀》的理論 (如 STP、AEO)、或是剛才做完的 AI 協作任務，有任何想討論的地方嗎？隨時問我！
+                        同學您好！我是 TONY 老師的 AI 助教。👋<br><br>我可以幫你產出具備 <strong>LaTeX 公式</strong> 與 <strong>Mermaid 架構圖</strong> 的專業行銷策略，想聊聊哪個主題呢？
                     </div>
                 </div>
             </div>
-            <!-- Input -->
             <div class="p-3 bg-white border-t border-slate-200 flex gap-2">
                 <textarea id="chat-input" rows="1" placeholder="輸入問題 (Shift+Enter 換行)..." class="flex-1 bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-slate-900 focus:ring-1 focus:ring-slate-900 resize-none overflow-hidden" onkeydown="handleChatKeydown(event)"></textarea>
                 <button onclick="sendChatMessage()" class="bg-slate-900 hover:bg-slate-800 text-white rounded-xl px-4 py-2 transition-colors flex items-center justify-center shadow-sm">
@@ -1017,11 +1009,9 @@
     </div> <!-- /MAIN APP -->
 
     <!-- ==================== MODALS ==================== -->
-    
-    <!-- Premium AI Modal -->
-    <div id="ai-modal" class="fixed inset-0 z-[60] hidden items-center justify-center p-4 sm:p-6">
+    <div id="ai-modal" class="fixed inset-0 z-[60] hidden items-center justify-center p-4 sm:p-6 transition-all duration-300">
         <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-md transition-opacity" onclick="closeModal()"></div>
-        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl relative z-10 flex flex-col max-h-[85vh] modal-enter border border-slate-100 overflow-hidden">
+        <div id="ai-modal-box" class="bg-white rounded-2xl shadow-2xl w-full max-w-3xl relative z-10 flex flex-col max-h-[90vh] modal-enter border border-slate-100 overflow-hidden transition-all duration-300">
             <div class="flex items-center justify-between p-6 border-b border-slate-100 bg-white">
                 <div class="flex items-center gap-3">
                     <div class="w-8 h-8 rounded-full bg-slate-900 flex items-center justify-center text-white text-xs font-black">AI</div>
@@ -1030,6 +1020,9 @@
                 <div class="flex items-center gap-2">
                     <button onclick="changeFontSize('modal', -1)" class="text-sm bg-slate-100 hover:bg-slate-200 text-slate-600 px-2.5 py-1 rounded-md font-medium transition-colors">A-</button>
                     <button onclick="changeFontSize('modal', 1)" class="text-sm bg-slate-100 hover:bg-slate-200 text-slate-600 px-2.5 py-1 rounded-md font-medium transition-colors mr-2">A+</button>
+                    <button onclick="toggleModalFullscreen()" id="modal-fs-btn" class="text-slate-400 hover:text-slate-900 bg-slate-50 hover:bg-slate-100 rounded-md p-1.5 transition-colors mr-1" title="全螢幕預覽">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path></svg>
+                    </button>
                     <button onclick="closeModal()" class="text-slate-400 hover:text-slate-900 bg-slate-50 hover:bg-slate-100 rounded-full p-2 transition-colors">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                     </button>
@@ -1044,11 +1037,10 @@
                     <!-- API Data injected here -->
                 </div>
             </div>
-            <!-- 下方工具列 (儲存與匯出) -->
             <div class="p-4 border-t border-slate-100 bg-white flex justify-between items-center">
                 <div class="text-xs text-slate-400 font-medium hidden sm:block">Powered by Gemini API • 內容由 AI 協作生成</div>
                 <div id="modal-actions-container" class="flex gap-2 w-full sm:w-auto justify-end">
-                    <!-- 儲存按鈕將由 JS 動態產生，以確保能夾帶該次內容 -->
+                    <!-- 儲存與匯出按鈕將由 JS 動態產生 -->
                 </div>
             </div>
         </div>
@@ -1057,7 +1049,7 @@
     <!-- 我的筆記庫 Modal -->
     <div id="notes-modal" class="fixed inset-0 z-[80] hidden items-center justify-center p-4">
         <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-md transition-opacity" onclick="closeNotesModal()"></div>
-        <div class="bg-[#F8FAFC] rounded-2xl shadow-2xl w-full max-w-3xl relative z-10 flex flex-col h-[80vh] modal-enter border border-slate-200 overflow-hidden">
+        <div class="bg-[#F8FAFC] rounded-2xl shadow-2xl w-full max-w-4xl relative z-10 flex flex-col h-[85vh] modal-enter border border-slate-200 overflow-hidden">
             <div class="flex items-center justify-between p-6 bg-slate-900 text-white">
                 <div class="flex items-center gap-3">
                     <svg class="w-6 h-6 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path></svg>
@@ -1073,7 +1065,27 @@
         </div>
     </div>
 
-    <!-- System Alert Modal -->
+    <!-- 筆記線上預覽 Modal -->
+    <div id="note-preview-modal" class="fixed inset-0 z-[90] hidden items-center justify-center p-4 sm:p-6 transition-all duration-300">
+        <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" onclick="closeNotePreview()"></div>
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-4xl relative z-10 flex flex-col h-[90vh] max-h-[90vh] border border-slate-100 overflow-hidden modal-enter">
+            <div class="flex items-center justify-between p-5 border-b border-slate-100 bg-slate-50">
+                <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                    <span class="w-1.5 h-5 bg-brand-500 rounded-sm shrink-0"></span><span id="note-preview-title">筆記預覽</span>
+                </h3>
+                <button onclick="closeNotePreview()" class="text-slate-400 hover:text-slate-900 bg-white hover:bg-slate-200 rounded-full p-2 transition-colors border border-slate-200 shadow-sm">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            <div class="p-6 overflow-y-auto flex-1 bg-white">
+                <div id="note-preview-content" class="prose prose-slate max-w-none text-base text-slate-700 leading-relaxed">
+                    <!-- Content injected here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 系統 Alert/Confirm Modals -->
     <div id="sys-alert-modal" class="fixed inset-0 z-[110] hidden items-center justify-center p-4">
         <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" onclick="closeSysAlert()"></div>
         <div class="bg-white rounded-2xl shadow-2xl w-full max-w-sm relative z-10 p-8 text-center modal-enter border border-slate-100">
@@ -1086,7 +1098,6 @@
         </div>
     </div>
 
-    <!-- System Confirm Modal -->
     <div id="sys-confirm-modal" class="fixed inset-0 z-[110] hidden items-center justify-center p-4">
         <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" onclick="closeSysConfirm()"></div>
         <div class="bg-white rounded-2xl shadow-2xl w-full max-w-sm relative z-10 p-8 text-center modal-enter border border-slate-100">
@@ -1121,14 +1132,12 @@
         const app = initializeApp(firebaseConfig);
         window.auth = getAuth(app);
         window.db = getFirestore(app);
-        window.serverTimestamp = serverTimestamp;
         
         window.appId = 'e46-marketing-management';
         window.userId = null;
         window.currentUserProfile = null;
         window.memberData = [];
 
-        // Auth Gate Logic
         onAuthStateChanged(window.auth, async (user) => {
             if (user) {
                 if (!user.emailVerified && user.email !== 'mindnodeai@gmail.com') return;
@@ -1141,35 +1150,31 @@
                         window.currentUserProfile = docSnap.data();
                         await updateDoc(docRef, { loginCount: (window.currentUserProfile.loginCount || 0) + 1, lastLoginAt: Date.now() });
                         
-                        if (window.currentUserProfile.role === 'admin') {
-                            document.getElementById('nav-admin-btn').classList.remove('hidden');
-                        }
+                        if (window.currentUserProfile.role === 'admin') document.getElementById('nav-admin-btn').classList.remove('hidden');
+                        
                         document.getElementById('auth-gate').classList.add('hidden');
                         document.getElementById('main-app').classList.remove('hidden');
-                        document.getElementById('admin-dashboard').classList.add('hidden');
                         await window.loadApiKeyFromCloud();
                     } else {
                         const role = (user.email === 'mindnodeai@gmail.com') ? 'admin' : 'user';
                         await setDoc(docRef, { uid: user.uid, email: user.email || '未知信箱', realName: '未設定', identity: 'visitor', role: role, loginCount: 1, createdAt: Date.now(), lastLoginAt: Date.now() });
                         window.currentUserProfile = { uid: user.uid, email: user.email, role: role };
                         if (role === 'admin') document.getElementById('nav-admin-btn').classList.remove('hidden');
+                        
                         document.getElementById('auth-gate').classList.add('hidden');
                         document.getElementById('main-app').classList.remove('hidden');
-                        document.getElementById('admin-dashboard').classList.add('hidden');
                     }
                 } catch (e) { 
                     console.error("載入資料失敗", e);
-                    window.showSysAlert("資料庫權限錯誤", "無法連接您的會員資料庫。請確認 Firebase Firestore 的安全規則 (Security Rules) 是否已正確發布。<br><br><span class='text-xs text-red-500'>" + e.message + "</span>", true);
+                    window.showSysAlert("資料庫權限錯誤", "請確認 Firebase Firestore 安全規則是否已正確發布。<br><br><span class='text-xs text-red-500'>" + e.message + "</span>", true);
                     await window.fbSignOut(window.auth);
                 }
             } else {
                 document.getElementById('auth-gate').classList.remove('hidden');
                 document.getElementById('main-app').classList.add('hidden');
-                document.getElementById('admin-dashboard').classList.add('hidden');
             }
         });
 
-        // 綁定全域函式供外部呼叫
         window.fbCreateUser = createUserWithEmailAndPassword;
         window.fbSignIn = signInWithEmailAndPassword;
         window.fbSendVerify = sendEmailVerification;
@@ -1187,7 +1192,35 @@
 
     <!-- ==================== APP LOGIC ==================== -->
     <script>
-        // --- 系統彈窗函式 ---
+        // --- 系統 UI 事件綁定 (使用事件委派 Event Delegation，保證 100% 觸發) ---
+        document.addEventListener('click', function(e) {
+            // 只要點擊到的元素身上有 'ai-term' 這個 class，就無條件觸發 AI 彈窗
+            if (e.target && e.target.classList.contains('ai-term')) {
+                window.triggerAIExplanation(e.target.innerText);
+            }
+        });
+
+        // 初始化圖表與拖曳視窗 (給予 300 毫秒緩衝，確保畫面已繪製)
+        setTimeout(() => {
+            if(window.mermaid) mermaid.initialize({ startOnLoad: false, theme: 'neutral' });
+            
+            const resizer = document.getElementById('chat-resizer');
+            const chatWin = document.getElementById('chatbot-window');
+            let isResizing = false;
+            if (resizer && chatWin) {
+                resizer.addEventListener('mousedown', (e) => {
+                    isResizing = true; document.addEventListener('mousemove', handleMouseMove);
+                    document.addEventListener('mouseup', () => { isResizing = false; document.removeEventListener('mousemove', handleMouseMove); }, { once: true }); e.preventDefault();
+                });
+                function handleMouseMove(e) {
+                    if (!isResizing) return;
+                    const rect = chatWin.getBoundingClientRect(); const newWidth = rect.right - e.clientX; const newHeight = rect.bottom - e.clientY;
+                    if (newWidth > 320 && newWidth < window.innerWidth * 0.9) chatWin.style.width = newWidth + 'px';
+                    if (newHeight > 400 && newHeight < window.innerHeight * 0.9) chatWin.style.height = newHeight + 'px';
+                }
+            }
+        }, 300);
+
         let confirmCallback = null;
         window.showSysAlert = (title, msg, isError = false) => {
             document.getElementById('sys-alert-title').innerText = title;
@@ -1231,7 +1264,7 @@
             window.closeSysConfirm();
         };
 
-        // --- 登入閘門邏輯 ---
+        // --- STREAMING_CHUNK:Auth Logic... ---
         window.switchAuthMode = (mode) => {
             document.getElementById('auth-login-form').classList.add('hidden');
             document.getElementById('auth-register-form').classList.add('hidden');
@@ -1264,7 +1297,6 @@
             const btn = document.getElementById('btn-reg');
             const spinner = document.getElementById('reg-spinner');
             const btnText = document.getElementById('reg-text');
-            
             btn.disabled = true; spinner.classList.remove('hidden'); btnText.innerText = '處理中...';
             
             try {
@@ -1273,14 +1305,13 @@
                 
                 const role = (email === 'mindnodeai@gmail.com') ? 'admin' : 'user';
                 const docRef = window.fbDoc(window.db, 'artifacts', window.appId, 'public', 'data', 'member_profiles', cred.user.uid);
-                
                 await window.fbSetDoc(docRef, {
                     uid: cred.user.uid, email: email, realName: name, identity: identity,
                     role: role, loginCount: 0, createdAt: Date.now(), lastLoginAt: Date.now()
                 });
 
                 await window.fbSignOut(window.auth); 
-                showAuthMsg('✅ 註冊成功！系統已發送驗證信。<br><span class="text-xs text-emerald-600/80 mt-1 block">溫馨提醒：註冊確認信有時會跑到「垃圾郵件匣」，請記得前往點擊連結驗證唷！</span>');
+                showAuthMsg('✅ 註冊成功！系統已發送驗證信。<br><span class="text-xs text-emerald-600/80 mt-1 block">溫馨提醒：請記得前往信箱點擊連結驗證唷！</span>');
                 setTimeout(() => window.switchAuthMode('login'), 5000);
             } catch (err) {
                 let msg = '註冊失敗：' + err.message;
@@ -1303,13 +1334,11 @@
 
             try {
                 const cred = await window.fbSignIn(window.auth, email, pwd);
-                
-                // 自動修復幽靈帳號機制
                 const docRef = window.fbDoc(window.db, 'artifacts', window.appId, 'public', 'data', 'member_profiles', cred.user.uid);
                 const docSnap = await window.fbGetDoc(docRef);
                 if (!docSnap.exists()) {
                     await window.fbSetDoc(docRef, {
-                        uid: cred.user.uid, email: email, realName: '未設定 (系統自動修復)', identity: 'visitor',
+                        uid: cred.user.uid, email: email, realName: '未設定 (修復)', identity: 'visitor',
                         role: (email === 'mindnodeai@gmail.com') ? 'admin' : 'user',
                         loginCount: 0, createdAt: Date.now(), lastLoginAt: Date.now()
                     });
@@ -1317,11 +1346,10 @@
                 
                 if (!cred.user.emailVerified && email !== 'mindnodeai@gmail.com') { 
                     await window.fbSignOut(window.auth);
-                    showAuthMsg('❌ 登入失敗：信箱尚未驗證。<br><span class="text-xs text-red-500 mt-1 block">請至信箱點擊驗證連結 (記得檢查垃圾郵件匣)。</span>', true);
+                    showAuthMsg('❌ 登入失敗：信箱尚未驗證。請至信箱點擊驗證連結。', true);
                     btn.disabled = false; spinner.classList.add('hidden'); btnText.innerText = '登入系統';
                     return;
                 }
-                
                 btn.disabled = false; spinner.classList.add('hidden'); btnText.innerText = '登入系統';
             } catch (err) {
                 showAuthMsg('❌ 登入失敗：帳號或密碼錯誤', true);
@@ -1331,25 +1359,19 @@
 
         window.handleResetPassword = async () => {
             const email = document.getElementById('reset-email').value.trim();
-            if (!email) return showAuthMsg('請輸入您註冊的信箱', true);
+            if (!email) return showAuthMsg('請輸入註冊信箱', true);
             try {
                 await window.fbSendReset(window.auth, email);
-                showAuthMsg('✅ 重設密碼信件已寄出！<br><span class="text-xs text-emerald-600/80 mt-1 block">溫馨提醒：信件有時會跑到「垃圾郵件匣」，請記得確認唷！</span>');
+                showAuthMsg('✅ 重設密碼信件已寄出！');
             } catch (err) { showAuthMsg('發送失敗：' + err.message, true); }
         };
 
         window.handleLogout = async () => {
             try {
                 await window.fbSignOut(window.auth);
-                window.userId = null;
-                window.currentUserProfile = null;
-                window.userApiKey = '';
-                
-                document.getElementById('log-email').value = '';
-                document.getElementById('log-pwd').value = '';
-                
-                const keyInput = document.getElementById('api-key-input');
-                if (keyInput) keyInput.value = '';
+                window.userId = null; window.currentUserProfile = null; window.userApiKey = '';
+                document.getElementById('log-email').value = ''; document.getElementById('log-pwd').value = '';
+                document.getElementById('api-key-input').value = '';
                 document.getElementById('api-key-status').classList.add('hidden');
                 
                 const saveBtn = document.getElementById('save-btn');
@@ -1358,55 +1380,110 @@
                 saveBtn.classList.add('bg-brand-600', 'hover:bg-brand-500', 'border-brand-500');
                 
                 document.getElementById('nav-admin-btn').classList.add('hidden');
-                window.switchAuthMode('login');
-                showAuthMsg('');
+                window.switchAuthMode('login'); showAuthMsg('');
             } catch (err) { window.showSysAlert("登出失敗", err.message, true); }
         };
 
-        // --- 字體大小控制與拖曳縮放邏輯 ---
-        let modalFontSize = 16;
-        let chatFontSize = 14;
+        // --- STREAMING_CHUNK:Export Logic (Native PDF Print)... ---
+        // 全新 PDF Export Logic (瀏覽器原生列印引擎)
+        window.exportToPDF = async (title, safeHTML) => {
+            const contentHTML = decodeURIComponent(safeHTML);
+            
+            // 建立一個新的視窗以供乾淨排版列印
+            const printWin = window.open('', '_blank');
+            if (!printWin) {
+                window.showSysAlert('快顯封鎖', '請允許本網站開啟彈出式視窗，以進行 PDF 匯出。', true);
+                return;
+            }
+
+            // 注入包含獨立 Tailwind, MathJax, Mermaid 的純淨 HTML 結構
+            const html = `
+            <!DOCTYPE html>
+            <html lang="zh-TW">
+            <head>
+                <meta charset="UTF-8">
+                <title>AI筆記_${title}</title>
+                <script src="https://cdn.tailwindcss.com"><\/script>
+                <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"><\/script>
+                <script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"><\/script>
+                <style>
+                    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap');
+                    body { font-family: 'Noto Sans TC', sans-serif; background: #fff; color: #0f172a; padding: 40px; line-height: 1.8; }
+                    /* 設定換頁防護，確保圖表、表格、公式不會被切斷 */
+                    .mermaid, table, pre, img, .math-display, .mjx-chtml { page-break-inside: avoid; break-inside: avoid; margin-bottom: 24px; display: block; }
+                    h3, h4, h5 { page-break-after: avoid; break-after: avoid; margin-top: 24px; }
+                    table { width: 100%; border-collapse: collapse; margin-top: 16px; margin-bottom: 24px; }
+                    th, td { border: 1px solid #cbd5e1; padding: 12px; text-align: left; font-size: 14px; }
+                    th { background-color: #f8fafc; font-weight: bold; color: #334155; }
+                    .prose p { margin-bottom: 16px; }
+                    
+                    @media print {
+                        body { padding: 0; }
+                        @page { margin: 15mm; }
+                    }
+                </style>
+            </head>
+            <body>
+                <h2 style="font-size: 26px; font-weight: 900; margin-bottom: 24px; border-bottom: 3px solid #0f172a; padding-bottom: 12px;">${title}</h2>
+                <div id="print-content" class="text-sm text-slate-800">
+                    ${contentHTML}
+                </div>
+                
+                <script>
+                    mermaid.initialize({ startOnLoad: false, theme: 'neutral' });
+                    
+                    window.onload = async () => {
+                        try {
+                            // 1. 強制渲染 LaTeX 數學公式
+                            if (window.MathJax) {
+                                await MathJax.typesetPromise([document.getElementById('print-content')]);
+                            }
+                            // 2. 強制渲染 Mermaid 架構圖
+                            if (window.mermaid) {
+                                await mermaid.run({ nodes: document.querySelectorAll('.mermaid') });
+                            }
+                        } catch (err) {
+                            console.error('渲染發生錯誤:', err);
+                        } finally {
+                            // 3. 延遲 0.8 秒確保所有 SVG 與字體繪製完畢後，呼叫原生列印
+                            setTimeout(() => {
+                                window.print();
+                            }, 800);
+                        }
+                    };
+                <\/script>
+            </body>
+            </html>`;
+
+            printWin.document.open();
+            printWin.document.write(html);
+            printWin.document.close();
+        };
+
+        // Export to Word
+        window.exportToWord = (title, contentHTML) => {
+            const header = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>" + title + "</title><style>body { font-family: 'Microsoft JhengHei', 'PingFang TC', sans-serif; line-height: 1.8; color: #1e293b; } h3, h4 { color: #0f172a; border-bottom: 2px solid #0d9488; padding-bottom: 8px; font-size: 18px; margin-top: 20px;} p, li { font-size: 14px; }</style></head><body>";
+            const footer = "</body></html>";
+            const wordWarning = contentHTML.includes('class="mermaid"') ? "<p style='color:red; font-size:12px; font-weight:bold;'>[注意] Microsoft Word 無法直接解析 Mermaid 架構圖語法。如需完整圖表與數學公式，建議使用系統的「匯出 PDF」功能。</p>" : "";
+            const htmlToExport = header + wordWarning + "<h2 style='text-align:center; color:#0f172a; border-bottom: 3px solid #1e293b; padding-bottom: 10px; margin-bottom:20px; font-size: 22px;'>" + title + "</h2>" + contentHTML + footer;
+            
+            const blob = new Blob(['\ufeff', htmlToExport], { type: 'application/msword' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a'); a.href = url; a.download = `AI筆記_${title}.doc`;
+            a.click(); URL.revokeObjectURL(url);
+        }
+
+        // --- Font Sizer & Modals ---
+        let modalFontSize = 16; let chatFontSize = 14;
         window.changeFontSize = (target, step) => {
             const el = document.getElementById(target === 'modal' ? 'modal-content' : 'chat-messages');
             if(!el) return;
             let currentSize = target === 'modal' ? modalFontSize : chatFontSize;
             currentSize = Math.max(12, Math.min(24, currentSize + step));
-            if (target === 'modal') modalFontSize = currentSize;
-            else chatFontSize = currentSize;
+            if (target === 'modal') modalFontSize = currentSize; else chatFontSize = currentSize;
             el.style.fontSize = currentSize + 'px';
         };
 
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('.ai-term').forEach(el => {
-                el.addEventListener('click', (e) => window.triggerAIExplanation(e.target.innerText));
-            });
-
-            // Chatbot Resize Logic
-            const resizer = document.getElementById('chat-resizer');
-            const chatWin = document.getElementById('chatbot-window');
-            let isResizing = false;
-
-            resizer.addEventListener('mousedown', (e) => {
-                isResizing = true;
-                document.addEventListener('mousemove', handleMouseMove);
-                document.addEventListener('mouseup', () => {
-                    isResizing = false;
-                    document.removeEventListener('mousemove', handleMouseMove);
-                }, { once: true });
-                e.preventDefault();
-            });
-
-            function handleMouseMove(e) {
-                if (!isResizing) return;
-                const rect = chatWin.getBoundingClientRect();
-                const newWidth = rect.right - e.clientX;
-                const newHeight = rect.bottom - e.clientY;
-                if (newWidth > 320 && newWidth < window.innerWidth * 0.9) chatWin.style.width = newWidth + 'px';
-                if (newHeight > 400 && newHeight < window.innerHeight * 0.9) chatWin.style.height = newHeight + 'px';
-            }
-        });
-
-        // --- 筆記庫與 Word 匯出 ---
         window.openNotesModal = async () => {
             if(!window.userId) return window.showSysAlert('提示', '請先登入會員以查看筆記庫', true);
             document.getElementById('notes-modal').classList.remove('hidden');
@@ -1419,42 +1496,58 @@
                 const q = window.fbQuery(window.fbCollection(window.db, 'artifacts', window.appId, 'users', window.userId, 'notes'));
                 const snap = await window.fbGetDocs(q);
                 if(snap.empty) {
-                    listContainer.innerHTML = '<div class="text-center text-slate-500 py-10 font-medium">您目前還沒有儲存任何 AI 筆記喔！</div>';
-                    return;
+                    listContainer.innerHTML = '<div class="text-center text-slate-500 py-10 font-medium">您目前還沒有儲存任何 AI 筆記喔！</div>'; return;
                 }
-                let notes = [];
-                snap.forEach(doc => notes.push({id: doc.id, ...doc.data()}));
+                let notes = []; snap.forEach(doc => notes.push({id: doc.id, ...doc.data()}));
                 notes.sort((a,b) => b.timestamp - a.timestamp);
                 
                 listContainer.innerHTML = notes.map(n => {
                     const date = new Date(n.timestamp).toLocaleString('zh-TW');
-                    const safeContent = encodeURIComponent(n.content);
+                    const safeTitle = n.title.replace(/'/g, "\\'");
+                    const safeContent = encodeURIComponent(n.content).replace(/'/g, "%27");
                     return `
-                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
                         <div class="flex flex-col sm:flex-row justify-between sm:items-center border-b border-slate-100 pb-3 mb-3 gap-3">
-                            <h4 class="font-bold text-slate-900 text-lg flex items-center gap-2">
-                                <span class="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span>${n.title}
-                            </h4>
-                            <div class="flex items-center gap-3">
-                                <span class="text-xs text-slate-400 font-mono">${date}</span>
-                                <button onclick="window.exportToWord('${n.title}', decodeURIComponent('${safeContent}'))" class="text-xs bg-slate-900 text-white px-3 py-1.5 rounded hover:bg-slate-800 transition-colors flex items-center gap-1">
-                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg> Word
-                                </button>
-                                <button onclick="window.deleteNote('${n.id}')" class="text-slate-400 hover:text-red-500 transition-colors">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-                                </button>
+                            <h4 class="font-bold text-slate-900 text-lg flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span>${n.title}</h4>
+                            <div class="flex flex-wrap items-center gap-2">
+                                <span class="text-[11px] text-slate-400 font-mono mr-2">${date}</span>
+                                <button onclick="window.previewNote('${safeTitle}', '${safeContent}')" class="text-xs bg-brand-50 text-brand-600 border border-brand-200 hover:bg-brand-600 hover:text-white px-3 py-1.5 rounded-lg transition-colors font-bold shadow-sm">線上閱讀</button>
+                                <button onclick="window.exportToWord('${safeTitle}', decodeURIComponent('${safeContent}'))" class="text-xs bg-slate-100 text-slate-600 hover:text-slate-900 px-3 py-1.5 rounded-lg hover:bg-slate-200 transition-colors font-bold shadow-sm">Word</button>
+                                <button onclick="window.exportToPDF('${safeTitle}', '${safeContent}')" class="text-xs bg-emerald-50 text-emerald-600 border border-emerald-200 hover:bg-emerald-600 hover:text-white px-3 py-1.5 rounded-lg transition-colors font-bold shadow-sm">PDF</button>
+                                <button onclick="window.deleteNote('${n.id}')" class="text-slate-400 hover:text-red-500 transition-colors ml-1" title="刪除"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button>
                             </div>
                         </div>
-                        <div class="prose prose-sm prose-slate max-w-none line-clamp-4 opacity-80">${n.content}</div>
+                        <div class="prose prose-sm prose-slate max-w-none line-clamp-3 opacity-70">${n.content}</div>
                     </div>`;
                 }).join('');
             } catch(e) { listContainer.innerHTML = '<div class="text-red-500 text-center py-10">讀取筆記失敗</div>'; }
         }
-        
-        window.closeNotesModal = () => {
-            document.getElementById('notes-modal').classList.add('hidden');
-            document.getElementById('notes-modal').classList.remove('flex');
-        }
+        window.closeNotesModal = () => { document.getElementById('notes-modal').classList.add('hidden'); document.getElementById('notes-modal').classList.remove('flex'); }
+
+        window.previewNote = (title, safeContent) => {
+            const rawTitle = title.replace(/\\'/g, "'");
+            document.getElementById('note-preview-title').innerText = rawTitle;
+            const contentContainer = document.getElementById('note-preview-content');
+            contentContainer.innerHTML = decodeURIComponent(safeContent);
+            
+            document.getElementById('note-preview-modal').classList.remove('hidden');
+            document.getElementById('note-preview-modal').classList.add('flex');
+            
+            // 開啟預覽時，即時重新渲染數學公式與 Mermaid 圖表
+            if (window.MathJax) {
+                MathJax.typesetPromise([contentContainer]).catch(err => console.log('MathJax error: ', err));
+            }
+            if (window.mermaid) {
+                try { mermaid.run({ nodes: contentContainer.querySelectorAll('.mermaid') }); } 
+                catch (e) { console.error('Mermaid render error: ', e); }
+            }
+        };
+
+        window.closeNotePreview = () => {
+            document.getElementById('note-preview-modal').classList.add('hidden');
+            document.getElementById('note-preview-modal').classList.remove('flex');
+            document.getElementById('note-preview-content').innerHTML = ''; // 清空內容避免圖表 ID 衝突
+        };
 
         window.saveAiNote = async (title, content, btnElement) => {
             if (!window.userId) return window.showSysAlert('無法儲存', '請先登入系統才能使用雲端筆記庫功能。', true);
@@ -1472,11 +1565,10 @@
                 btnElement.classList.replace('border-brand-200', 'border-emerald-200');
             } catch (e) {
                 window.showSysAlert('儲存失敗', e.message, true);
-                btnElement.innerHTML = origHTML;
-                btnElement.disabled = false;
+                btnElement.innerHTML = origHTML; btnElement.disabled = false;
             }
         }
-
+        
         window.deleteNote = async (noteId) => {
             window.showSysConfirm('刪除筆記', '確定要永久刪除這篇學習筆記嗎？', async () => {
                 await window.fbDeleteDoc(window.fbDoc(window.db, 'artifacts', window.appId, 'users', window.userId, 'notes', noteId));
@@ -1484,117 +1576,43 @@
             });
         }
 
-        window.exportToWord = (title, contentHTML) => {
-            const header = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>" + title + "</title><style>body { font-family: 'Microsoft JhengHei', 'PingFang TC', sans-serif; line-height: 1.8; color: #1e293b; } h3, h4 { color: #0f172a; border-bottom: 2px solid #0d9488; padding-bottom: 8px; font-size: 18px; margin-top: 20px;} p, li { font-size: 14px; }</style></head><body>";
-            const footer = "</body></html>";
-            const htmlToExport = header + "<h2 style='text-align:center; color:#0f172a; border-bottom: 3px solid #1e293b; padding-bottom: 10px; margin-bottom:20px; font-size: 22px;'>" + title + "</h2>" + contentHTML + footer;
-            
-            const blob = new Blob(['\ufeff', htmlToExport], { type: 'application/msword' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `AI筆記_${title}.doc`;
-            a.click();
-            URL.revokeObjectURL(url);
-        }
-
-        // --- 管理後台邏輯 ---
-        window.openAdminDashboard = async () => {
-            document.getElementById('main-app').classList.add('hidden');
-            document.getElementById('admin-dashboard').classList.remove('hidden');
-            await window.renderAdminTable();
-        };
-
-        window.closeAdminDashboard = () => {
-            document.getElementById('admin-dashboard').classList.add('hidden');
-            document.getElementById('main-app').classList.remove('hidden');
-        };
-
+        // --- STREAMING_CHUNK:Admin Functions... ---
+        window.openAdminDashboard = async () => { document.getElementById('main-app').classList.add('hidden'); document.getElementById('admin-dashboard').classList.remove('hidden'); await window.renderAdminTable(); };
+        window.closeAdminDashboard = () => { document.getElementById('admin-dashboard').classList.add('hidden'); document.getElementById('main-app').classList.remove('hidden'); };
+        
         window.renderAdminTable = async () => {
             const tbody = document.getElementById('admin-tbody');
             tbody.innerHTML = '<tr><td colspan="7" class="text-center py-12 text-brand-600 font-bold tracking-widest"><div class="loader mr-3 align-middle border-brand-200 border-b-brand-600"></div> 資料載入中...</td></tr>';
-            
             try {
                 const q = window.fbQuery(window.fbCollection(window.db, 'artifacts', window.appId, 'public', 'data', 'member_profiles'));
                 const snap = await window.fbGetDocs(q);
-                let users = [];
-                snap.forEach(doc => users.push(doc.data()));
-                
-                users.sort((a, b) => b.createdAt - a.createdAt);
-                window.memberData = users;
-
-                if (users.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="7" class="text-center py-12 text-slate-500 font-medium">尚無任何註冊會員</td></tr>';
-                    return;
-                }
-
+                let users = []; snap.forEach(doc => users.push(doc.data()));
+                users.sort((a, b) => b.createdAt - a.createdAt); window.memberData = users;
+                if (users.length === 0) { tbody.innerHTML = '<tr><td colspan="7" class="text-center py-12 text-slate-500 font-medium">尚無會員</td></tr>'; return; }
                 tbody.innerHTML = users.map(u => {
                     const date = new Date(u.createdAt).toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
                     const isSuperAdmin = u.email === 'mindnodeai@gmail.com';
-                    
-                    const roleBadge = u.role === 'admin' 
-                        ? '<span class="px-2.5 py-1 bg-amber-100/80 text-amber-700 rounded-lg text-xs font-black tracking-widest shadow-sm ring-1 ring-amber-400/30">ADMIN 管理員</span>' 
-                        : '<span class="px-2.5 py-1 bg-slate-100 text-slate-600 rounded-lg text-xs font-bold shadow-sm border border-slate-200">USER 一般會員</span>';
-                        
-                    const identityBadge = u.identity === 'student' 
-                        ? '<span class="px-2.5 py-1 text-brand-700 font-bold text-xs"><span class="w-2 h-2 inline-block bg-brand-500 rounded-full mr-1"></span>TONY學員</span>' 
-                        : '<span class="px-2.5 py-1 text-slate-500 font-bold text-xs"><span class="w-2 h-2 inline-block bg-slate-300 rounded-full mr-1"></span>一般訪客</span>';
-                    
-                    return `
-                    <tr class="hover:bg-brand-50/50 transition-colors border-b border-slate-100">
-                        <td class="px-5 py-4 whitespace-nowrap text-sm font-bold text-slate-900">${u.email}</td>
-                        <td class="px-5 py-4 whitespace-nowrap text-sm font-medium text-slate-700">${u.realName}</td>
-                        <td class="px-5 py-4 whitespace-nowrap">${identityBadge}</td>
-                        <td class="px-5 py-4 whitespace-nowrap text-sm font-black text-slate-600 text-center">${u.loginCount || 0}</td>
-                        <td class="px-5 py-4 whitespace-nowrap text-xs text-slate-500 font-mono tracking-tighter">${date}</td>
-                        <td class="px-5 py-4 whitespace-nowrap">${roleBadge}</td>
-                        <td class="px-5 py-4 whitespace-nowrap text-sm font-medium flex gap-2">
-                            ${!isSuperAdmin ? `
-                                <button onclick="window.changeUserRole('${u.uid}', '${u.role === 'admin' ? 'user' : 'admin'}')" class="text-amber-700 hover:text-white bg-amber-50 hover:bg-amber-600 border border-amber-200 hover:border-amber-600 px-3 py-1.5 rounded-lg transition-all text-xs font-bold shadow-sm">切換權限</button>
-                                <button onclick="window.deleteUser('${u.uid}')" class="text-red-600 hover:text-white bg-red-50 hover:bg-red-600 border border-red-200 hover:border-red-600 px-3 py-1.5 rounded-lg transition-all text-xs font-bold shadow-sm">刪除紀錄</button>
-                            ` : '<span class="text-xs text-amber-600 font-black tracking-widest bg-amber-100 px-3 py-1.5 rounded-lg border border-amber-200">系統創作者</span>'}
-                        </td>
+                    const roleBadge = u.role === 'admin' ? '<span class="px-2.5 py-1 bg-amber-100/80 text-amber-700 rounded-lg text-xs font-black">ADMIN</span>' : '<span class="px-2.5 py-1 bg-slate-100 text-slate-600 rounded-lg text-xs font-bold">USER</span>';
+                    const idBadge = u.identity === 'student' ? '<span class="px-2.5 py-1 text-brand-700 font-bold text-xs"><span class="w-2 h-2 inline-block bg-brand-500 rounded-full mr-1"></span>TONY學員</span>' : '<span class="px-2.5 py-1 text-slate-500 font-bold text-xs"><span class="w-2 h-2 inline-block bg-slate-300 rounded-full mr-1"></span>一般訪客</span>';
+                    return `<tr class="hover:bg-brand-50/50 border-b border-slate-100">
+                        <td class="px-5 py-4 text-sm font-bold text-slate-900">${u.email}</td><td class="px-5 py-4 text-sm font-medium text-slate-700">${u.realName}</td>
+                        <td class="px-5 py-4">${idBadge}</td><td class="px-5 py-4 text-sm font-black text-center">${u.loginCount || 0}</td><td class="px-5 py-4 text-xs font-mono">${date}</td><td class="px-5 py-4">${roleBadge}</td>
+                        <td class="px-5 py-4 flex gap-2">${!isSuperAdmin ? `<button onclick="window.changeUserRole('${u.uid}', '${u.role === 'admin' ? 'user' : 'admin'}')" class="text-amber-700 bg-amber-50 px-3 py-1.5 rounded-lg text-xs font-bold">切換權限</button><button onclick="window.deleteUser('${u.uid}')" class="text-red-600 bg-red-50 px-3 py-1.5 rounded-lg text-xs font-bold">刪除</button>` : '<span class="text-xs text-amber-600 font-black bg-amber-100 px-3 py-1.5 rounded-lg">創作者</span>'}</td>
                     </tr>`;
                 }).join('');
-            } catch (e) {
-                tbody.innerHTML = '<tr><td colspan="7" class="text-center py-12 text-red-500 font-bold">載入失敗，請檢查權限或連線。</td></tr>';
-            }
+            } catch (e) { tbody.innerHTML = '<tr><td colspan="7" class="text-center py-12 text-red-500 font-bold">載入失敗</td></tr>'; }
         };
 
-        window.changeUserRole = (uid, newRole) => {
-            window.showSysConfirm("確認更改權限", `確定要將此用戶的系統權限更改為 [${newRole.toUpperCase()}] 嗎？`, async () => {
-                try {
-                    await window.fbUpdateDoc(window.fbDoc(window.db, 'artifacts', window.appId, 'public', 'data', 'member_profiles', uid), { role: newRole });
-                    await window.renderAdminTable(); 
-                } catch (e) { window.showSysAlert("權限變更失敗", e.message, true); }
-            }, false);
-        };
-
-        window.deleteUser = (uid) => {
-            window.showSysConfirm("刪除會員檔案", "警告：確定要刪除此用戶的會員檔案嗎？\n(注意：此操作無法復原。)", async () => {
-                try {
-                    await window.fbDeleteDoc(window.fbDoc(window.db, 'artifacts', window.appId, 'public', 'data', 'member_profiles', uid));
-                    await window.renderAdminTable();
-                } catch (e) { window.showSysAlert("刪除失敗", e.message, true); }
-            }, true);
-        };
-
+        window.changeUserRole = (uid, newRole) => { window.showSysConfirm("確認更改權限", `確定更改為 [${newRole.toUpperCase()}] 嗎？`, async () => { await window.fbUpdateDoc(window.fbDoc(window.db, 'artifacts', window.appId, 'public', 'data', 'member_profiles', uid), { role: newRole }); await window.renderAdminTable(); }, false); };
+        window.deleteUser = (uid) => { window.showSysConfirm("刪除檔案", "確定刪除此用戶？無法復原。", async () => { await window.fbDeleteDoc(window.fbDoc(window.db, 'artifacts', window.appId, 'public', 'data', 'member_profiles', uid)); await window.renderAdminTable(); }, true); };
         window.exportCSV = () => {
-            if (!window.memberData || window.memberData.length === 0) return window.showSysAlert("無法匯出", "目前沒有資料。");
-            let csv = '\uFEFF'; 
-            csv += "註冊信箱,真實姓名,身份,系統登入次數,註冊時間,系統權限\n";
-            window.memberData.forEach(u => {
-                const date = new Date(u.createdAt).toLocaleString('zh-TW');
-                const identity = u.identity === 'student' ? 'TONY老師學員' : '一般訪客';
-                const role = u.role === 'admin' ? '管理員' : '一般會員';
-                csv += `${u.email},${u.realName},${identity},${u.loginCount || 0},${date},${role}\n`;
-            });
-            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a'); a.href = url; a.download = `SaaS_會員總表_${new Date().toISOString().slice(0,10)}.csv`; a.click(); URL.revokeObjectURL(url);
+            if (!window.memberData || window.memberData.length === 0) return window.showSysAlert("無法匯出", "沒有資料。");
+            let csv = '\uFEFF註冊信箱,真實姓名,身份,登入次數,註冊時間,權限\n';
+            window.memberData.forEach(u => csv += `${u.email},${u.realName},${u.identity==='student'?'學員':'訪客'},${u.loginCount||0},${new Date(u.createdAt).toLocaleString('zh-TW')},${u.role==='admin'?'管理員':'會員'}\n`);
+            const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8;' }));
+            const a = document.createElement('a'); a.href = url; a.download = `會員總表.csv`; a.click(); URL.revokeObjectURL(url);
         };
-
-        window.generateAIReport = async () => {
+        window.generateAIReport = async () => { 
             const startDate = document.getElementById('report-start').value;
             const endDate = document.getElementById('report-end').value;
             if (!startDate || !endDate) return window.showSysAlert('提示', '請先設定「起訖時間」');
@@ -1617,7 +1635,7 @@
 
                 const prompt = `你是一位專業的 SaaS 數據分析師。這段期間 (${startDate} 到 ${endDate}) 的註冊數據：\n- 新註冊：${total} 人\n- 身份：學員 ${students} 人 / 訪客 ${visitors} 人\n- 登入總次數：${logins} 次\n\n請撰寫「營運分析報告」，包含：1.數據總結 2.客群分析 3.給管理層的建議。請以 HTML 格式回覆 (只使用 h1, h2, p, ul)。`;
 
-                const res = await fetchWithRetry(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${apiKey}`, {
+                const res = await fetchWithRetry(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=${apiKey}`, {
                     method: 'POST', headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
                 });
@@ -1628,57 +1646,138 @@
             finally { btn.innerHTML = origText; btn.disabled = false; }
         };
 
-        // --- API Key & AI Logic ---
-        window.userApiKey = localStorage.getItem('tony_course_api_key') || '';
-        
+        // --- STREAMING_CHUNK:AI API & Parsers... ---
         window.loadApiKeyFromCloud = async () => {
             if (!window.userId) return;
-            try {
-                const docSnap = await window.fbGetDoc(window.fbDoc(window.db, 'artifacts', window.appId, 'users', window.userId, 'settings', 'apikey'));
-                if (docSnap.exists() && docSnap.data().key) {
-                    window.userApiKey = docSnap.data().key;
-                    document.getElementById('api-key-input').value = window.userApiKey;
-                    document.getElementById('api-key-status').classList.remove('hidden');
-                }
-            } catch (e) { console.error("無法載入 API Key"); }
+            const docSnap = await window.fbGetDoc(window.fbDoc(window.db, 'artifacts', window.appId, 'users', window.userId, 'settings', 'apikey'));
+            if (docSnap.exists() && docSnap.data().key) { window.userApiKey = docSnap.data().key; document.getElementById('api-key-input').value = window.userApiKey; document.getElementById('api-key-status').classList.remove('hidden'); }
         }
-
         window.saveApiKey = async () => {
-            const inputVal = document.getElementById('api-key-input').value.trim();
-            if (inputVal) {
-                window.userApiKey = inputVal;
-                document.getElementById('api-key-status').classList.remove('hidden');
-                if (window.userId) {
-                    await window.fbSetDoc(window.fbDoc(window.db, 'artifacts', window.appId, 'users', window.userId, 'settings', 'apikey'), { key: window.userApiKey });
-                }
-                const btn = document.getElementById('save-btn');
-                const origText = btn.innerText;
-                btn.innerText = "已啟用";
-                btn.classList.replace('bg-brand-600', 'bg-emerald-600'); btn.classList.replace('border-brand-500', 'border-emerald-600');
-                setTimeout(() => {
-                    btn.innerText = origText;
-                    btn.classList.replace('bg-emerald-600', 'bg-brand-600'); btn.classList.replace('border-emerald-600', 'border-brand-500');
-                }, 2000);
+            const v = document.getElementById('api-key-input').value.trim();
+            if (v) { window.userApiKey = v; document.getElementById('api-key-status').classList.remove('hidden');
+                if (window.userId) await window.fbSetDoc(window.fbDoc(window.db, 'artifacts', window.appId, 'users', window.userId, 'settings', 'apikey'), { key: window.userApiKey });
+                const btn = document.getElementById('save-btn'); const origText = btn.innerText; btn.innerText = "已啟用"; btn.classList.replace('bg-brand-600', 'bg-emerald-600'); btn.classList.replace('border-brand-500', 'border-emerald-600'); setTimeout(() => { btn.innerText = origText; btn.classList.replace('bg-emerald-600', 'bg-brand-600'); btn.classList.replace('border-emerald-600', 'border-brand-500'); }, 2000);
             }
         }
+        
+        window.isModalFullscreen = false;
+        window.toggleModalFullscreen = () => {
+            const modalBox = document.getElementById('ai-modal-box');
+            const fsBtn = document.getElementById('modal-fs-btn');
+            const modalOuter = document.getElementById('ai-modal');
+            
+            if (!window.isModalFullscreen) {
+                // 進入全螢幕
+                modalOuter.classList.remove('p-4', 'sm:p-6');
+                modalOuter.classList.add('p-0');
+                modalBox.classList.remove('max-w-3xl', 'max-h-[90vh]', 'rounded-2xl');
+                modalBox.classList.add('max-w-full', 'h-screen', 'max-h-screen', 'rounded-none');
+                fsBtn.innerHTML = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 14h6m0 0v6m0-6l-7 7m17-11h-6m0 0V4m0 6l7-7M4 10h6m0 0V4m0 6l-7-7m17 11h-6m0 0v6m0-6l7 7"></path></svg>';
+                fsBtn.title = "還原大小";
+                window.isModalFullscreen = true;
+            } else {
+                // 還原視窗
+                modalOuter.classList.add('p-4', 'sm:p-6');
+                modalOuter.classList.remove('p-0');
+                modalBox.classList.add('max-w-3xl', 'max-h-[90vh]', 'rounded-2xl');
+                modalBox.classList.remove('max-w-full', 'h-screen', 'max-h-screen', 'rounded-none');
+                fsBtn.innerHTML = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path></svg>';
+                fsBtn.title = "全螢幕預覽";
+                window.isModalFullscreen = false;
+            }
+        };
 
-        window.closeModal = () => document.getElementById('ai-modal').classList.add('hidden');
-
+        window.closeModal = () => { 
+            document.getElementById('ai-modal').classList.add('hidden'); 
+            document.getElementById('ai-modal').classList.remove('flex'); 
+            // 關閉時若處於全螢幕，自動將其還原為預設狀態
+            if (window.isModalFullscreen) {
+                window.toggleModalFullscreen();
+            }
+        };
+        
         async function fetchWithRetry(url, options, retries = 3) {
+            const controller = new AbortController();
+            const id = setTimeout(() => controller.abort(), 90000); // 90秒超時設定
+            options.signal = controller.signal;
+
             for (let i = 0; i < retries; i++) {
                 try {
-                    const response = await fetch(url, options);
-                    if (!response.ok) throw new Error(`HTTP Error ${response.status}`);
-                    return await response.json();
-                } catch (error) {
-                    if (i === retries - 1) throw error;
-                    await new Promise(res => setTimeout(res, 2000));
+                    const res = await fetch(url, options);
+                    clearTimeout(id);
+                    if (!res.ok) throw new Error(`HTTP Error ${res.status}`);
+                    return await res.json();
+                } catch (e) {
+                    if (e.name === 'AbortError') {
+                        throw new Error('網路連線逾時(90秒)，請檢查連線或稍後再試。');
+                    }
+                    if (i === retries - 1) throw e;
+                    await new Promise(r => setTimeout(r, 2000));
                 }
             }
+        }
+
+        function parseMarkdown(text) {
+            let html = text;
+            html = html.replace(/```(.*?)\r?\n([\s\S]*?)```/g, function(match, langInfo, code) {
+                const lang = langInfo.trim().toLowerCase();
+                if (lang === 'mermaid') {
+                    const cleanCode = code.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                    return `<div class="mermaid w-full flex justify-center overflow-x-auto my-6 p-4 bg-white border border-slate-200 rounded-xl shadow-sm text-sm">\n${cleanCode}\n</div>`;
+                } else {
+                    return `<pre class="bg-slate-100 p-4 rounded-lg text-xs font-mono text-slate-700 overflow-x-auto my-4 border border-slate-200"><code>${code.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code></pre>`;
+                }
+            });
+            
+            html = html.replace(/`([^`]+)`/g, '<code class="bg-slate-100 text-brand-600 px-1.5 py-0.5 rounded text-sm font-mono">$1</code>');
+            html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" class="text-brand-600 hover:text-brand-800 underline decoration-brand-300 underline-offset-2">$1</a>');
+            html = html.replace(/^---$/gim, '<hr class="my-6 border-slate-200">');
+
+            if (html.includes('|')) {
+                const lines = html.split('\n');
+                let inTable = false; let tableHtml = ''; let newHtmlLines = [];
+                for (let i = 0; i < lines.length; i++) {
+                    const line = lines[i].trim();
+                    if (line.startsWith('|') && line.endsWith('|')) {
+                        if (!inTable) { inTable = true; tableHtml = '<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-slate-200 border border-slate-200 rounded-lg overflow-hidden">'; }
+                        if (/^\|[\s\-:]+\|/.test(line) && line.replace(/[\|\-\:\s]/g, '').length === 0) {
+                            tableHtml += '</thead><tbody class="bg-white divide-y divide-slate-100">';
+                            tableHtml = tableHtml.replace(/<tr class="hover:bg-slate-50">/g, '<thead class="bg-slate-50"><tr>').replace(/<td class="px-4 py-3 text-sm text-slate-700 whitespace-pre-wrap break-words">/g, '<th class="px-4 py-3 text-left text-xs font-bold text-slate-600 uppercase tracking-wider">').replace(/<\/td>/g, '</th>');
+                        } else {
+                            const cells = line.split('|').slice(1, -1).map(c => c.trim());
+                            tableHtml += '<tr class="hover:bg-slate-50">';
+                            cells.forEach(cell => { tableHtml += `<td class="px-4 py-3 text-sm text-slate-700 whitespace-pre-wrap break-words">${cell}</td>`; });
+                            tableHtml += '</tr>';
+                        }
+                    } else {
+                        if (inTable) { inTable = false; tableHtml += '</tbody></table></div>'; newHtmlLines.push(tableHtml); tableHtml = ''; }
+                        newHtmlLines.push(lines[i]);
+                    }
+                }
+                if (inTable) { tableHtml += '</tbody></table></div>'; newHtmlLines.push(tableHtml); }
+                html = newHtmlLines.join('\n');
+            }
+
+            html = html.replace(/\*\*(.*?)\*\*/g, '<strong class="text-slate-900 font-bold">$1</strong>');
+            html = html.replace(/^#### (.*$)/gim, '<h5 class="text-sm font-bold text-slate-800 mt-4 mb-2">$1</h5>');
+            html = html.replace(/^### (.*$)/gim, '<h4 class="text-base font-bold text-slate-900 mt-5 mb-2 flex items-center"><span class="w-1 h-4 bg-brand-500 mr-2 rounded-sm"></span>$1</h4>');
+            html = html.replace(/^## (.*$)/gim, '<h3 class="text-lg font-bold text-slate-900 mt-6 mb-3 border-b border-slate-100 pb-2">$1</h3>');
+            html = html.replace(/^\* (.*$)/gim, '<li class="ml-5 list-disc marker:text-brand-500 mb-1">$1</li>');
+            html = html.replace(/^- (.*$)/gim, '<li class="ml-5 list-disc marker:text-brand-500 mb-1">$1</li>');
+            
+            const parts = html.split(/(<pre[\s\S]*?<\/pre>|<div class="mermaid[\s\S]*?<\/div>|<div class="overflow-x-auto[\s\S]*?<\/table><\/div>)/);
+            for (let i = 0; i < parts.length; i++) {
+                if (parts[i] && !parts[i].startsWith('<pre') && !parts[i].startsWith('<div class="mermaid') && !parts[i].startsWith('<div class="overflow-x-auto')) {
+                    parts[i] = parts[i].replace(/\n\n/g, '</p><p class="mb-4">').replace(/\n/g, '<br>');
+                }
+            }
+            html = parts.join('');
+            if(!html.startsWith('<') && !html.startsWith('<h')) html = `<p class="mb-4">${html}</p>`;
+            return html;
         }
 
         window.triggerAIExplanation = async (term) => {
-            if (!window.userApiKey) return window.showSysAlert('需要 API Key', '請先在首頁頂端輸入 Gemini API Key。', true);
+            if (!window.userApiKey) return window.showSysAlert('需要 API Key', '請先輸入 Gemini API Key。', true);
             const modal = document.getElementById('ai-modal');
             const termTitle = document.getElementById('modal-term');
             const loading = document.getElementById('modal-loading');
@@ -1691,281 +1790,107 @@
 
             try {
                 const systemPrompt = "你是一位頂尖商學院講座教授，兼任國際領先品牌的首席行銷科技策略顧問。你具有深厚的行銷學術史造詣與實戰經驗，教學極其重視『學術源流考究、奠基學者著作』與『產業落地盲點』。\n⚠️ 請特別注意：目前是 2026 年，身為頂尖顧問，你必須強制使用最新的商業實戰個案與近幾年的最新數據，切勿一直停留在十幾年前的老舊案例。";
-                const userPrompt = `請深度解析行銷專有名詞/管理理論：「${term}」。\n請嚴格遵守 Markdown 格式排版，並展現名校碩博士班與哈佛商業評論等級的深度。\n**【🛑 嚴格排版禁令】：絕對禁止使用「空白鍵」、「|」、「-」等 ASCII 或純文字符號去手繪拼湊任何「2D 矩陣圖（如 SWOT、TOWS 矩陣）」、「樹狀圖」或「流程圖」。這種做法會導致網頁版面完全崩潰（中英文全半形字元寬度不同）！若需表達矩陣結構，請「必定且僅能」使用標準的 Markdown 表格格式（Markdown Table）或條列式呈現。**\n\n### 🎓 原創奠基者與理論源起\n- 原創學者/提出專家姓名（附上英文全名）\n- 提出年代、經典著作或首發代表性論文 (Journal / Publication)\n- 理論原創誕生的商業歷史背景與欲解決的時代核心問題\n\n### 📖 學術核心框架與嚴謹定義\n(以學術嚴謹的邏輯拆解核心變數、關鍵構面與模型推演機制，絕不簡略帶過)\n\n### 💡 TONY 顧問實戰視角與實務盲點\n(以資深品牌科技顧問角度，指出企業在實際執行時最常犯的誤區、教條主義陷阱、以及在現代行銷 7.0 與 AI 時代下的局限性與進化)\n\n### 🔥 最新頂級商業實戰個案剖析\n(務必啟動聯網搜尋最新的 2025/2026 標竿企業真實操作，說明該理論如何被成功運用或迭代突破，嚴禁使用過時老舊案例)\n\n字數約 650-800 字，筆觸權威、專業且具備學術啟發性。`;
+                const userPrompt = `請深度解析行銷專有名詞/管理理論：「${term}」。\n請嚴格遵守 Markdown 格式排版，並展現名校碩博士班與哈佛商業評論等級的深度。\n**【🛑 嚴格排版禁令】：絕對禁止使用「空白鍵」、「|」、「-」等純文字符號去手繪拼湊「2D 矩陣圖」或「樹狀圖」。若需表達矩陣結構，請「必定」使用標準的 Markdown Table。\n\n**【👑 專業視覺化要求】：為展現專業度，請在解析中必定包含：\n1. 至少一個「LaTeX 語法呈現的數學模型公式 ($$...$$)」\n2. 至少一個「Mermaid 語法繪製的圖表 (\`\`\`mermaid ... \`\`\`)」(如流程圖 flowchart、心智圖 mindmap)。**\n\n### 🎓 原創奠基者與理論源起\n- 原創學者/提出專家姓名（附上英文全名）\n- 提出年代、經典著作或首發論文\n\n### 📖 學術核心框架與嚴謹定義\n\n### 💡 TONY 顧問實戰視角與實務盲點\n\n### 🔥 最新頂級商業實戰個案剖析\n(務必啟動聯網搜尋最新的 2025/2026 真實操作)`;
 
-                const data = await fetchWithRetry(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${window.userApiKey}`, {
+                const data = await fetchWithRetry(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=${window.userApiKey}`, {
                     method: 'POST', headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ 
-                        systemInstruction: { parts: [{ text: systemPrompt }] }, 
-                        contents: [{ parts: [{ text: userPrompt }] }],
-                        tools: [{ "google_search": {} }] // 啟用 Google 搜尋 Grounding 功能
-                    })
+                    body: JSON.stringify({ systemInstruction: { parts: [{ text: systemPrompt }] }, contents: [{ parts: [{ text: userPrompt }] }], tools: [{ "google_search": {} }] })
                 });
 
-                const aiText = data.candidates[0].content.parts[0].text;
+                let aiText = data.candidates[0].content.parts[0].text;
                 let parsedHTML = parseMarkdown(aiText);
                 
-                // 解析與注入 Google 搜尋來源 (Grounding Metadata)
                 const groundingMetadata = data.candidates[0].groundingMetadata;
                 if (groundingMetadata && groundingMetadata.groundingAttributions) {
                     const uniqueSources = [];
                     groundingMetadata.groundingAttributions.forEach(attr => {
-                        if (attr.web?.uri && attr.web?.title) {
-                            if (!uniqueSources.some(s => s.uri === attr.web.uri)) {
-                                uniqueSources.push({ uri: attr.web.uri, title: attr.web.title });
-                            }
+                        if (attr.web?.uri && attr.web?.title && !uniqueSources.some(s => s.uri === attr.web.uri)) {
+                            uniqueSources.push({ uri: attr.web.uri, title: attr.web.title });
                         }
                     });
                     if (uniqueSources.length > 0) {
-                        parsedHTML += '<div class="mt-8 pt-4 border-t border-slate-200 bg-slate-50 p-4 rounded-xl"><h6 class="text-xs font-black text-slate-500 mb-2 uppercase tracking-widest flex items-center"><svg class="w-3.5 h-3.5 mr-1 text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>即時連網參考文獻</h6><ul class="space-y-1.5">';
-                        uniqueSources.forEach(src => {
-                            parsedHTML += `<li><a href="${src.uri}" target="_blank" class="text-[11px] text-brand-600 hover:text-brand-800 transition-colors hover:underline break-all leading-tight inline-block">${src.title}</a></li>`;
-                        });
+                        parsedHTML += '<div class="mt-8 pt-4 border-t border-slate-200 bg-slate-50 p-4 rounded-xl"><h6 class="text-xs font-black text-slate-500 mb-2 uppercase tracking-widest flex items-center">即時連網參考文獻</h6><ul class="space-y-1.5">';
+                        uniqueSources.forEach(src => parsedHTML += `<li><a href="${src.uri}" target="_blank" class="text-[11px] text-brand-600 hover:text-brand-800 transition-colors hover:underline break-all leading-tight inline-block">${src.title}</a></li>`);
                         parsedHTML += '</ul></div>';
                     }
                 }
 
                 content.innerHTML = parsedHTML;
                 
-                // 觸發 MathJax 渲染公式
-                if (window.MathJax) {
-                    MathJax.typesetPromise([content]).catch((err) => console.log('MathJax error: ', err));
-                }
+                if (window.MathJax) MathJax.typesetPromise([content]).catch((err) => console.log('MathJax error: ', err));
+                if (window.mermaid) { try { mermaid.run({ nodes: content.querySelectorAll('.mermaid') }); } catch (e) { console.error('Mermaid render error: ', e); } }
                 
-                // 修正 SyntaxError：將單引號進行轉義替換，確保匯入 decodeURIComponent 時不會斷開 JS 字串
                 const safeHTML = encodeURIComponent(parsedHTML).replace(/'/g, "%27");
                 const safeTerm = term.replace(/'/g, "\\'");
                 
                 actionsContainer.innerHTML = `
                     <button onclick="window.saveAiNote('深度解析：${safeTerm}', decodeURIComponent('${safeHTML}'), this)" class="text-xs font-bold text-brand-600 bg-brand-50 border border-brand-200 px-3 py-1.5 rounded-lg transition-colors hover:bg-brand-100 flex items-center gap-1">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 01-2-2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path></svg> 儲存至筆記
+                        儲存至筆記
                     </button>
-                    <button onclick="window.exportToWord('深度解析：${safeTerm}', decodeURIComponent('${safeHTML}'))" class="text-xs font-bold text-white bg-slate-900 hover:bg-slate-800 border border-slate-900 px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg> 匯出 Word
+                    <button onclick="window.exportToWord('深度解析：${safeTerm}', decodeURIComponent('${safeHTML}'))" class="text-xs font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1">
+                        Word
+                    </button>
+                    <button onclick="window.exportToPDF('深度解析：${safeTerm}', '${safeHTML}')" class="text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-700 px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1 shadow-sm">
+                        匯出 PDF
                     </button>`;
-            } catch (error) {
-                content.innerHTML = `<div class="bg-red-50 text-red-700 p-4 rounded-xl">解析失敗：${error.message}</div>`;
-            } finally { loading.classList.remove('flex'); loading.classList.add('hidden'); content.classList.remove('hidden'); }
+            } catch (error) { 
+                content.innerHTML = `<div class="bg-red-50 text-red-700 p-4 rounded-xl font-bold">解析失敗</div><p class="text-sm text-red-600 mt-2">${error.message}</p>`; 
+            } finally { 
+                loading.classList.remove('flex'); loading.classList.add('hidden'); content.classList.remove('hidden'); 
+            }
         }
 
-        function parseMarkdown(text) {
-            let html = text;
-            
-            // 處理 Code Blocks (```) - 將其轉換為 <pre><code> 避免版面混亂
-            html = html.replace(/```([\s\S]*?)```/g, '<pre class="bg-slate-100 p-4 rounded-lg text-xs font-mono text-slate-700 overflow-x-auto my-4 border border-slate-200"><code>$1</code></pre>');
-            
-            // 處理 Inline Code (`)
-            html = html.replace(/`([^`]+)`/g, '<code class="bg-slate-100 text-brand-600 px-1.5 py-0.5 rounded text-sm font-mono">$1</code>');
-
-            // 處理 Markdown 連結 [text](url)
-            html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" class="text-brand-600 hover:text-brand-800 underline decoration-brand-300 underline-offset-2">$1</a>');
-
-            // 處理水平分隔線 (---)
-            html = html.replace(/^---$/gim, '<hr class="my-6 border-slate-200">');
-
-            // 處理 Markdown 表格 (解決截圖中變成亂碼純文字的問題)
-            if (html.includes('|')) {
-                const lines = html.split('\n');
-                let inTable = false;
-                let tableHtml = '';
-                let newHtmlLines = [];
-                
-                for (let i = 0; i < lines.length; i++) {
-                    const line = lines[i].trim();
-                    if (line.startsWith('|') && line.endsWith('|')) {
-                        if (!inTable) {
-                            inTable = true;
-                            tableHtml = '<div class="overflow-x-auto my-4"><table class="min-w-full divide-y divide-slate-200 border border-slate-200 rounded-lg overflow-hidden">';
-                        }
-                        // 檢查是否為分隔線 |---|---|
-                        if (/^\|[\s\-:]+\|/.test(line) && line.replace(/[\|\-\:\s]/g, '').length === 0) {
-                            tableHtml += '</thead><tbody class="bg-white divide-y divide-slate-100">';
-                            // 將上一行轉為 thead
-                            tableHtml = tableHtml.replace(/<tr class="hover:bg-slate-50">/g, '<thead class="bg-slate-50"><tr>').replace(/<td class="px-4 py-3 text-sm text-slate-700 whitespace-pre-wrap break-words">/g, '<th class="px-4 py-3 text-left text-xs font-bold text-slate-600 uppercase tracking-wider">').replace(/<\/td>/g, '</th>');
-                        } else {
-                            const cells = line.split('|').slice(1, -1).map(c => c.trim());
-                            tableHtml += '<tr class="hover:bg-slate-50">';
-                            cells.forEach(cell => {
-                                tableHtml += `<td class="px-4 py-3 text-sm text-slate-700 whitespace-pre-wrap break-words">${cell}</td>`;
-                            });
-                            tableHtml += '</tr>';
-                        }
-                    } else {
-                        if (inTable) {
-                            inTable = false;
-                            tableHtml += '</tbody></table></div>';
-                            newHtmlLines.push(tableHtml);
-                            tableHtml = '';
-                        }
-                        newHtmlLines.push(lines[i]);
-                    }
-                }
-                if (inTable) {
-                    tableHtml += '</tbody></table></div>';
-                    newHtmlLines.push(tableHtml);
-                }
-                html = newHtmlLines.join('\n');
-            }
-
-            html = html.replace(/\*\*(.*?)\*\*/g, '<strong class="text-slate-900 font-bold">$1</strong>');
-            html = html.replace(/^#### (.*$)/gim, '<h5 class="text-sm font-bold text-slate-800 mt-4 mb-2">$1</h5>');
-            html = html.replace(/^### (.*$)/gim, '<h4 class="text-base font-bold text-slate-900 mt-5 mb-2 flex items-center"><span class="w-1 h-4 bg-brand-500 mr-2 rounded-sm"></span>$1</h4>');
-            html = html.replace(/^## (.*$)/gim, '<h3 class="text-lg font-bold text-slate-900 mt-6 mb-3 border-b border-slate-100 pb-2">$1</h3>');
-            html = html.replace(/^\* (.*$)/gim, '<li class="ml-5 list-disc marker:text-brand-500 mb-1">$1</li>');
-            html = html.replace(/^- (.*$)/gim, '<li class="ml-5 list-disc marker:text-brand-500 mb-1">$1</li>');
-            
-            // 避免把已經包裝好的 <pre> 內的換行符號取代掉
-            const parts = html.split(/(<pre[\s\S]*?<\/pre>)/);
-            for (let i = 0; i < parts.length; i++) {
-                if (!parts[i].startsWith('<pre')) {
-                    parts[i] = parts[i].replace(/\n\n/g, '</p><p class="mb-4">').replace(/\n/g, '<br>');
-                }
-            }
-            html = parts.join('');
-
-            if(!html.startsWith('<') && !html.startsWith('<h')) html = `<p class="mb-4">${html}</p>`;
-            return html;
-        }
-
-        // --- 提示詞複製功能 ---
-        window.copyToClipboard = async function(buttonElement) {
-            const container = buttonElement.closest('.relative');
-            const promptText = container.querySelector('.prompt-text').innerText;
-            const originalHTML = buttonElement.innerHTML;
-            const successHTML = `<svg class="w-3 h-3 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> <span class="text-emerald-400 font-bold">已複製</span>`;
-
-            try {
-                await navigator.clipboard.writeText(promptText);
-                showCopySuccess(buttonElement, originalHTML, successHTML);
-            } catch (err) {
-                const textArea = document.createElement("textarea");
-                textArea.value = promptText;
-                textArea.style.position = "absolute";
-                textArea.style.left = "-999999px";
-                document.body.appendChild(textArea);
-                textArea.select();
-                try {
-                    document.execCommand('copy');
-                    showCopySuccess(buttonElement, originalHTML, successHTML);
-                } catch (ex) {
-                    buttonElement.innerHTML = `<span class="text-red-400">複製失敗</span>`;
-                    setTimeout(() => buttonElement.innerHTML = originalHTML, 2000);
-                }
-                document.body.removeChild(textArea);
-            }
-        };
-
-        function showCopySuccess(btn, origHtml, successHtml) {
-            btn.innerHTML = successHtml;
-            btn.classList.remove('text-slate-400', 'hover:text-white', 'bg-slate-800', 'hover:bg-slate-700');
-            btn.classList.add('bg-emerald-900/50', 'border', 'border-emerald-800');
-            setTimeout(() => {
-                btn.innerHTML = origHtml;
-                btn.classList.add('text-slate-400', 'hover:text-white', 'bg-slate-800', 'hover:bg-slate-700');
-                btn.classList.remove('bg-emerald-900/50', 'border', 'border-emerald-800');
-            }, 2000);
-        }
-
-        // --- TONY 老師 AI 助理 Chatbot 邏輯 ---
+        // --- STREAMING_CHUNK:Chatbot Interaction Logic... ---
         window.chatHistory = [];
 
         window.toggleChat = () => {
             const chatWin = document.getElementById('chatbot-window');
             if (chatWin.classList.contains('hidden')) {
-                if (!window.userApiKey) {
-                    window.showSysAlert('需要 API Key', '請先在頁面頂端輸入 Gemini API Key 以啟用專屬 AI 助教。', true);
-                    return;
-                }
-                chatWin.classList.remove('hidden');
-                chatWin.classList.add('flex');
-                setTimeout(() => document.getElementById('chat-input').focus(), 100);
-            } else {
-                chatWin.classList.add('hidden');
-                chatWin.classList.remove('flex');
-            }
+                if (!window.userApiKey) return window.showSysAlert('需要 API Key', '請先輸入 API Key。', true);
+                chatWin.classList.remove('hidden'); chatWin.classList.add('flex'); setTimeout(() => document.getElementById('chat-input').focus(), 100);
+            } else { chatWin.classList.add('hidden'); chatWin.classList.remove('flex'); }
         };
 
         window.handleChatKeydown = (e) => {
-            e.target.style.height = 'auto';
-            e.target.style.height = (e.target.scrollHeight) + 'px';
-            if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                window.sendChatMessage();
-            }
+            e.target.style.height = 'auto'; e.target.style.height = (e.target.scrollHeight) + 'px';
+            if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); window.sendChatMessage(); }
         };
 
         window.sendChatMessage = async () => {
-            const inputEl = document.getElementById('chat-input');
-            const text = inputEl.value.trim();
+            const inputEl = document.getElementById('chat-input'); const text = inputEl.value.trim();
             if (!text || !window.userApiKey) return;
 
-            // 1. 顯示使用者輸入
             window.appendChatMessage('user', text);
-            inputEl.value = '';
-            inputEl.style.height = 'auto';
-            window.chatHistory.push({ role: 'user', parts: [{ text: text }] });
+            inputEl.value = ''; inputEl.style.height = 'auto'; window.chatHistory.push({ role: 'user', parts: [{ text: text }] });
 
-            // 2. 顯示讀取中動畫
-            const msgContainer = document.getElementById('chat-messages');
-            const loadingId = 'chat-loading-' + Date.now();
-            const loadingHtml = `
-                <div id="${loadingId}" class="flex items-start gap-2 justify-start">
-                    <div class="w-7 h-7 rounded-full bg-brand-100 flex items-center justify-center shrink-0 mt-1 border border-brand-200"><span class="text-brand-700 text-xs font-black">AI</span></div>
-                    <div class="bg-white p-4 rounded-2xl rounded-tl-sm shadow-sm border border-slate-200 flex items-center gap-1.5">
-                        <span class="w-2 h-2 bg-brand-400 rounded-full animate-bounce"></span>
-                        <span class="w-2 h-2 bg-brand-400 rounded-full animate-bounce" style="animation-delay: 0.15s"></span>
-                        <span class="w-2 h-2 bg-brand-400 rounded-full animate-bounce" style="animation-delay: 0.3s"></span>
-                    </div>
-                </div>`;
-            msgContainer.insertAdjacentHTML('beforeend', loadingHtml);
+            const msgContainer = document.getElementById('chat-messages'); const loadingId = 'chat-loading-' + Date.now();
+            msgContainer.insertAdjacentHTML('beforeend', `<div id="${loadingId}" class="flex items-start gap-2 justify-start"><div class="w-7 h-7 rounded-full bg-brand-100 flex items-center justify-center shrink-0 mt-1 border border-brand-200"><span class="text-brand-700 text-xs font-black">AI</span></div><div class="bg-white p-4 rounded-2xl rounded-tl-sm shadow-sm border border-slate-200 flex items-center gap-1.5"><span class="w-2 h-2 bg-brand-400 rounded-full animate-bounce"></span><span class="w-2 h-2 bg-brand-400 rounded-full animate-bounce" style="animation-delay: 0.15s"></span><span class="w-2 h-2 bg-brand-400 rounded-full animate-bounce" style="animation-delay: 0.3s"></span></div></div>`);
             msgContainer.scrollTop = msgContainer.scrollHeight;
 
             try {
-                // 大師級學術與實戰人設提示詞
-                const systemPrompt = `你現在是 TONY 楊老師（資深品牌行銷科技顧問、商學院講座教授）的首席 AI 助教。
-學術規範與專業準則：
-1. 【嚴謹原創溯源】：回答涉及任何管理學或行銷學概念、模型、矩陣時，必須明確點出「原創者 (Scholar/Founder) 英文全名、提出年代與原創背景/著作」，秉持商學正統治學倫理。
-2. 【行銷 7.0 視野】：以行銷 7.0 為全新指導架構，強調全自主 AI 代理 (Agentic AI)、沉浸式空間運算與數據驅動決策的整合。
-3. 【學術與落地結合】：結合學術理論的嚴密邏輯與上市企業級顧問實戰視角，剖析商業盲點與護城河，鼓勵學生批判性思考。
-4. 【排版禁令】：嚴格禁止使用「空白鍵」、「|」、「-」等純文字符號去手繪拼湊任何「2D 矩陣圖（如 SWOT 矩陣）」或「架構圖」。中英文字元寬度差異會導致網頁排版嚴重錯亂。若需呈現矩陣，請「必定且僅能」使用標準的 Markdown 表格（Table）排版呈現。字數約 350~550 字。
-5. 【啟用即時搜尋】：目前是 2026 年，面對學生的提問，若涉及產業動態、最新案例或數據，請必定啟動連網搜尋最新的資訊來回答，避免提供過時的舊資料。`;
+                const systemPrompt = `你現在是 TONY 楊老師（資深顧問、商學院講座教授）的首席 AI 助教。
+【排版與視覺化禁令】：絕對禁止使用純文字符號手繪表格或樹狀圖！排版一律使用 Markdown Table。並請主動運用 LaTeX ($$...$$) 撰寫數學公式，或運用 Mermaid (\`\`\`mermaid ... \`\`\`) 語法繪製流程/心智圖來回答策略問題。目前是 2026 年，必定啟動聯網搜尋最新數據。字數控制 350~600 字。`;
                 
-                const data = await fetchWithRetry(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${window.userApiKey}`, {
+                const data = await fetchWithRetry(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=${window.userApiKey}`, {
                     method: 'POST', headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ 
-                        systemInstruction: { parts: [{ text: systemPrompt }] }, 
-                        contents: window.chatHistory,
-                        tools: [{ "google_search": {} }] // 啟用 Google 搜尋 Grounding 功能
-                    })
+                    body: JSON.stringify({ systemInstruction: { parts: [{ text: systemPrompt }] }, contents: window.chatHistory, tools: [{ "google_search": {} }] })
                 });
 
                 let aiText = data.candidates[0].content.parts[0].text;
-
-                // 處理參考資料來源 (Grounding Metadata)
-                const groundingMetadata = data.candidates[0].groundingMetadata;
-                if (groundingMetadata && groundingMetadata.groundingAttributions) {
-                    const uniqueSources = [];
-                    groundingMetadata.groundingAttributions.forEach(attr => {
-                        if (attr.web?.uri && attr.web?.title) {
-                            if (!uniqueSources.some(s => s.uri === attr.web.uri)) {
-                                uniqueSources.push({ uri: attr.web.uri, title: attr.web.title });
-                            }
-                        }
-                    });
-                    if (uniqueSources.length > 0) {
-                        aiText += '\n\n---\n**💡 參考文獻與即時資料來源：**\n';
-                        uniqueSources.forEach(src => {
-                            aiText += `* [${src.title}](${src.uri})\n`;
-                        });
+                const gm = data.candidates[0].groundingMetadata;
+                if (gm && gm.groundingAttributions) {
+                    const us = []; gm.groundingAttributions.forEach(a => { if (a.web?.uri && a.web?.title && !us.some(s => s.uri === a.web.uri)) us.push({ uri: a.web.uri, title: a.web.title }); });
+                    if (us.length > 0) {
+                        aiText += '\n\n---\n**💡 參考文獻與即時資料來源：**\n'; us.forEach(src => aiText += `* [${src.title}](${src.uri})\n`);
                     }
                 }
 
                 window.chatHistory.push({ role: 'model', parts: [{ text: aiText }] });
-                document.getElementById(loadingId).remove();
+                if (document.getElementById(loadingId)) document.getElementById(loadingId).remove(); 
                 window.appendChatMessage('model', aiText);
             } catch (error) {
-                document.getElementById(loadingId).remove();
-                window.appendChatMessage('error', '系統連線發生錯誤，請確認 API Key 是否正確。');
+                if (document.getElementById(loadingId)) document.getElementById(loadingId).remove(); 
+                window.appendChatMessage('error', error.message); 
                 window.chatHistory.pop();
             }
         };
@@ -1978,31 +1903,58 @@
                 html = `<div class="flex items-start gap-2 justify-end"><div class="bg-slate-900 text-white p-3.5 rounded-2xl rounded-tr-sm shadow-md max-w-[85%] break-words leading-relaxed font-medium">${escaped}</div></div>`;
             } else if (role === 'model') {
                 const parsedHTML = parseMarkdown(text);
-                
-                // 修正 SyntaxError：過濾所有會破壞 HTML onclick 屬性的單引號，包含 title 也要去除
                 const safeHTML = encodeURIComponent(parsedHTML).replace(/'/g, "%27");
                 const safeTitle = text.substring(0, 15).replace(/[\n#*']/g, '') + '...';
-                
                 html = `
                 <div class="flex items-start gap-2 justify-start group">
                     <div class="w-7 h-7 rounded-full bg-brand-100 flex items-center justify-center shrink-0 mt-1 border border-brand-200"><span class="text-brand-700 text-xs font-black">AI</span></div>
-                    <div class="bg-white p-4 rounded-2xl rounded-tl-sm shadow-sm border border-slate-200 text-slate-700 max-w-[85%] break-words leading-relaxed">
-                        <div class="prose prose-sm prose-slate max-w-none">${parsedHTML}</div>
-                        <div class="mt-3 pt-3 border-t border-slate-100 flex gap-2">
-                            <button onclick="window.saveAiNote('助教對話：${safeTitle}', decodeURIComponent('${safeHTML}'), this)" class="text-[10px] font-bold text-brand-600 bg-brand-50 border border-brand-200 px-2 py-1 rounded hover:bg-brand-100 transition-colors flex items-center gap-1">儲存筆記</button>
-                            <button onclick="window.exportToWord('AI助教對話紀錄', decodeURIComponent('${safeHTML}'))" class="text-[10px] font-bold text-slate-500 bg-slate-100 border border-slate-200 px-2 py-1 rounded hover:bg-slate-200 transition-colors flex items-center gap-1">匯出 Word</button>
+                    <div class="bg-white p-4 rounded-2xl rounded-tl-sm shadow-sm border border-slate-200 text-slate-700 max-w-[85%] break-words leading-relaxed w-full">
+                        <div class="prose prose-sm prose-slate max-w-none w-full overflow-x-hidden">${parsedHTML}</div>
+                        <div class="mt-3 pt-3 border-t border-slate-100 flex flex-wrap gap-2">
+                            <button onclick="window.saveAiNote('助教對話：${safeTitle}', decodeURIComponent('${safeHTML}'), this)" class="text-[10px] font-bold text-brand-600 bg-brand-50 border border-brand-200 px-2 py-1 rounded hover:bg-brand-100 transition-colors">儲存筆記</button>
+                            <button onclick="window.exportToWord('AI助教對話紀錄', decodeURIComponent('${safeHTML}'))" class="text-[10px] font-bold text-slate-500 bg-slate-100 border border-slate-200 px-2 py-1 rounded hover:bg-slate-200 transition-colors">Word</button>
+                            <button onclick="window.exportToPDF('AI助教對話紀錄', '${safeHTML}')" class="text-[10px] font-bold text-white bg-emerald-600 border border-emerald-700 px-2 py-1 rounded hover:bg-emerald-700 transition-colors shadow-sm">PDF</button>
                         </div>
                     </div>
                 </div>`;
-            } else {
-                html = `<div class="flex justify-center my-3"><span class="bg-red-50 text-red-600 px-3 py-1.5 rounded-lg text-xs font-bold border border-red-200 shadow-sm">${text}</span></div>`;
-            }
+            } else { html = `<div class="flex justify-center my-3"><span class="bg-red-50 text-red-600 px-3 py-1.5 rounded-lg text-xs font-bold border border-red-200 shadow-sm">${text}</span></div>`; }
             msgContainer.insertAdjacentHTML('beforeend', html);
             msgContainer.scrollTop = msgContainer.scrollHeight;
             
-            // 如果是 AI 回覆，觸發 MathJax 渲染公式
-            if (role === 'model' && window.MathJax) {
-                MathJax.typesetPromise([msgContainer]).catch((err) => console.log('MathJax error: ', err));
+            if (role === 'model') {
+                if (window.MathJax) MathJax.typesetPromise([msgContainer]).catch((err) => console.log('MathJax error: ', err));
+                if (window.mermaid) { try { mermaid.run({ nodes: msgContainer.querySelectorAll('.mermaid') }); } catch (e) { console.error('Mermaid render error: ', e); } }
+            }
+        };
+        
+        window.copyToClipboard = async function(buttonElement) {
+            const container = buttonElement.closest('.relative');
+            const promptText = container.querySelector('.prompt-text').innerText;
+            const originalHTML = buttonElement.innerHTML;
+            const successHTML = `<svg class="w-3 h-3 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> <span class="text-emerald-400 font-bold">已複製</span>`;
+
+            try {
+                await navigator.clipboard.writeText(promptText);
+                buttonElement.innerHTML = successHTML;
+                buttonElement.classList.remove('text-slate-400', 'hover:text-white', 'bg-slate-800', 'hover:bg-slate-700');
+                buttonElement.classList.add('bg-emerald-900/50', 'border', 'border-emerald-800');
+                setTimeout(() => {
+                    buttonElement.innerHTML = originalHTML;
+                    buttonElement.classList.add('text-slate-400', 'hover:text-white', 'bg-slate-800', 'hover:bg-slate-700');
+                    buttonElement.classList.remove('bg-emerald-900/50', 'border', 'border-emerald-800');
+                }, 2000);
+            } catch (err) {
+                const textArea = document.createElement("textarea"); textArea.value = promptText; textArea.style.position = "absolute"; textArea.style.left = "-999999px";
+                document.body.appendChild(textArea); textArea.select();
+                try {
+                    document.execCommand('copy');
+                    buttonElement.innerHTML = successHTML;
+                    setTimeout(() => buttonElement.innerHTML = originalHTML, 2000);
+                } catch (ex) {
+                    buttonElement.innerHTML = `<span class="text-red-400">複製失敗</span>`;
+                    setTimeout(() => buttonElement.innerHTML = originalHTML, 2000);
+                }
+                document.body.removeChild(textArea);
             }
         };
     </script>
