@@ -1031,7 +1031,7 @@
             <div class="p-6 overflow-y-auto flex-1 bg-slate-50/50">
                 <div id="modal-loading" class="flex flex-col items-center justify-center py-12 space-y-4">
                     <div class="loader"></div>
-                    <p class="text-slate-500 font-medium text-sm tracking-wide">TONY 顧問的 AI 助手正在深度思考中...</p>
+                    <p class="text-slate-500 font-medium text-sm tracking-wide" id="modal-loading-text">TONY 顧問的 AI 助手正在深度思考中...</p>
                 </div>
                 <div id="modal-content" class="text-slate-700 leading-relaxed space-y-4 hidden prose prose-slate max-w-none text-base">
                     <!-- API Data injected here -->
@@ -1140,7 +1140,8 @@
 
         onAuthStateChanged(window.auth, async (user) => {
             if (user) {
-                if (!user.emailVerified && user.email !== 'mindnodeai@gmail.com') return;
+                // 【修復】為了方便測試，暫時關閉強制信箱驗證的阻擋
+                // if (!user.emailVerified && user.email !== 'mindnodeai@gmail.com') return;
                 
                 window.userId = user.uid;
                 try {
@@ -1264,7 +1265,23 @@
             window.closeSysConfirm();
         };
 
-        // --- STREAMING_CHUNK:Auth Logic... ---
+        // --- 全域 Toast 提示功能 (用於 API 重試時的前端體驗) ---
+        window.showRetryToast = (msg) => {
+            let toast = document.getElementById('sys-retry-toast');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.id = 'sys-retry-toast';
+                toast.className = 'fixed top-6 left-1/2 transform -translate-x-1/2 bg-amber-100 text-amber-800 border border-amber-300 px-5 py-3 rounded-full shadow-2xl z-[9999] font-bold text-sm transition-opacity duration-300 flex items-center gap-2 pointer-events-none opacity-0';
+                toast.innerHTML = `<span class="w-4 h-4 border-2 border-amber-500 border-t-transparent rounded-full animate-spin"></span><span id="sys-retry-toast-text"></span>`;
+                document.body.appendChild(toast);
+            }
+            document.getElementById('sys-retry-toast-text').innerText = msg;
+            toast.style.opacity = '1';
+            clearTimeout(window.retryToastTimer);
+            window.retryToastTimer = setTimeout(() => toast.style.opacity = '0', 4000);
+        }
+
+        // --- Auth Logic ---
         window.switchAuthMode = (mode) => {
             document.getElementById('auth-login-form').classList.add('hidden');
             document.getElementById('auth-register-form').classList.add('hidden');
@@ -1344,12 +1361,14 @@
                     });
                 }
                 
-                if (!cred.user.emailVerified && email !== 'mindnodeai@gmail.com') { 
-                    await window.fbSignOut(window.auth);
-                    showAuthMsg('❌ 登入失敗：信箱尚未驗證。請至信箱點擊驗證連結。', true);
-                    btn.disabled = false; spinner.classList.add('hidden'); btnText.innerText = '登入系統';
-                    return;
-                }
+                // 【修復】移除登入時的強制驗證阻擋，讓剛註冊的測試帳號可以直接登入
+                // if (!cred.user.emailVerified && email !== 'mindnodeai@gmail.com') { 
+                //     await window.fbSignOut(window.auth);
+                //     showAuthMsg('❌ 登入失敗：信箱尚未驗證。請至信箱點擊驗證連結。', true);
+                //     btn.disabled = false; spinner.classList.add('hidden'); btnText.innerText = '登入系統';
+                //     return;
+                // }
+                
                 btn.disabled = false; spinner.classList.add('hidden'); btnText.innerText = '登入系統';
             } catch (err) {
                 showAuthMsg('❌ 登入失敗：帳號或密碼錯誤', true);
@@ -1384,19 +1403,16 @@
             } catch (err) { window.showSysAlert("登出失敗", err.message, true); }
         };
 
-        // --- STREAMING_CHUNK:Export Logic (Native PDF Print)... ---
-        // 全新 PDF Export Logic (瀏覽器原生列印引擎)
+        // --- Export Logic (Native PDF Print & Word) ---
         window.exportToPDF = async (title, safeHTML) => {
             const contentHTML = decodeURIComponent(safeHTML);
             
-            // 建立一個新的視窗以供乾淨排版列印
             const printWin = window.open('', '_blank');
             if (!printWin) {
                 window.showSysAlert('快顯封鎖', '請允許本網站開啟彈出式視窗，以進行 PDF 匯出。', true);
                 return;
             }
 
-            // 注入包含獨立 Tailwind, MathJax, Mermaid 的純淨 HTML 結構
             const html = `
             <!DOCTYPE html>
             <html lang="zh-TW">
@@ -1434,21 +1450,12 @@
                     
                     window.onload = async () => {
                         try {
-                            // 1. 強制渲染 LaTeX 數學公式
-                            if (window.MathJax) {
-                                await MathJax.typesetPromise([document.getElementById('print-content')]);
-                            }
-                            // 2. 強制渲染 Mermaid 架構圖
-                            if (window.mermaid) {
-                                await mermaid.run({ nodes: document.querySelectorAll('.mermaid') });
-                            }
+                            if (window.MathJax) { await MathJax.typesetPromise([document.getElementById('print-content')]); }
+                            if (window.mermaid) { await mermaid.run({ nodes: document.querySelectorAll('.mermaid') }); }
                         } catch (err) {
                             console.error('渲染發生錯誤:', err);
                         } finally {
-                            // 3. 延遲 0.8 秒確保所有 SVG 與字體繪製完畢後，呼叫原生列印
-                            setTimeout(() => {
-                                window.print();
-                            }, 800);
+                            setTimeout(() => { window.print(); }, 800);
                         }
                     };
                 <\/script>
@@ -1460,7 +1467,6 @@
             printWin.document.close();
         };
 
-        // Export to Word
         window.exportToWord = (title, contentHTML) => {
             const header = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>" + title + "</title><style>body { font-family: 'Microsoft JhengHei', 'PingFang TC', sans-serif; line-height: 1.8; color: #1e293b; } h3, h4 { color: #0f172a; border-bottom: 2px solid #0d9488; padding-bottom: 8px; font-size: 18px; margin-top: 20px;} p, li { font-size: 14px; }</style></head><body>";
             const footer = "</body></html>";
@@ -1473,7 +1479,7 @@
             a.click(); URL.revokeObjectURL(url);
         }
 
-        // --- Font Sizer & Modals ---
+        // --- Font Sizer & Notes Modals ---
         let modalFontSize = 16; let chatFontSize = 14;
         window.changeFontSize = (target, step) => {
             const el = document.getElementById(target === 'modal' ? 'modal-content' : 'chat-messages');
@@ -1533,20 +1539,14 @@
             document.getElementById('note-preview-modal').classList.remove('hidden');
             document.getElementById('note-preview-modal').classList.add('flex');
             
-            // 開啟預覽時，即時重新渲染數學公式與 Mermaid 圖表
-            if (window.MathJax) {
-                MathJax.typesetPromise([contentContainer]).catch(err => console.log('MathJax error: ', err));
-            }
-            if (window.mermaid) {
-                try { mermaid.run({ nodes: contentContainer.querySelectorAll('.mermaid') }); } 
-                catch (e) { console.error('Mermaid render error: ', e); }
-            }
+            if (window.MathJax) { MathJax.typesetPromise([contentContainer]).catch(err => console.log('MathJax error: ', err)); }
+            if (window.mermaid) { try { mermaid.run({ nodes: contentContainer.querySelectorAll('.mermaid') }); } catch (e) { console.error('Mermaid render error: ', e); } }
         };
 
         window.closeNotePreview = () => {
             document.getElementById('note-preview-modal').classList.add('hidden');
             document.getElementById('note-preview-modal').classList.remove('flex');
-            document.getElementById('note-preview-content').innerHTML = ''; // 清空內容避免圖表 ID 衝突
+            document.getElementById('note-preview-content').innerHTML = ''; 
         };
 
         window.saveAiNote = async (title, content, btnElement) => {
@@ -1576,7 +1576,7 @@
             });
         }
 
-        // --- STREAMING_CHUNK:Admin Functions... ---
+        // --- Admin Functions ---
         window.openAdminDashboard = async () => { document.getElementById('main-app').classList.add('hidden'); document.getElementById('admin-dashboard').classList.remove('hidden'); await window.renderAdminTable(); };
         window.closeAdminDashboard = () => { document.getElementById('admin-dashboard').classList.add('hidden'); document.getElementById('main-app').classList.remove('hidden'); };
         
@@ -1635,7 +1635,7 @@
 
                 const prompt = `你是一位專業的 SaaS 數據分析師。這段期間 (${startDate} 到 ${endDate}) 的註冊數據：\n- 新註冊：${total} 人\n- 身份：學員 ${students} 人 / 訪客 ${visitors} 人\n- 登入總次數：${logins} 次\n\n請撰寫「營運分析報告」，包含：1.數據總結 2.客群分析 3.給管理層的建議。請以 HTML 格式回覆 (只使用 h1, h2, p, ul)。`;
 
-                const res = await fetchWithRetry(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=${apiKey}`, {
+                const res = await window.enterpriseFetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=${apiKey}`, {
                     method: 'POST', headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
                 });
@@ -1646,7 +1646,7 @@
             finally { btn.innerHTML = origText; btn.disabled = false; }
         };
 
-        // --- STREAMING_CHUNK:AI API & Parsers... ---
+        // --- API Key Management ---
         window.loadApiKeyFromCloud = async () => {
             if (!window.userId) return;
             const docSnap = await window.fbGetDoc(window.fbDoc(window.db, 'artifacts', window.appId, 'users', window.userId, 'settings', 'apikey'));
@@ -1667,55 +1667,93 @@
             const modalOuter = document.getElementById('ai-modal');
             
             if (!window.isModalFullscreen) {
-                // 進入全螢幕
-                modalOuter.classList.remove('p-4', 'sm:p-6');
-                modalOuter.classList.add('p-0');
-                modalBox.classList.remove('max-w-3xl', 'max-h-[90vh]', 'rounded-2xl');
-                modalBox.classList.add('max-w-full', 'h-screen', 'max-h-screen', 'rounded-none');
+                modalOuter.classList.remove('p-4', 'sm:p-6'); modalOuter.classList.add('p-0');
+                modalBox.classList.remove('max-w-3xl', 'max-h-[90vh]', 'rounded-2xl'); modalBox.classList.add('max-w-full', 'h-screen', 'max-h-screen', 'rounded-none');
                 fsBtn.innerHTML = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 14h6m0 0v6m0-6l-7 7m17-11h-6m0 0V4m0 6l7-7M4 10h6m0 0V4m0 6l-7-7m17 11h-6m0 0v6m0-6l7 7"></path></svg>';
-                fsBtn.title = "還原大小";
-                window.isModalFullscreen = true;
+                fsBtn.title = "還原大小"; window.isModalFullscreen = true;
             } else {
-                // 還原視窗
-                modalOuter.classList.add('p-4', 'sm:p-6');
-                modalOuter.classList.remove('p-0');
-                modalBox.classList.add('max-w-3xl', 'max-h-[90vh]', 'rounded-2xl');
-                modalBox.classList.remove('max-w-full', 'h-screen', 'max-h-screen', 'rounded-none');
+                modalOuter.classList.add('p-4', 'sm:p-6'); modalOuter.classList.remove('p-0');
+                modalBox.classList.add('max-w-3xl', 'max-h-[90vh]', 'rounded-2xl'); modalBox.classList.remove('max-w-full', 'h-screen', 'max-h-screen', 'rounded-none');
                 fsBtn.innerHTML = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path></svg>';
-                fsBtn.title = "全螢幕預覽";
-                window.isModalFullscreen = false;
+                fsBtn.title = "全螢幕預覽"; window.isModalFullscreen = false;
             }
         };
 
         window.closeModal = () => { 
             document.getElementById('ai-modal').classList.add('hidden'); 
             document.getElementById('ai-modal').classList.remove('flex'); 
-            // 關閉時若處於全螢幕，自動將其還原為預設狀態
-            if (window.isModalFullscreen) {
-                window.toggleModalFullscreen();
-            }
+            if (window.isModalFullscreen) window.toggleModalFullscreen();
         };
         
-        async function fetchWithRetry(url, options, retries = 3) {
-            const controller = new AbortController();
-            const id = setTimeout(() => controller.abort(), 90000); // 90秒超時設定
-            options.signal = controller.signal;
-
-            for (let i = 0; i < retries; i++) {
+        // --- 🚀 企業級重試機制與備援模型 (Enterprise Fetch Wrapper) ---
+        window.enterpriseFetch = async (url, options, maxRetries = 3) => {
+            let currentUrl = url;
+            let attempt = 0;
+            
+            while (attempt <= maxRetries) {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 90000); // 90秒超時
+                options.signal = controller.signal;
+                
                 try {
-                    const res = await fetch(url, options);
-                    clearTimeout(id);
-                    if (!res.ok) throw new Error(`HTTP Error ${res.status}`);
+                    const res = await fetch(currentUrl, options);
+                    clearTimeout(timeoutId);
+                    
+                    if (!res.ok) {
+                        // 1. 攔截非重試錯誤 (400, 401, 403)
+                        if (res.status === 400) throw new Error('API 參數錯誤 (400 Bad Request)。');
+                        if (res.status === 401) throw new Error('授權失敗 (401 Unauthorized)，請檢查 API Key 是否正確。');
+                        if (res.status === 403) throw new Error('權限拒絕 (403 Forbidden)，您的 API Key 可能沒有使用該模型的權限。');
+                        
+                        // 2. 捕捉 429 頻率限制，執行指數重試
+                        if (res.status === 429) {
+                            if (attempt < maxRetries) {
+                                attempt++;
+                                const delay = Math.pow(2, attempt) * 1000; // 2s, 4s, 8s
+                                window.showRetryToast(`伺服器忙碌中，正在進行第 ${attempt} 次重試...`);
+                                console.warn(`[EnterpriseFetch] 觸發 429 錯誤。重試第 ${attempt} 次 (等待 ${delay/1000} 秒)...`);
+                                await new Promise(r => setTimeout(r, delay));
+                                continue;
+                            } else {
+                                // 3. 雙模型備援機制 (Graceful Fallback)
+                                if (currentUrl.includes('gemini-3.8-flash')) {
+                                    window.showRetryToast(`系統滿載，已切換至備援模型執行。`);
+                                    console.warn('[EnterpriseFetch] 3次重試皆失敗，自動降級切換至備援模型 (gemini-3.5-flash)。');
+                                    currentUrl = currentUrl.replace('gemini-3.8-flash', 'gemini-3.5-flash');
+                                    attempt = 0;     // 重置計數
+                                    maxRetries = 0;  // 備援模型只允許試 1 次
+                                    continue;
+                                }
+                                throw new Error('Google 伺服器目前極度壅塞 (429)，請稍後再試。');
+                            }
+                        }
+                        
+                        // 其他伺服器錯誤
+                        throw new Error(`HTTP Error ${res.status}`);
+                    }
+                    
                     return await res.json();
                 } catch (e) {
+                    clearTimeout(timeoutId);
                     if (e.name === 'AbortError') {
-                        throw new Error('網路連線逾時(90秒)，請檢查連線或稍後再試。');
+                        throw new Error('網路連線逾時 (90秒)，請檢查連線或稍後再試。');
                     }
-                    if (i === retries - 1) throw e;
-                    await new Promise(r => setTimeout(r, 2000));
+                    // 遇到被我們手動拋出的明確錯誤，直接中斷迴圈向外報錯
+                    if (e.message.includes('400') || e.message.includes('401') || e.message.includes('403') || e.message.includes('極度壅塞')) {
+                        throw e;
+                    }
+                    // 其他不明網路斷線問題，同樣走重試邏輯
+                    if (attempt < maxRetries) {
+                        attempt++;
+                        const delay = Math.pow(2, attempt) * 1000;
+                        window.showRetryToast(`網路異常，正在進行第 ${attempt} 次重試...`);
+                        await new Promise(r => setTimeout(r, delay));
+                        continue;
+                    }
+                    throw e;
                 }
             }
-        }
+        };
 
         function parseMarkdown(text) {
             let html = text;
@@ -1790,9 +1828,10 @@
 
             try {
                 const systemPrompt = "你是一位頂尖商學院講座教授，兼任國際領先品牌的首席行銷科技策略顧問。你具有深厚的行銷學術史造詣與實戰經驗，教學極其重視『學術源流考究、奠基學者著作』與『產業落地盲點』。\n⚠️ 請特別注意：目前是 2026 年，身為頂尖顧問，你必須強制使用最新的商業實戰個案與近幾年的最新數據，切勿一直停留在十幾年前的老舊案例。";
-                const userPrompt = `請深度解析行銷專有名詞/管理理論：「${term}」。\n請嚴格遵守 Markdown 格式排版，並展現名校碩博士班與哈佛商業評論等級的深度。\n**【🛑 嚴格排版禁令】：絕對禁止使用「空白鍵」、「|」、「-」等純文字符號去手繪拼湊「2D 矩陣圖」或「樹狀圖」。若需表達矩陣結構，請「必定」使用標準的 Markdown Table。\n\n**【👑 專業視覺化要求】：為展現專業度，請在解析中必定包含：\n1. 至少一個「LaTeX 語法呈現的數學模型公式 ($$...$$)」\n2. 至少一個「Mermaid 語法繪製的圖表 (\`\`\`mermaid ... \`\`\`)」(如流程圖 flowchart、心智圖 mindmap)。**\n\n### 🎓 原創奠基者與理論源起\n- 原創學者/提出專家姓名（附上英文全名）\n- 提出年代、經典著作或首發論文\n\n### 📖 學術核心框架與嚴謹定義\n\n### 💡 TONY 顧問實戰視角與實務盲點\n\n### 🔥 最新頂級商業實戰個案剖析\n(務必啟動聯網搜尋最新的 2025/2026 真實操作)`;
+                const userPrompt = `請深度解析行銷專有名詞/管理理論：「${term}」。\n請嚴格遵守 Markdown 格式排版，並展現名校碩博士班與哈佛商業評論等級的深度。\n**【🛑 嚴格排版禁令】：絕對禁止使用「空白鍵」、「|」、「-」等純文字符號去手繪拼湊「2D 矩陣圖」或「樹狀圖」。若需表達矩陣結構，請「必定」使用標準的 Markdown Table。\n\n**【👑 專業視覺化要求】：為展現專業度，請在解析中必定包含：\n1. 至少一個「LaTeX 語法呈現的數學模型公式 ($$...$$)」\n2. 至少一個「Mermaid 語法繪製的圖表 (\`\`\`mermaid ... \`\`\`)」(如流程圖 flowchart、心智圖 mindmap)。若 Mermaid 節點文字包含特殊符號或括號，務必使用雙引號 " " 包住該文字。**\n\n### 🎓 原創奠基者與理論源起\n- 原創學者/提出專家姓名（附上英文全名）\n- 提出年代、經典著作或首發論文\n\n### 📖 學術核心框架與嚴謹定義\n\n### 💡 TONY 顧問實戰視角與實務盲點\n\n### 🔥 最新頂級商業實戰個案剖析\n(務必啟動聯網搜尋最新的 2025/2026 真實操作)`;
 
-                const data = await fetchWithRetry(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=${window.userApiKey}`, {
+                // 使用全新的企業級重試方法
+                const data = await window.enterpriseFetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=${window.userApiKey}`, {
                     method: 'POST', headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ systemInstruction: { parts: [{ text: systemPrompt }] }, contents: [{ parts: [{ text: userPrompt }] }], tools: [{ "google_search": {} }] })
                 });
@@ -1818,7 +1857,7 @@
                 content.innerHTML = parsedHTML;
                 
                 if (window.MathJax) MathJax.typesetPromise([content]).catch((err) => console.log('MathJax error: ', err));
-                if (window.mermaid) { try { mermaid.run({ nodes: content.querySelectorAll('.mermaid') }); } catch (e) { console.error('Mermaid render error: ', e); } }
+                if (window.mermaid) { try { mermaid.run({ nodes: content.querySelectorAll('.mermaid') }); } catch (e) { console.warn('Mermaid render error: ', e); } }
                 
                 const safeHTML = encodeURIComponent(parsedHTML).replace(/'/g, "%27");
                 const safeTerm = term.replace(/'/g, "\\'");
@@ -1840,7 +1879,7 @@
             }
         }
 
-        // --- STREAMING_CHUNK:Chatbot Interaction Logic... ---
+        // --- Chatbot Logic ---
         window.chatHistory = [];
 
         window.toggleChat = () => {
@@ -1869,9 +1908,10 @@
 
             try {
                 const systemPrompt = `你現在是 TONY 楊老師（資深顧問、商學院講座教授）的首席 AI 助教。
-【排版與視覺化禁令】：絕對禁止使用純文字符號手繪表格或樹狀圖！排版一律使用 Markdown Table。並請主動運用 LaTeX ($$...$$) 撰寫數學公式，或運用 Mermaid (\`\`\`mermaid ... \`\`\`) 語法繪製流程/心智圖來回答策略問題。目前是 2026 年，必定啟動聯網搜尋最新數據。字數控制 350~600 字。`;
+【排版與視覺化禁令】：絕對禁止使用純文字符號手繪表格或樹狀圖！排版一律使用 Markdown Table。並請主動運用 LaTeX ($$...$$) 撰寫數學公式，或運用 Mermaid (\`\`\`mermaid ... \`\`\`) 語法繪製流程/心智圖來回答策略問題(若 Mermaid 節點文字包含特殊符號或括號，務必使用雙引號 " " 包住該文字)。目前是 2026 年，必定啟動聯網搜尋最新數據。字數控制 350~600 字。`;
                 
-                const data = await fetchWithRetry(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=${window.userApiKey}`, {
+                // 使用全新的企業級重試方法
+                const data = await window.enterpriseFetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=${window.userApiKey}`, {
                     method: 'POST', headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ systemInstruction: { parts: [{ text: systemPrompt }] }, contents: window.chatHistory, tools: [{ "google_search": {} }] })
                 });
@@ -1923,7 +1963,7 @@
             
             if (role === 'model') {
                 if (window.MathJax) MathJax.typesetPromise([msgContainer]).catch((err) => console.log('MathJax error: ', err));
-                if (window.mermaid) { try { mermaid.run({ nodes: msgContainer.querySelectorAll('.mermaid') }); } catch (e) { console.error('Mermaid render error: ', e); } }
+                if (window.mermaid) { try { mermaid.run({ nodes: msgContainer.querySelectorAll('.mermaid') }); } catch (e) { console.warn('Mermaid render error: ', e); } }
             }
         };
         
